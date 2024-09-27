@@ -9,7 +9,7 @@ export default function CoursePage() {
       <Banner />
       <Tenets />
       <Directions />
-      <StartBanner />
+      {/*<StartBanner />*/}
     </main>
   );
 }

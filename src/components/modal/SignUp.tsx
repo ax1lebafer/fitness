@@ -1,9 +1,9 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
+import ButtonLink from "../ui/ButtonLink.tsx";
 import { useLocation, useNavigate } from "react-router-dom";
 import { appRoutes } from "../../lib/appRoutes.ts";
-import ButtonLink from "../ui/ButtonLink.tsx";
 
-export default function SignIn() {
+export default function SignUp() {
   // const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -12,57 +12,77 @@ export default function SignIn() {
     navigate(-1);
   };
 
-  const onSignUp = () => {
-    navigate(appRoutes.SIGNUP, { state: { backgroundLocation: location } });
+  const onSignIn = () => {
+    navigate(appRoutes.SIGNIN, { state: { backgroundLocation: location } });
   };
 
-  const [formValues, setFormValues] = useState({ email: "", password: "" });
+  const [formValues, setFormValues] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
-  const [signInError, setSignInError] = useState("");
+  const [signUpError, setSignUpError] = useState<string>("");
 
   const onInputChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormValues({ ...formValues, [name]: value });
   };
 
-  const onLogin = async (event: React.MouseEvent<HTMLButtonElement>) => {
+  const onRegistration = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
     if (!formValues.email || formValues.email.trim() === "") {
-      setSignInError("Не введена почта");
+      setSignUpError("Не введена эл.почта");
       return;
     }
 
     const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!re.test(String(formValues.email).toLowerCase())) {
-      setSignInError("Некорректный email");
+      setSignUpError("Некорректный email");
       return;
     }
 
     if (!formValues.password || formValues.password.trim() === "") {
-      setSignInError("Не введен пароль");
+      setSignUpError("Не введен пароль");
       return;
     } else if (formValues.password.trim().length < 6) {
-      setSignInError("Пароль не должен быть короче 6 символов");
+      setSignUpError("Пароль не должен быть короче 6 символов");
+      return;
+    }
+
+    if (
+      !formValues.confirmPassword ||
+      formValues.confirmPassword.trim() === ""
+    ) {
+      setSignUpError("Не введено подтверждение пароля");
+      return;
+    } else if (formValues.confirmPassword.trim().length < 6) {
+      setSignUpError("Пароль не должен быть короче 6 символов");
+      return;
+    }
+
+    if (formValues.password !== formValues.confirmPassword) {
+      setSignUpError("Пароли не совпадают");
       return;
     }
 
     try {
-      // await dispatch(getUser(formValues)).unwrap();
-      setSignInError("");
-      navigate(appRoutes.HOME);
+      // await dispatch(getRegistration(formValues)).unwrap();
+      navigate(appRoutes.SIGNIN);
+      setSignUpError("");
     } catch (error: any) {
-      // TODO: Изменить тип для ошибки
+      console.log("errMessage", error);
       const errMessage = error.message.toLowerCase();
       console.log("errMessage", errMessage);
       // const userMessage = errorMessage(errMessage);
-      // userMessage !== "" ? setSignInError(userMessage) : "";
+      // userMessage !== "" ? setSignUpError(userMessage) : "";
     }
   };
 
   useEffect(() => {
-    setSignInError("");
-  }, [formValues.email, formValues.password]);
+    setSignUpError("");
+  }, [formValues.email, formValues.password, formValues.confirmPassword]);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
@@ -74,9 +94,9 @@ export default function SignIn() {
       <div className="absolute left-[calc(50%-(360px/2))] top-[calc(50%-(527px/2))]">
         <form
           className="w-[360px] p-[40px] bg-[white] rounded-[30px] flex flex-col items-center pt-[43px] pr-[47px] pb-[47px] pl-[40px]"
-          // action="#"
+          action="#"
         >
-          <div className="w-[220px] h-[35px]  mb-[48px]">
+          <div className="w-[220px] h-[35px] mb-[48px]">
             <img src="/img/logo.svg" alt="logo" width={220} height={35} />
           </div>
           <input
@@ -89,27 +109,35 @@ export default function SignIn() {
             onChange={onInputChange}
           />
           <input
-            className="w-[280px] v-[52px] rounded-[8px] border-[1px] border-[#d0cece] px-[18px] py-[16px] text-lg"
+            className="w-[280px] v-[52px] rounded-[8px] border-[1px] border-[#d0cece] px-[18px] py-[16px] mb-[10px] text-lg"
             type="password"
             name="password"
             placeholder="Пароль"
             value={formValues.password}
             onChange={onInputChange}
           />
-          {signInError && (
+          <input
+            className="w-[280px] v-[52px] rounded-[8px] border-[1px] border-[#d0cece] px-[18px] py-[16px] text-lg"
+            type="password"
+            name="confirmPassword"
+            placeholder="Повторите пароль"
+            value={formValues.confirmPassword}
+            onChange={onInputChange}
+          />
+          {signUpError && (
             <p className="mt-[10px] text-[#db0030] text-sm text-center font-normal leading-4">
-              {signInError}
+              {signUpError}
             </p>
           )}
           <ButtonLink
-            text="Войти"
-            className="w-full mb-2.5 mt-[34px]"
-            onClick={onLogin}
+            text="Зарегистрироваться"
+            className="w-full mb-2.5"
+            onClick={onRegistration}
           />
           <ButtonLink
-            text="Зарегистрироваться"
+            text="Войти"
             className="mt-0 w-full bg-transparent border border-black hover:bg-[#F7F7F7] hover:text-black active:bg-[#E9ECED] active:text-black"
-            onClick={onSignUp}
+            onClick={onSignIn}
             type={"button"}
           />
         </form>

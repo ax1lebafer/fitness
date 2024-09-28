@@ -1,15 +1,11 @@
 import Header from "./Header.tsx";
-import React from "react";
+import { Outlet } from "react-router-dom";
 
-type LayoutProps = {
-  children: React.ReactNode;
-};
-
-export default function Layout({ children }: LayoutProps) {
+export default function Layout() {
   return (
     <>
       <Header />
-      {children}
+      <Outlet />
     </>
   );
 }

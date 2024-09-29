@@ -8,12 +8,16 @@ export default function SignIn() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const backgroundLocation = location.state?.backgroundLocation || {
+    pathname: appRoutes.HOME,
+  };
+
   const onClose = () => {
-    navigate(-1);
+    navigate(backgroundLocation.pathname, { replace: true });
   };
 
   const onSignUp = () => {
-    navigate(appRoutes.SIGNUP, { state: { backgroundLocation: location } });
+    navigate(appRoutes.SIGNUP, { state: { backgroundLocation } });
   };
 
   const [formValues, setFormValues] = useState({ email: "", password: "" });

@@ -8,12 +8,14 @@ export default function SignUp() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const backgroundLocation = location.state?.backgroundLocation || location;
+
   const onClose = () => {
-    navigate(-1);
+    navigate(backgroundLocation.pathname, { replace: true });
   };
 
   const onSignIn = () => {
-    navigate(appRoutes.SIGNIN, { state: { backgroundLocation: location } });
+    navigate(appRoutes.SIGNIN, { state: { backgroundLocation } });
   };
 
   const [formValues, setFormValues] = useState({
@@ -131,7 +133,7 @@ export default function SignUp() {
           )}
           <ButtonLink
             text="Зарегистрироваться"
-            className="w-full mb-2.5"
+            className="w-full mb-2.5 mt-[34px]"
             onClick={onRegistration}
           />
           <ButtonLink

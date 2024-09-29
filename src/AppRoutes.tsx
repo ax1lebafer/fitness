@@ -11,9 +11,11 @@ export default function AppRoutes() {
   const location = useLocation();
   const state = location.state as { backgroundLocation?: Location };
 
+  const backgroundLocation = state?.backgroundLocation || location;
+
   return (
     <>
-      <Routes location={state?.backgroundLocation || location}>
+      <Routes location={backgroundLocation}>
         <Route element={<Layout />}>
           <Route path={appRoutes.HOME} element={<HomePage />} />
           <Route path={appRoutes.COURSES} element={<CoursePage />} />
@@ -22,7 +24,7 @@ export default function AppRoutes() {
       </Routes>
 
       {state?.backgroundLocation && (
-        <Routes>
+        <Routes location={location}>
           <Route path={appRoutes.SIGNIN} element={<SignIn />} />
           <Route path={appRoutes.SIGNUP} element={<SignUp />} />
         </Routes>

@@ -1,7 +1,15 @@
 import ButtonLink from "./ui/ButtonLink.tsx";
 import { appRoutes } from "../lib/appRoutes.ts";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function StartBanner() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleSignInClick = () => {
+    navigate(appRoutes.SIGNIN, { state: { backgroundLocation: location } });
+  };
+
   return (
     <section className="bg-white rounded-[30px] w-full mt-[42px] relative mb-[50px]">
       <div className="flex flex-col h-[406px] w-[437px] m-[40px]">
@@ -15,7 +23,10 @@ export default function StartBanner() {
           <li>упражнения заряжают бодростью</li>
           <li>помогают противостоять стрессам</li>
         </ol>
-        <ButtonLink text="Войдите, чтобы добавить курс" to={appRoutes.SIGNIN} />
+        <ButtonLink
+          text="Войдите, чтобы добавить курс"
+          onClick={handleSignInClick}
+        />
       </div>
       <div className="relative">
         <div className="absolute overflow-hidden w-[634px] h-[386px] top-[-386px] right-[6px]">

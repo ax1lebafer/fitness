@@ -7,6 +7,8 @@ import NotFoundPage from "./pages/NotFoundPage.tsx";
 import SignIn from "./components/modal/SignIn.tsx";
 import SignUp from "./components/modal/SignUp.tsx";
 import ProfileEnter from "./components/modal/ProfileEnter.tsx";
+import UpdatePassword from "./components/modal/UpdatePassword.tsx";
+import ProfilePage from "./pages/ProfilePage.tsx";
 
 
 export default function AppRoutes() {
@@ -21,6 +23,7 @@ export default function AppRoutes() {
         <Route element={<Layout />}>
           <Route path={appRoutes.HOME} element={<HomePage />} />
           <Route path={appRoutes.COURSES} element={<CoursePage />} />
+          <Route path={appRoutes.PROFILE} element={<ProfilePage />} />
         </Route>
         <Route path={appRoutes.NOT_FOUND} element={<NotFoundPage />} />
       </Routes>
@@ -30,6 +33,7 @@ export default function AppRoutes() {
           <Route path={appRoutes.SIGNIN} element={<SignIn />} />
           <Route path={appRoutes.SIGNUP} element={<SignUp />} />
           <Route path={appRoutes.PROFILE_ENTER} element={<ProfileEnter />} />
+          <Route path={appRoutes.UPDATE_PASSWORD} element={<UpdatePassword />} />
         </Routes>
       )}
     </>

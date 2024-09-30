@@ -8,6 +8,7 @@ import SignIn from "./components/modal/SignIn.tsx";
 import SignUp from "./components/modal/SignUp.tsx";
 import ProfileEnter from "./components/modal/ProfileEnter.tsx";
 
+
 export default function AppRoutes() {
   const location = useLocation();
   const state = location.state as { backgroundLocation?: Location };

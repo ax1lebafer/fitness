@@ -9,12 +9,6 @@ import { auth, app } from "../lib/firebaseConfig";
 
 const database = getDatabase(app);
 
-// const firebaseApp = initializeApp(firebaseConfig);
-// const database = getDatabase(firebaseApp);
-// const auth = getAuth(firebaseApp);
-// const snapshot = await get(child(ref(database), `courses/${courseId}`));
-
-
 export async function getRegistration({ email, username, password }: SignUpType) {
   const userCredential = await createUserWithEmailAndPassword(
     auth,
@@ -33,7 +27,8 @@ export async function getRegistration({ email, username, password }: SignUpType)
     },
   });
   console.log("auth. response: ", response);
-  return response;
+  // return response;
+  return userCredential.user;
 }
 
 export async function getUser({ email, password }: SignInType) {
@@ -45,10 +40,10 @@ export async function getUser({ email, password }: SignInType) {
   const uid = userCredential.user.uid;
   console.log("UID: ", uid);
 
-  const db = ref(database);
-  console.log("db:", db);
-  const snapshot = await get(child(db, `users/${uid}`));
-  console.log("Snapshot: ", snapshot);
+  const snapshot = await get(child(ref(database), `users/${uid}`));
+  if (snapshot.exists()) {
+    console.log("Snapshot.val: ", snapshot.val());
+  }
   return snapshot.val();
 }
 

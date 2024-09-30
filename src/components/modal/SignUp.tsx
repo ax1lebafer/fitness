@@ -79,13 +79,11 @@ export default function SignUp() {
     //   return;
     // }
 
-    // const name = "Сергей";
-
     try {
-      const data = await getRegistration(formValues);
-      console.log("SignUp. data", data);
+      const user = await getRegistration(formValues);
+      console.log("SignUp. user", user);
       setSignUpError("");
-      setUser(data);
+      setUser(user);
       navigate(appRoutes.SIGNIN);
     } catch (error: any) {
       // if (error instanceof Error) throw new Error(error.message);

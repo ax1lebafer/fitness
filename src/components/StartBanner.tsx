@@ -1,10 +1,18 @@
 import ButtonLink from "./ui/ButtonLink.tsx";
 import { appRoutes } from "../lib/appRoutes.ts";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useUser } from "../hooks/useUser.ts";
+import ButtonInActive from "./ui/ButtonInActive.tsx";
 
 export default function StartBanner() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { user } = useUser();
+
+  if (user) {
+    console.log("StartBanner. user: ", user);
+    console.log("StartBanner. user.email: ", user.email);
+  }
 
   const handleSignInClick = () => {
     navigate(appRoutes.SIGNIN, { state: { backgroundLocation: location } });
@@ -23,10 +31,17 @@ export default function StartBanner() {
           <li>упражнения заряжают бодростью</li>
           <li>помогают противостоять стрессам</li>
         </ol>
-        <ButtonLink
-          text="Войдите, чтобы добавить курс"
-          onClick={handleSignInClick}
-        />
+        {user === null ? (
+          <ButtonLink
+            text="Войдите, чтобы добавить курс"
+            onClick={handleSignInClick}
+          />
+        ) : (
+          <ButtonInActive
+            text="Войдите, чтобы добавить курс"
+            // onClick={handleSignInClick}
+          />
+        )}
       </div>
       <div className="relative">
         <div className="absolute overflow-hidden w-[634px] h-[386px] top-[-386px] right-[6px]">

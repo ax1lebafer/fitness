@@ -1,13 +1,27 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import ButtonLink from "./ui/ButtonLink.tsx";
 import { appRoutes } from "../lib/appRoutes.ts";
+import { useUser } from "../hooks/useUser.ts";
 
 export default function Header() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { user, isEntering } = useUser();
+
+  let UserName = "";
+
+  if (user) {
+    UserName = user.name;
+  }
 
   const openSignInModal = () => {
     navigate(appRoutes.SIGNIN, { state: { backgroundLocation: location } });
+  };
+
+  const openProfileEnterModal = () => {
+    navigate(appRoutes.PROFILE_ENTER, {
+      state: { backgroundLocation: location },
+    });
   };
 
   return (
@@ -26,7 +40,33 @@ export default function Header() {
           Онлайн-тренировки для занятий дома
         </p>
       </div>
-      <ButtonLink text={"Войти"} onClick={openSignInModal} />
+      {!isEntering ? (
+        <ButtonLink text={"Войти"} onClick={openSignInModal} />
+      ) : (
+        <div className="w-auto h-[50px] flex flex-row gap-[12px]">
+          <div>
+            <img
+              src="/img/avatar-small.svg"
+              alt="avatar"
+              width={50}
+              height={50}
+            />
+          </div>
+          <div className="text-center text-2xl pt-[6px]">{UserName}</div>
+          <button
+            onClick={openProfileEnterModal}
+            className="w-[15px] h-[50px] bg-[#e5e5e5] cursor-point inline-block"
+            type="button"
+          >
+            <img
+              src="/img/icons/down_arrow.svg"
+              alt="arrow"
+              width={15}
+              height={15}
+            />
+          </button>
+        </div>
+      )}
     </header>
   );
 }

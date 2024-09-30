@@ -4,9 +4,15 @@ export const UserContext = createContext(null);
 
 export default function UserProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [isEntering, setIsEntering] = useState<boolean>(false);
+
+    function logout() {
+    localStorage.removeItem("user");
+    setUser(null);
+  };
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser, isEntering, setIsEntering, logout }}>
       {children}
     </UserContext.Provider>
   );

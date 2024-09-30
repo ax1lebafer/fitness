@@ -9,8 +9,8 @@ import { errorMessage } from "../../utils/ErrorMessage.ts";
 export default function SignIn() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { setUser } = useUser();
-
+  const { setUser, setIsEntering } = useUser();
+  
   const backgroundLocation = location.state?.backgroundLocation || {
     pathname: appRoutes.HOME,
   };
@@ -55,9 +55,10 @@ export default function SignIn() {
     }
 
     try {
-      const data = await getUser(formValues);
-      setUser(data.user);
-      console.log("data.user", data.user);
+      const user = await getUser(formValues);
+      setUser(user);
+      setIsEntering(true);
+      console.log("user", user);
       setSignInError("");
       navigate(appRoutes.HOME);
     } catch (error: any) {

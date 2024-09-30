@@ -1,5 +1,4 @@
 import ButtonLink from "../../components/ui/ButtonLink";
-// import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { appRoutes } from "../../lib/appRoutes.ts";
 import { useUser } from "../../hooks/useUser";
@@ -24,16 +23,11 @@ export default function ProfileEnter() {
   }
 
   return (
-    // <div className="w-full min-h-full overflow-hidden opacity-75">
-    // <div className="max-w-full h-lvh my-auto mx-auto z-0 relative">
-
     <div className="fixed inset-0 flex items-center justify-center z-50">
       <div
         className="fixed inset-0 bg-black opacity-50"
         onClick={onClose}
       ></div>
-      {/* Позиционирование модального окна в реальности будет другое */}
-      {/* <div className="absolute left-[calc(50%-(266px/2))] top-[calc(50%-(280px/2))] opacity-100"> */}
       <div className="absolute left-[calc(100%-266px)] top-[120px] opacity-100">
         <form
           className="w-[266px] p-[30px] bg-[white] rounded-[30px] flex flex-col items-center"
@@ -60,6 +54,5 @@ export default function ProfileEnter() {
         </form>
       </div>
     </div>
-    // </div>
   );
 }

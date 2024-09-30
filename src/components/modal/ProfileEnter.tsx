@@ -25,10 +25,11 @@ export default function ProfileEnter() {
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
       <div
-        className="fixed inset-0 bg-black opacity-50"
+        className="fixed inset-0 bg-black opacity-20"
         onClick={onClose}
       ></div>
-      <div className="absolute left-[calc(100%-266px)] top-[120px] opacity-100">
+      {/* <div className="relative left-[calc(50%+266px/2)] top-[-120px] opacity-100"> */}
+      <div className="relative left-[447px] top-[-399px] opacity-100">
         <form
           className="w-[266px] p-[30px] bg-[white] rounded-[30px] flex flex-col items-center"
           action="#"

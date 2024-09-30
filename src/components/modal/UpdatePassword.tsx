@@ -81,7 +81,7 @@ export default function UpdatePassword() {
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
       <div
-        className="fixed inset-0 bg-black opacity-50"
+        className="fixed inset-0 bg-black opacity-20"
         onClick={onClose}
       ></div>
       <div className="absolute left-[calc(50%-(360px/2))] top-[calc(50%-(527px/2))] opacity-100">
@@ -115,7 +115,7 @@ export default function UpdatePassword() {
           )}
           <ButtonLink
             text="Подтвердить"
-            className="w-full mb-2.5"
+            className="w-full mb-2.5 mt-[34px]"
             onClick={onChangePassword}
             //   href="/profile"
           />

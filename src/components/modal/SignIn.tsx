@@ -2,12 +2,15 @@ import React, { ChangeEvent, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { appRoutes } from "../../lib/appRoutes.ts";
 import ButtonLink from "../ui/ButtonLink.tsx";
+import { getUser } from "../../api/userAuth.ts";
+import { useUser } from "../../hooks/useUser";
+import { errorMessage } from "../../utils/ErrorMessage.ts";
 
 export default function SignIn() {
-  // const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-
+  const { setUser, setIsEntering } = useUser();
+  
   const backgroundLocation = location.state?.backgroundLocation || {
     pathname: appRoutes.HOME,
   };
@@ -52,15 +55,18 @@ export default function SignIn() {
     }
 
     try {
-      // await dispatch(getUser(formValues)).unwrap();
+      const user = await getUser(formValues);
+      setUser(user);
+      setIsEntering(true);
+      console.log("user", user);
       setSignInError("");
       navigate(appRoutes.HOME);
     } catch (error: any) {
       // TODO: Изменить тип для ошибки
       const errMessage = error.message.toLowerCase();
       console.log("errMessage", errMessage);
-      // const userMessage = errorMessage(errMessage);
-      // userMessage !== "" ? setSignInError(userMessage) : "";
+      const userMessage = errorMessage(errMessage);
+      setSignInError(userMessage);
     }
   };
 
@@ -76,10 +82,7 @@ export default function SignIn() {
       ></div>
 
       <div className="absolute left-[calc(50%-(360px/2))] top-[calc(50%-(527px/2))]">
-        <form
-          className="w-[360px] p-[40px] bg-[white] rounded-[30px] flex flex-col items-center pt-[43px] pr-[47px] pb-[47px] pl-[40px]"
-          // action="#"
-        >
+        <form className="w-[360px] p-[40px] bg-[white] rounded-[30px] flex flex-col items-center pt-[43px] pr-[47px] pb-[47px] pl-[40px]">
           <div className="w-[220px] h-[35px]  mb-[48px]">
             <img src="/img/logo.svg" alt="logo" width={220} height={35} />
           </div>

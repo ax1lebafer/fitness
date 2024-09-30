@@ -2,11 +2,15 @@ import { ChangeEvent, useEffect, useState } from "react";
 import ButtonLink from "../ui/ButtonLink.tsx";
 import { useLocation, useNavigate } from "react-router-dom";
 import { appRoutes } from "../../lib/appRoutes.ts";
+import { useUser } from "../../hooks/useUser.ts";
+import { getRegistration } from "../../api/userAuth.ts";
+import { errorMessage } from "../../utils/ErrorMessage.ts";
 
 export default function SignUp() {
   // const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const { setUser } = useUser();
 
   const backgroundLocation = location.state?.backgroundLocation || location;
 
@@ -20,8 +24,9 @@ export default function SignUp() {
 
   const [formValues, setFormValues] = useState({
     email: "",
+    username: "",
     password: "",
-    confirmPassword: "",
+    // confirmPassword: "",
   });
 
   const [signUpError, setSignUpError] = useState<string>("");
@@ -45,6 +50,11 @@ export default function SignUp() {
       return;
     }
 
+    if (!formValues.username || formValues.username.trim() === "") {
+      setSignUpError("Не введена эл.почта");
+      return;
+    }
+
     if (!formValues.password || formValues.password.trim() === "") {
       setSignUpError("Не введен пароль");
       return;
@@ -53,38 +63,41 @@ export default function SignUp() {
       return;
     }
 
-    if (
-      !formValues.confirmPassword ||
-      formValues.confirmPassword.trim() === ""
-    ) {
-      setSignUpError("Не введено подтверждение пароля");
-      return;
-    } else if (formValues.confirmPassword.trim().length < 6) {
-      setSignUpError("Пароль не должен быть короче 6 символов");
-      return;
-    }
+    // if (
+    //   !formValues.confirmPassword ||
+    //   formValues.confirmPassword.trim() === ""
+    // ) {
+    //   setSignUpError("Не введено подтверждение пароля");
+    //   return;
+    // } else if (formValues.confirmPassword.trim().length < 6) {
+    //   setSignUpError("Пароль не должен быть короче 6 символов");
+    //   return;
+    // }
 
-    if (formValues.password !== formValues.confirmPassword) {
-      setSignUpError("Пароли не совпадают");
-      return;
-    }
+    // if (formValues.password !== formValues.confirmPassword) {
+    //   setSignUpError("Пароли не совпадают");
+    //   return;
+    // }
 
     try {
-      // await dispatch(getRegistration(formValues)).unwrap();
-      navigate(appRoutes.SIGNIN);
+      const user = await getRegistration(formValues);
+      console.log("SignUp. user", user);
       setSignUpError("");
+      setUser(user);
+      navigate(appRoutes.SIGNIN);
     } catch (error: any) {
-      console.log("errMessage", error);
+      // if (error instanceof Error) throw new Error(error.message);
+      console.log("errMessage", error.message);
       const errMessage = error.message.toLowerCase();
-      console.log("errMessage", errMessage);
-      // const userMessage = errorMessage(errMessage);
-      // userMessage !== "" ? setSignUpError(userMessage) : "";
+      console.log("errMessage", error);
+      const userMessage = errorMessage(errMessage);
+      setSignUpError(userMessage);
     }
   };
 
   useEffect(() => {
     setSignUpError("");
-  }, [formValues.email, formValues.password, formValues.confirmPassword]);
+  }, [formValues.email, formValues.username, formValues.password]);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
@@ -112,20 +125,28 @@ export default function SignUp() {
           />
           <input
             className="w-[280px] v-[52px] rounded-[8px] border-[1px] border-[#d0cece] px-[18px] py-[16px] mb-[10px] text-lg"
+            type="text"
+            name="username"
+            placeholder="Логин"
+            value={formValues.username}
+            onChange={onInputChange}
+          />
+          <input
+            className="w-[280px] v-[52px] rounded-[8px] border-[1px] border-[#d0cece] px-[18px] py-[16px] mb-[10px] text-lg"
             type="password"
             name="password"
             placeholder="Пароль"
             value={formValues.password}
             onChange={onInputChange}
           />
-          <input
+          {/* <input
             className="w-[280px] v-[52px] rounded-[8px] border-[1px] border-[#d0cece] px-[18px] py-[16px] text-lg"
             type="password"
             name="confirmPassword"
             placeholder="Повторите пароль"
             value={formValues.confirmPassword}
             onChange={onInputChange}
-          />
+          /> */}
           {signUpError && (
             <p className="mt-[10px] text-[#db0030] text-sm text-center font-normal leading-4">
               {signUpError}

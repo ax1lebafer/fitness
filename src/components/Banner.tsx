@@ -7,7 +7,7 @@ export default function Banner() {
         alt="Женщина занимается йогой"
         width={800}
         height={683}
-        className="absolute left-[50%] translate-x-[-20%]"
+        className="absolute left-[45%] translate-x-[-20%]"
       />
     </section>
   );

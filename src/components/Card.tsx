@@ -1,19 +1,23 @@
 import { Link, useLocation } from "react-router-dom";
 import ProgressBar from "./ProgressBar.tsx";
-import { appRoutes } from "../lib/appRoutes.ts";
 
-export default function Card() {
+type CardProps = {
+  name: string;
+  id: string;
+};
+
+export default function Card({ name, id }: CardProps) {
   const location = useLocation();
   const pathname = location.pathname;
 
-  const isProfilePage = pathname === "profile";
+  const isProfilePage = pathname === "/profile";
 
   return (
     <div className="w-[360px] bg-white rounded-[30px]">
       <div className="relative h-[325px]">
         <img
-          className="rounded-[30px] h-[325px] object-cover"
-          src="/img/train-1.png"
+          className="rounded-[30px] h-[325px] w-[360px] object-cover"
+          src={`/img/${id}.png`}
           alt="Курс"
         />
         <img
@@ -27,9 +31,9 @@ export default function Card() {
       <div className="flex px-[30px] py-5 flex-col gap-5">
         <Link
           className="hover:underline text-3xl font-medium leading-none text-left"
-          to={appRoutes.COURSES}
+          to={`/courses/${id}`}
         >
-          Йога
+          {name}
         </Link>
         <div className="flex gap-1.5 flex-wrap">
           <div className="bg-[#F7F7F7] p-[10px] rounded-[50px] flex gap-1.5">

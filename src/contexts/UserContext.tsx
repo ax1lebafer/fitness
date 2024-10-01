@@ -1,18 +1,34 @@
-import { createContext, useState } from "react";
+import React, { createContext, useState } from "react";
 
-export const UserContext = createContext(null);
+type ProviderProps = {
+  children: React.ReactNode;
+};
 
-export default function UserProvider({ children }) {
-  const [user, setUser] = useState(null);
+type ContextType = {
+  user: string[] | null;
+  isEntering: boolean;
+  setUser: (prevState: null | string[]) => void;
+  setIsEntering: (prevState: boolean) => void;
+  logout: () => void;
+};
+
+export const UserContext = createContext<null | ContextType>(null);
+
+export default function UserProvider({ children }: ProviderProps) {
+  const [user, setUser] = useState<null | string[]>(null);
   const [isEntering, setIsEntering] = useState<boolean>(false);
 
-    function logout() {
+  console.log(user);
+
+  function logout() {
     localStorage.removeItem("user");
     setUser(null);
-  };
+  }
 
   return (
-    <UserContext.Provider value={{ user, setUser, isEntering, setIsEntering, logout }}>
+    <UserContext.Provider
+      value={{ user, setUser, isEntering, setIsEntering, logout }}
+    >
       {children}
     </UserContext.Provider>
   );

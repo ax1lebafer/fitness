@@ -5,6 +5,6 @@ export const appRoutes = {
   PROFILE: "/profile",
   PROFILE_ENTER: "/profileEnter",
   UPDATE_PASSWORD: "/updatePassword",
-  COURSES: "/courses",
+  COURSES: "/courses/:id",
   NOT_FOUND: "*",
 };

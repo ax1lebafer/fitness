@@ -33,9 +33,9 @@ export default function Header() {
       {/* <header className="flex justify-between pt-[30px] pb-[60px] items-center"> */}
       {/* <header className="h-[180px]"> */}
       <header>
-        <div className="w-[343px] xl:w-auto mx-[16px]">
+        <div className="w-[343px] xl:w-auto mx-[16px] xl:mx-0">
           <div className="flex justify-between pt-[30px] items-center content-center">
-            <div className="ml-[16px]">
+            <div>
               <Link to="/">
                 <img
                   src="/img/logo.svg"
@@ -55,7 +55,7 @@ export default function Header() {
               <ButtonLink
                 text={"Войти"}
                 onClick={openSignInModal}
-                className="w-[83px] xl:w-[103px] h-[36px] xl:h-[52px] px-[16px] xl:px-[26px] py-[8px] xl:py-[16px]"
+                className="w-[83px] xl:w-[103px] h-[36px] xl:h-[52px] px-[12px] xl:px-[26px] py-[6px] xl:py-[16px] text-[18px]"
               />
             ) : (
               <div className="w-auto h-[35px] xl:h-[50px] flex flex-row gap-[12px]">

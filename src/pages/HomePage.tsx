@@ -1,10 +1,15 @@
 import Card from "../components/Card.tsx";
 import ButtonLink from "../components/ui/ButtonLink.tsx";
+import { useEffect, useState } from "react";
+import { fetchCourses } from "../api/data.ts";
+import { CourseType } from "../types/courses.ts";
 import { useUser } from "../hooks/useUser.ts";
 
 export default function HomePage() {
   const { setIsProfile } = useUser();
   setIsProfile(false);
+
+  const [courses, setCourses] = useState<CourseType[]>([]);
 
   function scrollUp() {
     window.scrollTo({
@@ -13,33 +18,43 @@ export default function HomePage() {
     });
   }
 
+  useEffect(() => {
+    async function getCourse() {
+      try {
+        const data = await fetchCourses();
+        setCourses(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    getCourse();
+  }, []);
+
   return (
-    <>
-      <meta name="viewport" content="width=375, initial-scale=1" />
-      <main>
-        {/* <meta name="viewport" content="width=375, initial-scale=1" /> */}
-        <div className="flex justify-between items-start mb-[50px]">
-          <h1 className="text-[60px] sm:text-[32px] font-medium text-left leading-none">
-            Начните заниматься спортом <br /> и улучшите качество жизни
-          </h1>
-          <div className="relative w-[250px] rounded-[5px] bg-[#BCEC30] py-4 px-5">
-            <p className=" text-[26px] font-normal whitespace-nowrap">
-              Измени своё <br /> тело за полгода!
-            </p>
-            <span className="absolute rotate-[35deg] bottom-[-25px] left-[40%] transform -translate-x-1/2 w-0 h-0 border-l-[10px] border-l-transparent border-r-[15px] border-r-transparent border-t-[35px] border-t-[#BCEC30]"></span>
-          </div>
+    <main>
+      <div className="flex justify-between items-start mb-[50px] ml-[16px] xl:ml-0">
+        {/* <h1 className="text-[60px] font-medium text-left leading-none"> */}
+        <h1 className="text-[32px] xl:text-[60px] font-medium text-left leading-[110%] xl:leading-none">
+          Начните заниматься спортом <br className="hidden xl:block" /> и
+          улучшите качество жизни
+        </h1>
+        {/* <div className="relative w-[250px] rounded-[5px] bg-[#BCEC30] py-4 px-5"> */}
+        <div className="hidden xl:block xl:relative xl:w-[250px] xl:rounded-[5px] xl:bg-[#BCEC30] xl:py-4 xl:px-5">
+          <p className=" text-[26px] text-left font-normal whitespace-nowrap">
+            Измени своё <br /> тело за полгода!
+          </p>
+          <span className="absolute rotate-[35deg] bottom-[-25px] left-[40%] transform -translate-x-1/2 w-0 h-0 border-l-[10px] border-l-transparent border-r-[15px] border-r-transparent border-t-[35px] border-t-[#BCEC30]"></span>
         </div>
-        <div className="flex gap-10 flex-wrap mb-10">
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-        </div>
-        <div className="flex items-center justify-center mb-10">
-          <ButtonLink text={"Наверх ↑"} onClick={scrollUp} />
-        </div>
-      </main>
-    </>
+      </div>
+      <div className="flex gap-10 flex-wrap mb-10">
+        {courses.map((course) => (
+          <Card key={course._id} name={course.nameRU} id={course._id} />
+        ))}
+      </div>
+      <div className="flex items-center xl:items-center justify-end xl:justify-center mb-10">
+        <ButtonLink text={"Наверх ↑"} onClick={scrollUp} />
+      </div>
+    </main>
   );
 }

@@ -37,7 +37,7 @@ export default function ProfileEnter() {
         className="fixed inset-0 bg-black opacity-20"
         onClick={onClose}
       ></div>
-      <div className="absolute left-[calc(50%+320px)] opacity-100 top-[120px]">
+      <div className="absolute left-[calc((375px-266px)/2)] xl:left-[calc(50%+320px)] opacity-100 top-[120px]">
         <form className="w-[266px] p-[30px] bg-[white] rounded-[30px] flex flex-col items-center">
           <div className="w-[206px] h-[50px]  mb-[34px]">
             <div className="flex flex-col gap-[10px] text-center text-[18px] font-normal leading-4">

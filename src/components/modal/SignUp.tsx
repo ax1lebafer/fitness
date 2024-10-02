@@ -105,12 +105,8 @@ export default function SignUp() {
         className="fixed inset-0 bg-black opacity-20"
         onClick={onClose}
       ></div>
-
-      <div className="absolute left-[calc(50%-(360px/2))] top-[calc(50%-(527px/2))]">
-        <form
-          className="w-[360px] p-[40px] bg-[white] rounded-[30px] flex flex-col items-center pt-[43px] pr-[47px] pb-[47px] pl-[40px]"
-          // action="#"
-        >
+      <div className="absolute mx-[16px] xl:left-[calc(50%-(360px/2))] top-[calc(50%-(527px/2))]">
+        <form className="w-[343px] xl:w-[360px] p-[40px] xl:p-[40px] bg-[white] rounded-[30px] flex flex-col items-center">
           <div className="w-[220px] h-[35px] mb-[48px]">
             <img src="/img/logo.svg" alt="logo" width={220} height={35} />
           </div>

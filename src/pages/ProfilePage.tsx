@@ -8,6 +8,8 @@ export default function ProfilePage() {
   const navigate = useNavigate();
   const { user } = useUser();
 
+  const backgroundLocation = location.state?.backgroundLocation || location;
+
   const openUpdatePasswordModal = () => {
     navigate(appRoutes.UPDATE_PASSWORD, {
       state: { backgroundLocation: location },

@@ -2,7 +2,14 @@ import ButtonLink from "./ui/ButtonLink.tsx";
 import { appRoutes } from "../lib/appRoutes.ts";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useUser } from "../hooks/useUser.ts";
-import ButtonInActive from "./ui/ButtonInActive.tsx";
+
+const ulList = [
+  "проработка всех групп мышц",
+  "тренировка суставов",
+  "улучшение циркуляции крови",
+  "упражнения заряжают бодростью",
+  "помогают противостоять стрессам",
+];
 
 export default function StartBanner() {
   const navigate = useNavigate();
@@ -18,30 +25,28 @@ export default function StartBanner() {
     navigate(appRoutes.SIGNIN, { state: { backgroundLocation: location } });
   };
 
+  const addCourse = () => {
+    alert("Курс добавлен");
+  };
+
   return (
     <section className="bg-white rounded-[30px] w-full mt-[42px] relative mb-[50px]">
       <div className="flex flex-col h-[406px] w-[437px] m-[40px]">
-        <h2 className="text-[60px] font-medium leading-[60px] mb-7">
+        <h2 className="text-[60px] text-left font-medium leading-[60px] mb-7">
           Начните путь к новому телу
         </h2>
         <ol className="opacity-60 font-normal text-[24px] list-disc list-inside pb-1">
-          <li>проработка всех групп мышц</li>
-          <li>тренировка суставов</li>
-          <li>улучшение циркуляции крови</li>
-          <li>упражнения заряжают бодростью</li>
-          <li>помогают противостоять стрессам</li>
+          {ulList.map((el, i) => (
+            <li className="text-left" key={i}>
+              {el}
+            </li>
+          ))}
         </ol>
-        {user === null ? (
-          <ButtonLink
-            text="Войдите, чтобы добавить курс"
-            onClick={handleSignInClick}
-          />
-        ) : (
-          <ButtonInActive
-            text="Войдите, чтобы добавить курс"
-            // onClick={handleSignInClick}
-          />
-        )}
+        <ButtonLink
+          text={user ? "Добавить курс" : "Войдите, чтобы добавить курс"}
+          className="mt-7"
+          onClick={user ? addCourse : handleSignInClick}
+        />
       </div>
       <div className="relative">
         <div className="absolute overflow-hidden w-[634px] h-[386px] top-[-386px] right-[6px]">

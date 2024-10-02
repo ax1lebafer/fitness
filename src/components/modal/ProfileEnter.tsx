@@ -20,7 +20,7 @@ export default function ProfileEnter() {
     logout();
     setIsEntering(false);
     navigate(appRoutes.HOME);
-  }
+  };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
@@ -29,7 +29,7 @@ export default function ProfileEnter() {
         onClick={onClose}
       ></div>
       {/* <div className="relative left-[calc(50%+266px/2)] top-[-120px] opacity-100"> */}
-      <div className="relative left-[447px] top-[-399px] opacity-100">
+      <div className="relative left-[447px] top-[-50px] opacity-100">
         <form
           className="w-[266px] p-[30px] bg-[white] rounded-[30px] flex flex-col items-center"
           action="#"

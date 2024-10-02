@@ -7,6 +7,7 @@ type ButtonLinkProps<E = React.MouseEvent<HTMLButtonElement>> = {
   onClick?: (event: E) => void;
   className?: string;
   type?: "button" | "submit" | "reset";
+  disabled?: boolean;
 };
 
 export default function ButtonLink<E = React.MouseEvent<HTMLButtonElement>>({
@@ -15,6 +16,7 @@ export default function ButtonLink<E = React.MouseEvent<HTMLButtonElement>>({
   onClick,
   className,
   type,
+  disabled,
 }: ButtonLinkProps<E>) {
   const baseClasses =
     "px-[28px] py-4 rounded-[46px] bg-[#BCEC30] hover:bg-[#C6FF00] active:bg-black text-black hover:text-black active:text-white transition-colors duration-300 ease-linear inline-block text-center";
@@ -32,6 +34,7 @@ export default function ButtonLink<E = React.MouseEvent<HTMLButtonElement>>({
       onClick={onClick as React.MouseEventHandler<HTMLButtonElement>}
       className={`${baseClasses} ${className}`}
       type={type}
+      disabled={disabled}
     >
       {text}
     </button>

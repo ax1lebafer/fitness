@@ -84,7 +84,7 @@ export default function SignUp() {
       console.log("SignUp. user", user);
       setSignUpError("");
       setUser(user);
-      navigate(appRoutes.SIGNIN);
+      navigate(appRoutes.SIGNIN, { state: { backgroundLocation } });
     } catch (error: any) {
       // if (error instanceof Error) throw new Error(error.message);
       console.log("errMessage", error.message);

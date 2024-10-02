@@ -10,7 +10,7 @@ export default function Tenets() {
 
   return (
     <section>
-      <h2 className="text-[40px] font-semibold leading-[44px]">
+      <h2 className="text-[40px] text-left font-semibold leading-[44px]">
         Подойдет для вас, если:
       </h2>
       <div className="flex flex-wrap gap-[17px] text-white flex-row pt-10">
@@ -20,7 +20,9 @@ export default function Tenets() {
               <p className="text-[#BCEC30] text-[75px] leading-[75px]">
                 {index + 1}
               </p>
-              <p className="text-[24px] font-normal break-words">{text}</p>
+              <p className="text-[24px] text-left font-normal break-words">
+                {text}
+              </p>
             </div>
           </div>
         ))}

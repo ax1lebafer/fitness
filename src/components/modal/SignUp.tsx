@@ -7,7 +7,6 @@ import { getRegistration } from "../../api/userAuth.ts";
 import { errorMessage } from "../../utils/ErrorMessage.ts";
 
 export default function SignUp() {
-  // const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const { setUser } = useUser();
@@ -84,7 +83,7 @@ export default function SignUp() {
       console.log("SignUp. user", user);
       setSignUpError("");
       setUser(user);
-      navigate(appRoutes.SIGNIN);
+      navigate(appRoutes.SIGNIN, { state: { backgroundLocation } });
     } catch (error: any) {
       // if (error instanceof Error) throw new Error(error.message);
       console.log("errMessage", error.message);
@@ -100,16 +99,17 @@ export default function SignUp() {
   }, [formValues.email, formValues.username, formValues.password]);
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50">
+    // <div className="fixed inset-0 flex items-center justify-center z-50">
+    <div className="fixed inset-0 flex z-50">
       <div
-        className="fixed inset-0 bg-black opacity-50"
+        className="fixed inset-0 bg-black opacity-20"
         onClick={onClose}
       ></div>
 
       <div className="absolute left-[calc(50%-(360px/2))] top-[calc(50%-(527px/2))]">
         <form
           className="w-[360px] p-[40px] bg-[white] rounded-[30px] flex flex-col items-center pt-[43px] pr-[47px] pb-[47px] pl-[40px]"
-          action="#"
+          // action="#"
         >
           <div className="w-[220px] h-[35px] mb-[48px]">
             <img src="/img/logo.svg" alt="logo" width={220} height={35} />

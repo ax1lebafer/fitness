@@ -75,14 +75,18 @@ export default function SignIn() {
   }, [formValues.email, formValues.password]);
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50">
+    // <div className="fixed inset-0 flex items-center justify-center z-50">
+    <>
+    {/* <meta name="viewport" content="width=device-width, initial-scale=1" /> */}
+    <meta name="viewport" content="width=375, initial-scale=1" />
+    <div className="fixed inset-0 flex z-50">
       <div
-        className="fixed inset-0 bg-black opacity-50"
+        className="fixed inset-0 bg-black opacity-20"
         onClick={onClose}
       ></div>
 
-      <div className="absolute left-[calc(50%-(360px/2))] top-[calc(50%-(527px/2))]">
-        <form className="w-[360px] p-[40px] bg-[white] rounded-[30px] flex flex-col items-center pt-[43px] pr-[47px] pb-[47px] pl-[40px]">
+      <div className="absolute left-[calc(50%-(360px/2))] top-[calc(50%-(527px/2))] opacity-100">
+        <form className="w-[360px] sm:w-[343px] p-[40px] bg-[white] rounded-[30px] flex flex-col items-center pt-[43px] pr-[47px] pb-[47px] pl-[40px]">
           <div className="w-[220px] h-[35px]  mb-[48px]">
             <img src="/img/logo.svg" alt="logo" width={220} height={35} />
           </div>
@@ -122,5 +126,6 @@ export default function SignIn() {
         </form>
       </div>
     </div>
+    </>
   );
 }

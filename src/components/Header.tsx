@@ -28,10 +28,7 @@ export default function Header() {
 
   return (
     <>
-      {/* <meta name="viewport" content="width=device-width, initial-scale=1" /> */}
       {/* <meta name="viewport" content="width=375, initial-scale=1" /> */}
-      {/* <header className="flex justify-between pt-[30px] pb-[60px] items-center"> */}
-      {/* <header className="h-[180px]"> */}
       <header>
         <div className="w-[343px] xl:w-auto mx-[16px] xl:mx-0">
           <div className="flex justify-between pt-[30px] items-center content-center">

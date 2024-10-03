@@ -52,7 +52,8 @@ export default function Header() {
               <ButtonLink
                 text={"Войти"}
                 onClick={openSignInModal}
-                className="w-[83px] xl:w-[103px] h-[36px] xl:h-[52px] px-[12px] xl:px-[26px] py-[6px] xl:py-[16px] text-[18px]"
+                // className="w-[83px] xl:w-[103px] h-[36px] xl:h-[52px] px-[8px] xl:px-[26px] py-[4px] xl:py-[16px] text-[18px]"
+                className="text-[18px]"
               />
             ) : (
               <div className="w-auto h-[35px] xl:h-[50px] flex flex-row gap-[12px]">

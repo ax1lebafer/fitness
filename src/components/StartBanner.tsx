@@ -30,12 +30,12 @@ export default function StartBanner() {
   };
 
   return (
-    <section className="bg-white rounded-[30px] w-full mt-[42px] relative mb-[50px]">
-      <div className="flex flex-col h-[406px] w-[437px] m-[40px]">
-        <h2 className="text-[60px] text-left font-medium leading-[60px] mb-7">
+    <section className="bg-white rounded-[30px] w-[343px] mx-[16px] xl:mx-0 xl:w-full mt-[42px] relative mb-[50px]">
+      <div className="flex flex-col h-[406px] w-[343px] xl:w-[437px] xl:m-[40px] p-[30px] xl:p-0">
+        <h2 className="text-[32px] xl:text-[60px] text-left font-medium leading-[110%] xl:leading-[60px] mb-7 break-words">
           Начните путь к новому телу
         </h2>
-        <ol className="opacity-60 font-normal text-[24px] list-disc list-inside pb-1">
+        <ol className="opacity-60 font-normal text-[18px] xl:text-[24px] list-disc list-inside pb-1">
           {ulList.map((el, i) => (
             <li className="text-left" key={i}>
               {el}
@@ -44,7 +44,7 @@ export default function StartBanner() {
         </ol>
         <ButtonLink
           text={user ? "Добавить курс" : "Войдите, чтобы добавить курс"}
-          className="mt-7"
+          className="mt-7 w-[283px] h-[50px]"
           onClick={user ? addCourse : handleSignInClick}
         />
       </div>
@@ -65,7 +65,7 @@ export default function StartBanner() {
           width={487}
           height={542}
           draggable={false}
-          className="absolute top-[-582px] left-[646px] z-50 select-none"
+          className="absolute top-[-582px] xl:left-[646px] z-50 select-none"
         />
         <img
           src="/img/icons/vector-1.svg"

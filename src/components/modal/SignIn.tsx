@@ -60,7 +60,8 @@ export default function SignIn() {
       setIsEntering(true);
       console.log("user", user);
       setSignInError("");
-      navigate(appRoutes.HOME);
+      // navigate(appRoutes.HOME);
+      navigate(backgroundLocation.pathname, { replace: true });
     } catch (error: any) {
       // TODO: Изменить тип для ошибки
       const errMessage = error.message.toLowerCase();

@@ -17,6 +17,8 @@ export default function ProfilePage() {
     setIsProfile(true);
   }
 
+  const backgroundLocation = location.state?.backgroundLocation || location;
+
   const openUpdatePasswordModal = () => {
     navigate(appRoutes.UPDATE_PASSWORD, {
       state: { backgroundLocation: location },

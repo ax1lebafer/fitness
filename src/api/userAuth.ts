@@ -9,7 +9,11 @@ import { auth, app } from "../lib/firebaseConfig";
 
 const database = getDatabase(app);
 
-export async function getRegistration({ email, username, password }: SignUpType) {
+export async function getRegistration({
+  email,
+  username,
+  password,
+}: SignUpType) {
   const userCredential = await createUserWithEmailAndPassword(
     auth,
     email,

@@ -1,11 +1,11 @@
 import Card from "../components/Card.tsx";
 import ButtonLink from "../components/ui/ButtonLink.tsx";
-import { useEffect, useState } from "react";
-import { fetchCourses } from "../api/data.ts";
-import { CourseType } from "../types/courses.ts";
+import useCourses from "../hooks/useCourses.ts";
 
 export default function HomePage() {
-  const [courses, setCourses] = useState<CourseType[]>([]);
+  const { courses } = useCourses();
+
+  console.log(courses);
 
   function scrollUp() {
     window.scrollTo({
@@ -13,19 +13,6 @@ export default function HomePage() {
       behavior: "smooth",
     });
   }
-
-  useEffect(() => {
-    async function getCourse() {
-      try {
-        const data = await fetchCourses();
-        setCourses(data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
-    getCourse();
-  }, []);
 
   return (
     <main>
@@ -41,7 +28,7 @@ export default function HomePage() {
         </div>
       </div>
       <div className="flex gap-10 flex-wrap mb-10">
-        {courses.map((course) => (
+        {courses?.map((course) => (
           <Card key={course._id} name={course.nameRU} id={course._id} />
         ))}
       </div>

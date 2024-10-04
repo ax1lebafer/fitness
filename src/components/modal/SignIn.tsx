@@ -112,12 +112,12 @@ export default function SignIn() {
             )}
             <ButtonLink
               text="Войти"
-              className="w-full mb-2.5 mt-[34px]"
+              className="w-full mb-2.5 mt-[34px] h-[50px] xl:h-[52px]"
               onClick={onLogin}
             />
             <ButtonLink
               text="Зарегистрироваться"
-              className="mt-0 w-full bg-transparent border border-black hover:bg-[#F7F7F7] hover:text-black active:bg-[#E9ECED] active:text-black"
+              className="mt-0 w-full bg-transparent border border-black hover:bg-[#F7F7F7] hover:text-black active:bg-[#E9ECED] active:text-black h-[50px] xl:h-[52px]"
               onClick={onSignUp}
               type={"button"}
             />

@@ -30,12 +30,12 @@ export default function StartBanner() {
   };
 
   return (
-    <section className="bg-white rounded-[30px] w-[343px] mx-[16px] xl:mx-0 xl:w-full mt-[42px] relative mb-[50px]">
-      <div className="flex flex-col h-[406px] w-[343px] xl:w-[437px] xl:m-[40px] p-[30px] xl:p-0">
-        <h2 className="text-[32px] xl:text-[60px] text-left font-medium leading-[110%] xl:leading-[60px] mb-7 break-words">
+    <section className="bg-white rounded-[30px] w-[343px] mx-[16px] xl:mx-0 xl:w-full mt-[102px] xl:mt-[42px] mb-[30px] xl:mb-[50px]">
+      <div className="flex flex-col h-[406px] w-[343px] xl:w-[437px] xl:m-[40px] p-[30px] xl:p-0"> 
+        <h2 className="text-[32px] xl:text-[60px] text-left font-medium leading-[110%] xl:leading-[60px] mb-7 break-words z-50">
           Начните путь к новому телу
         </h2>
-        <ol className="opacity-60 font-normal text-[18px] xl:text-[24px] list-disc list-inside pb-1">
+        <ol className="opacity-60 font-normal text-[18px] xl:text-[24px] list-disc list-inside pb-1 z-50">
           {ulList.map((el, i) => (
             <li className="text-left" key={i}>
               {el}
@@ -44,19 +44,17 @@ export default function StartBanner() {
         </ol>
         <ButtonLink
           text={user ? "Добавить курс" : "Войдите, чтобы добавить курс"}
-          className="mt-7 w-[283px] h-[50px]"
+          className="mt-7 w-[283px] xl:w-[437px] h-[50px] xl:h-[52px]"
           onClick={user ? addCourse : handleSignInClick}
         />
       </div>
-      <div className="relative">
-        <div className="absolute overflow-hidden w-[634px] h-[386px] top-[-386px] right-[6px]">
+      <div className="relative z-10">
+        <div className="absolute w-[431px] xl:w-[634px] h-[251px] xl:h-[386px] top-[-550px] xl:top-[-386px] -right-[53.7px] xl:right-[53.7px] rotate-12.38">
           <img
-            src="/img/icons/vector-2.svg"
+            src="/img/icons/vector-22.svg"
             alt="Зелёная линия"
-            width={670}
-            height={390}
             draggable={false}
-            className="absolute select-none"
+            className="absolute select-none -z-20"
           />
         </div>
         <img
@@ -65,15 +63,13 @@ export default function StartBanner() {
           width={487}
           height={542}
           draggable={false}
-          className="absolute top-[-582px] xl:left-[646px] z-50 select-none"
+          className="absolute bottom-[300px] xl:top-[-582px] left-[67px] xl:left-[646px] -z-10 xl:z-10 select-none"
         />
         <img
           src="/img/icons/vector-1.svg"
           alt="Черная линия"
-          width={50}
-          height={42.5}
           draggable={false}
-          className="absolute top-[-463px] left-[757px] select-none"
+          className="absolute top-[-595px] xl:top-[-463px] left-[145px] xl:left-[757px]  w-[40px] xl:w-[50px] h-[33px] xl:h-[42.5px] select-none"
         />
       </div>
     </section>

@@ -52,7 +52,6 @@ export default function Header() {
               <ButtonLink
                 text={"Войти"}
                 onClick={openSignInModal}
-                // className="w-[83px] xl:w-[103px] h-[36px] xl:h-[52px] px-[8px] xl:px-[26px] py-[4px] xl:py-[16px] text-[18px]"
                 className="text-[18px]"
               />
             ) : (
@@ -68,7 +67,6 @@ export default function Header() {
                 <div className="hidden xl:block xl:text-center xl:text-2xl xl:pt-[6px]">
                   {UserName}
                 </div>
-                {/* <div className="sm:text-center"></div> */}
                 <button
                   onClick={openProfileEnterModal}
                   className="w-[15px] h-[35px] xl:h-[50px] bg-[#e5e5e5] cursor-point inline-block"

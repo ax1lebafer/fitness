@@ -6,11 +6,12 @@ export default function Tenets() {
   ];
 
   const styleBlock =
-    "bg-[linear-gradient(115.81deg,_#151720_34.98%,_#1E212E_91.5%)] rounded-[28px] w-[343px] xl:min-w-[320px] xl:min-h-[141px] p-5 flex-grow flex-shrink-0 max-w-[369px]";
+    "bg-[linear-gradient(115.81deg,_#151720_34.98%,_#1E212E_91.5%)] rounded-[28px] w-[343px] xl:min-w-[327px] xl:min-h-[141px] p-5 flex-grow flex-shrink-0 xl:max-w-[385px]";
 
   return (
-    <section className="mx-[16px] xl-mx-0">
-      <h2 className="text-[24px] xl:text-[40px] text-left font-semibold leading-[110%]">
+    <section className="mx-[16px] xl:mx-0">
+      {/* <h2 className="text-[24px] xl:text-[40px] text-left font-semibold leading-[110%]"> */}
+      <h2 className="text-[24px] xl:text-[40px] text-left font-normal leading-[110%]">
         Подойдет для вас, если:
       </h2>
       <div className="flex flex-wrap gap-[17px] text-white flex-col xl:flex-row pt-10">
@@ -20,7 +21,7 @@ export default function Tenets() {
               <p className="text-[#BCEC30] text-[75px] leading-[110%]">
                 {index + 1}
               </p>
-              <p className="text-[18px] xl:text-[24px] text-left font-normal break-words">
+              <p className="text-[18px] xl:text-[24px] text-left font-normal leading-[110%] break-words">
                 {text}
               </p>
             </div>

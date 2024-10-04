@@ -7,7 +7,7 @@ export default function Banner() {
       <img
         src="/img/size-1.svg"
         alt="Женщина занимается йогой"
-        className="absolute hidden xl:block xl:left-[45%] left-[5%] translate-x-[-25%] xl:translate-x-[-20%] w-[343px] h-[389px] scale-150"
+        className="absolute hidden xl:block left-[45%] translate-x-[-20%]"
       />
       <img
         src="/img/size-11.png"

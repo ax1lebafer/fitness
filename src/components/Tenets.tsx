@@ -10,7 +10,6 @@ export default function Tenets() {
 
   return (
     <section className="mx-[16px] xl:mx-0">
-      {/* <h2 className="text-[24px] xl:text-[40px] text-left font-semibold leading-[110%]"> */}
       <h2 className="text-[24px] xl:text-[40px] text-left font-normal leading-[110%]">
         Подойдет для вас, если:
       </h2>

@@ -82,11 +82,6 @@ export default function Header() {
               </div>
             )}
           </div>
-          {/* {!isProfile && (
-          <p className="mt-[14px] opacity-50 text-left">
-            Онлайн-тренировки для занятий дома
-          </p>
-        )} */}
           <div className="h-[34px] xl:h-[60px]"></div>
         </div>
       </header>

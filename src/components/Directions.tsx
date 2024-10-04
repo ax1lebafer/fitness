@@ -9,7 +9,7 @@ const directions = [
 
 export default function Directions() {
   return (
-    <section className="mx-[16px] xl:mx-0 w-[343px] xl:w-[100%]">
+    <section className="mx-[16px] xl:mx-0 w-[343px] xl:w-[100%] -z-20">
       <h2 className="text-[24px] xl:text-[40px] font-normal leading-[44px] text-left mb-10">
         Направления
       </h2>

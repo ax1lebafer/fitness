@@ -77,7 +77,6 @@ export default function SignIn() {
 
   return (
     <>
-      {/* <meta name="viewport" content="width=device-width, initial-scale=1" /> */}
       <div className="fixed inset-0 flex z-50">
         <div
           className="fixed inset-0 bg-black opacity-20"

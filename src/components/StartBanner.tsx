@@ -30,8 +30,8 @@ export default function StartBanner() {
   };
 
   return (
-    <section className="bg-white rounded-[30px] w-[343px] mx-[16px] xl:mx-0 xl:w-full mt-[102px] xl:mt-[42px] mb-[30px] xl:mb-[50px]">
-      <div className="flex flex-col h-[406px] w-[343px] xl:w-[437px] xl:m-[40px] p-[30px] xl:p-0"> 
+    <section className="bg-white rounded-[30px] w-[343px] mx-[16px] xl:mx-0 xl:w-full mt-[102px] xl:mt-[42px] mb-[30px] xl:mb-[50px] xl:overflow-hidden">
+      <div className="flex flex-col h-[406px] w-[343px] xl:w-[437px] xl:m-[40px] p-[30px] xl:p-0 z-50"> 
         <h2 className="text-[32px] xl:text-[60px] text-left font-medium leading-[110%] xl:leading-[60px] mb-7 break-words z-50">
           Начните путь к новому телу
         </h2>
@@ -48,13 +48,13 @@ export default function StartBanner() {
           onClick={user ? addCourse : handleSignInClick}
         />
       </div>
-      <div className="relative z-10">
-        <div className="absolute w-[431px] xl:w-[634px] h-[251px] xl:h-[386px] top-[-550px] xl:top-[-386px] -right-[53.7px] xl:right-[53.7px] rotate-12.38">
+      <div className="relative">
+        <div className="absolute xl:overflow-hidden w-[431px] xl:w-[634px] h-[251px] xl:h-[386px] top-[-550px] xl:top-[-386px] -right-[53.7px] xl:right-[8px] rotate-12.38">
           <img
             src="/img/icons/vector-22.svg"
             alt="Зелёная линия"
             draggable={false}
-            className="absolute select-none -z-20"
+            className="absolute select-none -z-30 xl:z-10"
           />
         </div>
         <img
@@ -69,7 +69,7 @@ export default function StartBanner() {
           src="/img/icons/vector-1.svg"
           alt="Черная линия"
           draggable={false}
-          className="absolute top-[-595px] xl:top-[-463px] left-[145px] xl:left-[757px]  w-[40px] xl:w-[50px] h-[33px] xl:h-[42.5px] select-none"
+          className="absolute top-[-590px] xl:top-[-463px] left-[145px] xl:left-[757px]  w-[32px] xl:w-[50px] h-[27px] xl:h-[42.5px] select-none"
         />
       </div>
     </section>

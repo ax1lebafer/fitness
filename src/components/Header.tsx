@@ -2,11 +2,19 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import ButtonLink from "./ui/ButtonLink.tsx";
 import { appRoutes } from "../lib/appRoutes.ts";
 import { useUser } from "../hooks/useUser.ts";
+import { useState } from "react";
+import ProfileEnter from "./modal/ProfileEnter.tsx";
 
 export default function Header() {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, isEntering } = useUser();
+
+  const [openModal, setOpenModal] = useState(false);
+
+  const closeModal = () => {
+    setOpenModal(false);
+  };
 
   let UserName = "";
 
@@ -18,11 +26,11 @@ export default function Header() {
     navigate(appRoutes.SIGNIN, { state: { backgroundLocation: location } });
   };
 
-  const openProfileEnterModal = () => {
-    navigate(appRoutes.PROFILE_ENTER, {
-      state: { backgroundLocation: location },
-    });
-  };
+  // const openProfileEnterModal = () => {
+  //   navigate(appRoutes.PROFILE_ENTER, {
+  //     state: { backgroundLocation: location },
+  //   });
+  // };
 
   return (
     <header className="flex justify-between pt-[30px] pb-[60px] items-center">
@@ -54,7 +62,7 @@ export default function Header() {
           </div>
           <div className="text-center text-2xl pt-[6px]">{UserName}</div>
           <button
-            onClick={openProfileEnterModal}
+            onClick={() => setOpenModal(true)}
             className="w-[15px] h-[50px] bg-[#e5e5e5] cursor-point inline-block"
             type="button"
           >
@@ -67,6 +75,7 @@ export default function Header() {
           </button>
         </div>
       )}
+      {openModal && <ProfileEnter closeModal={closeModal} />}
     </header>
   );
 }

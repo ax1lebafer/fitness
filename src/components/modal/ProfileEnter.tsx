@@ -1,19 +1,19 @@
 import ButtonLink from "../../components/ui/ButtonLink";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { appRoutes } from "../../lib/appRoutes.ts";
 import { useUser } from "../../hooks/useUser";
 
-export default function ProfileEnter() {
+type ProfileEnterProps = {
+  closeModal: () => void;
+};
+
+export default function ProfileEnter({ closeModal }: ProfileEnterProps) {
   const navigate = useNavigate();
-  const location = useLocation();
   const { user, setIsEntering, logout } = useUser();
 
-  const backgroundLocation = location.state?.backgroundLocation || {
-    pathname: appRoutes.HOME,
-  };
-
-  const onClose = () => {
-    navigate(backgroundLocation.pathname, { replace: true });
+  const openProfilePage = () => {
+    closeModal();
+    navigate("/profile");
   };
 
   const onExit = () => {
@@ -24,7 +24,7 @@ export default function ProfileEnter() {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-10">
-      <div className="fixed inset-0 z-20" onClick={onClose}></div>
+      <div className="fixed inset-0 z-20" onClick={closeModal}></div>
       {/* <div className="relative left-[calc(50%+266px/2)] top-[-120px] opacity-100"> */}
       <div className="relative min-w-[1160px] h-full">
         <div className="absolute top-[100px] right-0 z-30">
@@ -34,15 +34,15 @@ export default function ProfileEnter() {
           >
             <div className="w-[206px] h-[50px]  mb-[34px]">
               <div className="flex flex-col gap-[10px] text-center text-[18px] font-normal leading-4">
-                <p className="text-[#000000]">{user.name}</p>
-                <p className="text-[#999999]">{user.email}</p>
+                <p className="text-[#000000]">{user?.name}</p>
+                <p className="text-[#999999]">{user?.email}</p>
               </div>
             </div>
             <div className="flex flex-col gap-[10px]">
               <ButtonLink
                 text="Мой профиль"
                 className="mt-[0px] w-[206px]"
-                to={"/profile"}
+                onClick={openProfilePage}
               />
               <ButtonLink
                 text="Выйти"

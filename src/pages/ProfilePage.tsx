@@ -8,7 +8,7 @@ export default function ProfilePage() {
   const navigate = useNavigate();
   const { user } = useUser();
 
-  const backgroundLocation = location.state?.backgroundLocation || location;
+  // const backgroundLocation = location.state?.backgroundLocation || location;
 
   const openUpdatePasswordModal = () => {
     navigate(appRoutes.UPDATE_PASSWORD, {
@@ -16,9 +16,9 @@ export default function ProfilePage() {
     });
   };
 
-  const onHome = () => {
-    navigate(appRoutes.HOME, { state: { backgroundLocation } });
-  };
+  // const onHome = () => {
+  //   navigate(appRoutes.HOME, { state: { backgroundLocation } });
+  // };
 
   return (
     <div className="bg-[#FFFFFF] rounded-[30px] sm:px-[30px] px-[10px] py-[30px]">
@@ -34,15 +34,14 @@ export default function ProfilePage() {
         </div>
         <div className="flex flex-col sm:gap-[20px] gap-[13px] sm:mt-0 mt-[22px] sm:ml-0 ml-[19px]">
           <div className="sm:text-[32px] text-[24px] font-bold text-left">
-            {user.name}
+            {user?.name}
           </div>
           <div className="flex flex-col gap-[2px] text-left">
-            <p className="text-[18px]">Логин: {user.email}</p>
+            <p className="text-[18px]">Логин: {user?.email}</p>
             <p className="text-[18px]">Пароль: ***********</p>
             {/* <p className="text-[18px]">Пароль: {reloadUserInfo}</p> */}
           </div>
-          <div className="flex flex-wrap flex-col inline-block align-center md:flex-row gap-[15px]">
-            {/* <ButtonLink text={"Изменить пароль"} href="/updatePassword" /> */}
+          <div className="flex flex-wrap flex-col align-center md:flex-row gap-[15px]">
             <ButtonLink
               className="h-[52px]"
               text={"Изменить пароль"}

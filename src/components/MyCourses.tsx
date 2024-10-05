@@ -8,9 +8,9 @@ export default function MyCourses() {
       </h2>
 
       <ul className="flex gap-10">
-        <Card name={"Йога"} id={"123"} />
-        <Card name={"Йога"} id={"123"} />
-        <Card name={"Йога"} id={"123"} />
+        <Card name={"Стэп-аэробика"} id={"6i67sm"} />
+        <Card name={"Стэп-аэробика"} id={"6i67sm"} />
+        <Card name={"Стэп-аэробика"} id={"6i67sm"} />
       </ul>
     </section>
   );

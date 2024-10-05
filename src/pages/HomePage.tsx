@@ -5,8 +5,6 @@ import useCourses from "../hooks/useCourses.ts";
 export default function HomePage() {
   const { courses } = useCourses();
 
-  console.log(courses);
-
   function scrollUp() {
     window.scrollTo({
       top: 0,

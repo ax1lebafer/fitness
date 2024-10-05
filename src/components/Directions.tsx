@@ -3,7 +3,8 @@ type DirectionsProps = {
 };
 export default function Directions({ directions }: DirectionsProps) {
   return (
-    <section className="mx-[16px] xl:mx-0 w-[343px] xl:w-[100%] -z-20">
+    // <section className="mx-[16px] xl:mx-0 w-[343px] xl:w-[100%] content-center items-center -z-20">
+    <section className="mx-[calc((100%-343px)/2)] xl:mx-0 w-[343px] xl:w-[100%] content-center items-center -z-20">
       <h2 className="text-[24px] xl:text-[40px] font-normal leading-[44px] text-left mb-10">
         Направления
       </h2>

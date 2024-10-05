@@ -35,7 +35,7 @@ export default function ProfilePage() {
     <>
       {/* <meta name="viewport" content="width=375, initial-scale=1" /> */}
       {/* <div className="w-[343px] xl:w-auto ml-[32px] xl:ml-0"> */}
-      <div className="w-[343px] xl:w-auto mx-[16px] xl:ml-0">
+      <div className="w-[343px] xl:w-auto mx-[calc((100%-343px)/2)] mx:ml-0">
         <div className="h-[50px] xl:h-[84px]">
           <p className="xl:text-[40px] text-[24px] font-normal leading-[110%] text-left">
             Профиль

@@ -19,7 +19,7 @@ export default function HomePage() {
 
   return (
     <main>
-      <div className="flex justify-between items-start mb-[50px] ml-[16px] xl:ml-0">
+      <div className="flex justify-between items-start mb-[50px] mx-[calc((100%-343px)/2)] xl:mx-0">
         {/* <h1 className="text-[60px] font-medium text-left leading-none"> */}
         <h1 className="text-[32px] xl:text-[60px] font-medium text-left leading-[110%] xl:leading-none">
           Начните заниматься спортом <br className="hidden xl:block" /> и
@@ -38,7 +38,7 @@ export default function HomePage() {
           <Card key={course._id} name={course.nameRU} id={course._id} />
         ))}
       </div>
-      <div className="flex items-center xl:items-center justify-end xl:justify-center mb-10">
+      <div className="mx-[calc((100%-343px)/2)] xl:mx-0 flex items-center xl:items-center justify-end xl:justify-center mb-10">
         <ButtonLink text={"Наверх ↑"} onClick={scrollUp} />
       </div>
     </main>

@@ -7,7 +7,7 @@ export default function Tenets({ fitting }: TenetsProps) {
     "bg-[linear-gradient(115.81deg,_#151720_34.98%,_#1E212E_91.5%)] rounded-[28px] w-[343px] xl:min-w-[327px] xl:min-h-[141px] p-5 flex-grow flex-shrink-0 xl:max-w-[385px]";
 
   return (
-    <section className="mx-[16px] xl:mx-0">
+    <section className="mx-[calc((100%-343px)/2)] xl:mx-0">
       <h2 className="text-[24px] xl:text-[40px] text-left font-normal leading-[110%]">
         Подойдет для вас, если:
       </h2>

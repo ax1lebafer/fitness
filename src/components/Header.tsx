@@ -30,8 +30,8 @@ export default function Header() {
     <>
       {/* <meta name="viewport" content="width=375, initial-scale=1" /> */}
       <header>
-        <div className="w-[343px] xl:w-auto mx-[16px] xl:mx-0">
-          <div className="flex justify-between pt-[30px] items-center content-center">
+        <div className="w-[343px] xl:w-auto mx-[calc((100%-343px)/2)] xl:mx-0 items-center content-center justify-items-center">
+          <div className="flex justify-between pt-[30px] items-center content-center justify-items-center">
             <div>
               <Link to="/">
                 <img

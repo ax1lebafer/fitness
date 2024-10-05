@@ -13,7 +13,8 @@ export default function Card({ name, id }: CardProps) {
   const isProfilePage = pathname === "/profile";
 
   return (
-    <div className="mx-[16px] xl:mx-0 w-[343px] xl:w-[360px] bg-white rounded-[30px]">
+    // <div className="mx-[16px] xl:mx-0 w-[343px] xl:w-[360px] content-center items-center bg-white rounded-[30px]">
+    <div className="mx-[calc((100%-343px)/2)] xl:mx-0 w-[343px] xl:w-[360px] content-center items-center bg-white rounded-[30px]">
       <div className="relative h-[325px]">
         <img
           className="rounded-[30px] h-[325px] w-[360px] object-cover"

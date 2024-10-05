@@ -30,7 +30,7 @@ export default function StartBanner() {
   };
 
   return (
-    <section className="bg-white rounded-[30px] w-[343px] mx-[16px] xl:mx-0 xl:w-full mt-[102px] xl:mt-[42px] mb-[30px] xl:mb-[50px] xl:overflow-hidden">
+    <section className="bg-white rounded-[30px] w-[343px] mx-[calc((100%-343px)/2)] xl:mx-0 xl:w-full mt-[102px] xl:mt-[42px] mb-[30px] xl:mb-[50px] xl:overflow-hidden">
       <div className="flex flex-col h-[406px] w-[343px] xl:w-[437px] xl:m-[40px] p-[30px] xl:p-0 z-50"> 
         <h2 className="text-[32px] xl:text-[60px] text-left font-medium leading-[110%] xl:leading-[60px] mb-7 break-words z-50">
           Начните путь к новому телу

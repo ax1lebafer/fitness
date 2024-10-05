@@ -9,6 +9,16 @@ import useCourses from "../hooks/useCourses.ts";
 export default function CoursePage() {
   const { setIsProfile } = useUser();
   setIsProfile(false);
+  const { courses } = useCourses();
+  const { id } = useParams<{ id: string }>();
+
+  const course = courses?.find((course) => course._id.toString() === id);
+
+  if (!course) {
+    return <p>Курс не найден</p>;
+  }
+
+  console.log(course);
 
   const { courses } = useCourses();
   const { id } = useParams<{ id: string }>();

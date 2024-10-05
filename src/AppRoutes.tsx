@@ -9,6 +9,7 @@ import SignUp from "./components/modal/SignUp.tsx";
 import ProfileEnter from "./components/modal/ProfileEnter.tsx";
 import UpdatePassword from "./components/modal/UpdatePassword.tsx";
 import ProfilePage from "./pages/ProfilePage.tsx";
+import MainTraining from "./pages/MainTraining.tsx";
 
 export default function AppRoutes() {
   const location = useLocation();
@@ -23,6 +24,7 @@ export default function AppRoutes() {
           <Route path={appRoutes.HOME} element={<HomePage />} />
           <Route path={appRoutes.COURSES} element={<CoursePage />} />
           <Route path={appRoutes.PROFILE} element={<ProfilePage />} />
+          <Route path={appRoutes.TRAINING} element={<MainTraining/>}/>
         </Route>
         <Route path={appRoutes.NOT_FOUND} element={<NotFoundPage />} />
       </Routes>

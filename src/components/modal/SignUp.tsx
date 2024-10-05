@@ -2,14 +2,14 @@ import { ChangeEvent, useEffect, useState } from "react";
 import ButtonLink from "../ui/ButtonLink.tsx";
 import { useLocation, useNavigate } from "react-router-dom";
 import { appRoutes } from "../../lib/appRoutes.ts";
-import { useUser } from "../../hooks/useUser.ts";
+// import { useUser } from "../../hooks/useUser.ts";
 import { getRegistration } from "../../api/userAuth.ts";
 import { errorMessage } from "../../utils/ErrorMessage.ts";
 
 export default function SignUp() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { setUser } = useUser();
+  // const { setUser } = useUser();
 
   const backgroundLocation = location.state?.backgroundLocation || location;
 
@@ -80,17 +80,18 @@ export default function SignUp() {
 
     try {
       const user = await getRegistration(formValues);
-      console.log("SignUp. user", user);
+      // setUser(user);
       setSignUpError("");
-      setUser(user);
+      console.log("SignUp. user", user);
       navigate(appRoutes.SIGNIN, { state: { backgroundLocation } });
-    } catch (error: any) {
-      // if (error instanceof Error) throw new Error(error.message);
-      console.log("errMessage", error.message);
-      const errMessage = error.message.toLowerCase();
-      console.log("errMessage", error);
-      const userMessage = errorMessage(errMessage);
-      setSignUpError(userMessage);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.log("errMessage", error.message);
+        const errMessage = error.message.toLowerCase();
+        console.log("errMessage", error);
+        const userMessage = errorMessage(errMessage);
+        setSignUpError(userMessage);
+      }
     }
   };
 

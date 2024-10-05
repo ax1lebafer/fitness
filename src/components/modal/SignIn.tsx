@@ -60,15 +60,14 @@ export default function SignIn() {
       setIsEntering(true);
       console.log("user", user);
       setSignInError("");
-      // navigate(appRoutes.HOME);
       navigate(backgroundLocation.pathname, { replace: true });
-    } catch (error: any) {
-      // TODO: Изменить тип для ошибки
+    } catch (error: unknown) {
+      if (error instanceof Error) {
       const errMessage = error.message.toLowerCase();
       console.log("errMessage", errMessage);
       const userMessage = errorMessage(errMessage);
       setSignInError(userMessage);
-    }
+    }}
   };
 
   useEffect(() => {
@@ -76,7 +75,6 @@ export default function SignIn() {
   }, [formValues.email, formValues.password]);
 
   return (
-    <>
       <div className="fixed inset-0 flex z-50">
         <div
           className="fixed inset-0 bg-black opacity-20"
@@ -123,6 +121,5 @@ export default function SignIn() {
           </form>
         </div>
       </div>
-    </>
   );
 }

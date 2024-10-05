@@ -18,7 +18,7 @@ export default function StartBanner() {
 
   if (user) {
     console.log("StartBanner. user: ", user);
-    console.log("StartBanner. user.email: ", user.email);
+    // console.log("StartBanner. user.email: ", user.email);
   }
 
   const handleSignInClick = () => {

@@ -10,7 +10,6 @@ import ProfileEnter from "./components/modal/ProfileEnter.tsx";
 import UpdatePassword from "./components/modal/UpdatePassword.tsx";
 import ProfilePage from "./pages/ProfilePage.tsx";
 
-
 export default function AppRoutes() {
   const location = useLocation();
   const state = location.state as { backgroundLocation?: Location };
@@ -33,7 +32,10 @@ export default function AppRoutes() {
           <Route path={appRoutes.SIGNIN} element={<SignIn />} />
           <Route path={appRoutes.SIGNUP} element={<SignUp />} />
           <Route path={appRoutes.PROFILE_ENTER} element={<ProfileEnter />} />
-          <Route path={appRoutes.UPDATE_PASSWORD} element={<UpdatePassword />} />
+          <Route
+            path={appRoutes.UPDATE_PASSWORD}
+            element={<UpdatePassword />}
+          />
         </Routes>
       )}
     </>

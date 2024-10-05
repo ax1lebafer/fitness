@@ -20,16 +20,7 @@ export default function CoursePage() {
 
   console.log(course);
 
-  const { courses } = useCourses();
-  const { id } = useParams<{ id: string }>();
-
-  const course = courses?.find((course) => course._id.toString() === id);
-
-  if (!course) {
-    return <p>Курс не найден</p>;
-  }
-
-  console.log(course);
+   console.log(course);
 
   return (
     <main className="flex flex-col justify-center h-full gap-[60px]">

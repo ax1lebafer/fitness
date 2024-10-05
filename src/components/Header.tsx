@@ -18,6 +18,12 @@ export default function Header() {
 
   // console.log("Header. isProfile", isProfile);
 
+  const [openModal, setOpenModal] = useState(false);
+
+  const closeModal = () => {
+    setOpenModal(false);
+  };
+
   let UserName = "";
 
   if (user) {

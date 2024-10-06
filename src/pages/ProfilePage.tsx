@@ -23,14 +23,6 @@ export default function ProfilePage() {
     });
   };
 
-  let UserName;
-  let UserEmail;
-
-  if (user) {
-    UserName = user.name;
-    UserEmail = user.email;
-  }
-
   return (
     <>
       {/* <div className="w-[343px] xl:w-auto ml-[32px] xl:ml-0"> */}
@@ -51,10 +43,10 @@ export default function ProfilePage() {
             </div>
             <div className="flex flex-col xl:gap-[20px] gap-[13px] mt-0 xl:mt-[22px] ml-0 xl:ml-[19px]">
               <div className="xl:text-[32px] text-[24px] font-bold text-left">
-                {UserName}
+                {user?.name}
               </div>
               <div className="flex flex-col gap-[2px] text-left">
-                <p className="text-[18px]">Логин: {UserEmail}</p>
+                <p className="text-[18px]">Логин: {user?.email}</p>
                 <p className="text-[18px]">Пароль: ***********</p>
               </div>
               <div className="flex flex-col xl:flex-row gap-y-[10px] xl:gap-x-[10px]">

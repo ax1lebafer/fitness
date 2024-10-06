@@ -1,13 +1,14 @@
 import React, { createContext, useState } from "react";
+import { UserType } from "../types/user.ts";
 
 type ProviderProps = {
   children: React.ReactNode;
 };
 
 type ContextType = {
-  user: string[] | null;
-  setUser: (prevState: null | string[]) => void;
+  user: UserType | null;
   isEntering: boolean;
+  setUser: (prevState: null | UserType) => void;
   setIsEntering: (prevState: boolean) => void;
   logout: () => void;
   isProfile: boolean;

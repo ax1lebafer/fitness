@@ -24,7 +24,7 @@ export default function CoursePage() {
 
   return (
     <main className="flex flex-col justify-center h-full gap-[60px]">
-      <Banner name={course.nameRU} />
+      <Banner name={course.nameRU} id={course._id.toString()} />
       <Tenets fitting={course.fitting} />
       <Directions directions={course.directions} />
       <StartBanner />

@@ -1,14 +1,15 @@
 import { Route, Routes, useLocation } from "react-router-dom";
-import Layout from "./components/Layout.tsx";
-import { appRoutes } from "./lib/appRoutes.ts";
-import HomePage from "./pages/HomePage.tsx";
-import CoursePage from "./pages/CoursePage.tsx";
-import NotFoundPage from "./pages/NotFoundPage.tsx";
-import SignIn from "./components/modal/SignIn.tsx";
-import SignUp from "./components/modal/SignUp.tsx";
-import ProfileEnter from "./components/modal/ProfileEnter.tsx";
-import UpdatePassword from "./components/modal/UpdatePassword.tsx";
-import ProfilePage from "./pages/ProfilePage.tsx";
+import Layout from "./components/Layout";
+import { appRoutes } from "./lib/appRoutes";
+import HomePage from "./pages/HomePage";
+import CoursePage from "./pages/CoursePage";
+import NotFoundPage from "./pages/NotFoundPage";
+import SignIn from "./components/modal/SignIn";
+import SignUp from "./components/modal/SignUp";
+import ProfileEnter from "./components/modal/ProfileEnter";
+import UpdatePassword from "./components/modal/UpdatePassword";
+import ProfilePage from "./pages/ProfilePage";
+import PrivateRoute from "./components/PrivateRoute";
 
 export default function AppRoutes() {
   const location = useLocation();
@@ -22,7 +23,9 @@ export default function AppRoutes() {
         <Route element={<Layout />}>
           <Route path={appRoutes.HOME} element={<HomePage />} />
           <Route path={appRoutes.COURSES} element={<CoursePage />} />
-          <Route path={appRoutes.PROFILE} element={<ProfilePage />} />
+          <Route element={<PrivateRoute />}>
+            <Route path={appRoutes.PROFILE} element={<ProfilePage />} />
+          </Route>
         </Route>
         <Route path={appRoutes.NOT_FOUND} element={<NotFoundPage />} />
       </Routes>

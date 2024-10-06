@@ -11,6 +11,11 @@ export default function ProfileEnter({ closeModal }: ProfileEnterProps) {
   const navigate = useNavigate();
   const { user, setIsEntering, logout } = useUser();
 
+  const openProfilePage = () => {
+    closeModal();
+    navigate("/profile");
+  };
+
   const onExit = () => {
     logout();
     setIsEntering(false);
@@ -38,7 +43,7 @@ export default function ProfileEnter({ closeModal }: ProfileEnterProps) {
               <ButtonLink
                 text="Мой профиль"
                 className="mt-[0px] w-[206px]"
-                to="/profile"
+                onClick={openProfilePage}
               />
               <ButtonLink
                 text="Выйти"

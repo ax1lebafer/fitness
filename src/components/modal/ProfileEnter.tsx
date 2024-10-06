@@ -23,11 +23,13 @@ export default function ProfileEnter({ closeModal }: ProfileEnterProps) {
   };
 
   return (
+
     <div className="fixed inset-0 flex items-center justify-center z-10 opacity-100">
       <div className="fixed inset-0 z-20" onClick={closeModal}></div>
       {/* <div className="relative left-[calc(50%+266px/2)] top-[-120px] opacity-100"> */}
       <div className="relative min-w-[343px] xl:min-w-[1160px] h-full">
         <div className="absolute top-[80px] xl:top-[100px] right-0 z-30">
+
           <form
             className="w-[266px] p-[30px] bg-[white] rounded-[30px] flex flex-col items-center"
             action="#"
@@ -38,7 +40,6 @@ export default function ProfileEnter({ closeModal }: ProfileEnterProps) {
                 <p className="text-[#999999]">{user?.email}</p>
               </div>
             </div>
-
             <div className="flex flex-col gap-[10px]">
               <ButtonLink
                 text="Мой профиль"

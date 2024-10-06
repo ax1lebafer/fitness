@@ -18,7 +18,7 @@ type ContextType = {
 export const UserContext = createContext<null | ContextType>(null);
 
 export default function UserProvider({ children }: ProviderProps) {
-  const [user, setUser] = useState<null | string[]>(null);
+  const [user, setUser] = useState<null | UserType>(null);
   const [isEntering, setIsEntering] = useState<boolean>(false);
   const [isProfile, setIsProfile] = useState<boolean>(false);
 

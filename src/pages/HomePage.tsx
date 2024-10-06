@@ -8,8 +8,6 @@ export default function HomePage() {
   setIsProfile(false);
   const { courses } = useCourses();
 
-  console.log(courses);
-
   function scrollUp() {
     window.scrollTo({
       top: 0,

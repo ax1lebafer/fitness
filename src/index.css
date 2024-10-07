@@ -40,3 +40,10 @@ progress::-moz-progress-bar {
   background-color: #00C1FF;
   border-radius: 10px;
 }
+
+nav ol li+li:before {
+  content: '/';
+  padding: 0 5px;
+  font-size: 32px;
+  text-decoration: none;
+}

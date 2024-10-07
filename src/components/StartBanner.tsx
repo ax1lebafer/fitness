@@ -2,6 +2,7 @@ import ButtonLink from "./ui/ButtonLink.tsx";
 import { appRoutes } from "../lib/appRoutes.ts";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useUser } from "../hooks/useUser.ts";
+import { fetchAddCourseToUser } from "../api/data.ts";
 
 const ulList = [
   "проработка всех групп мышц",
@@ -11,14 +12,19 @@ const ulList = [
   "помогают противостоять стрессам",
 ];
 
-export default function StartBanner() {
+type IdProps = {
+  id: string;
+};
+
+export default function StartBanner({ id }: IdProps) {
   const navigate = useNavigate();
   const location = useLocation();
   const { user } = useUser();
 
+  let userId: string;
   if (user) {
     console.log("StartBanner. user: ", user);
-    // console.log("StartBanner. user.email: ", user.email);
+    userId = user.uid;
   }
 
   const handleSignInClick = () => {
@@ -26,12 +32,15 @@ export default function StartBanner() {
   };
 
   const addCourse = () => {
+    console.log("StartBanner. courseId: ", id);
+    console.log("StartBanner. uid: ", user?.uid);
+    fetchAddCourseToUser(userId, id);
     alert("Курс добавлен");
   };
 
   return (
     <section className="bg-white rounded-[30px] w-[343px] mx-[calc((100%-343px)/2)] xl:mx-0 xl:w-full mt-[102px] xl:mt-[42px] mb-[30px] xl:mb-[50px] xl:overflow-hidden">
-      <div className="flex flex-col h-[406px] w-[343px] xl:w-[437px] xl:m-[40px] p-[30px] xl:p-0 z-50"> 
+      <div className="flex flex-col h-[406px] w-[343px] xl:w-[437px] xl:m-[40px] p-[30px] xl:p-0 z-50">
         <h2 className="text-[32px] xl:text-[60px] text-left font-medium leading-[110%] xl:leading-[60px] mb-7 break-words z-50">
           Начните путь к новому телу
         </h2>

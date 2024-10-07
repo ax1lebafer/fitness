@@ -27,7 +27,7 @@ export default function CoursePage() {
       <Banner name={course.nameRU} id={course._id.toString()} />
       <Tenets fitting={course.fitting} />
       <Directions directions={course.directions} />
-      <StartBanner />
+      <StartBanner id={course._id.toString()} />
     </main>
   );
 }

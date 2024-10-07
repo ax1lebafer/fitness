@@ -17,6 +17,7 @@ export default function ProfileEnter({ closeModal }: ProfileEnterProps) {
   };
 
   const onExit = () => {
+    closeModal();
     logout();
     setIsEntering(false);
     navigate(appRoutes.HOME);

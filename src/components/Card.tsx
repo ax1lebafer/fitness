@@ -24,6 +24,7 @@ export default function Card({ name, id }: CardProps) {
         <img
           src="/img/icons/add.svg"
           alt="Добавить"
+          title="Добавить курс"
           width={26}
           height={26}
           className="absolute right-6 top-6 cursor-pointer hover:scale-125 transition ease-linear"

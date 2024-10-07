@@ -10,6 +10,7 @@ import ProfileEnter from "./components/modal/ProfileEnter";
 import UpdatePassword from "./components/modal/UpdatePassword";
 import ProfilePage from "./pages/ProfilePage";
 import PrivateRoute from "./components/PrivateRoute";
+import MainTraining from "./pages/MainTraining.tsx";
 
 export default function AppRoutes() {
   const location = useLocation();
@@ -25,6 +26,7 @@ export default function AppRoutes() {
           <Route path={appRoutes.COURSES} element={<CoursePage />} />
           <Route element={<PrivateRoute />}>
             <Route path={appRoutes.PROFILE} element={<ProfilePage />} />
+            <Route path={appRoutes.TRAINING} element={<MainTraining />} />
           </Route>
         </Route>
         <Route path={appRoutes.NOT_FOUND} element={<NotFoundPage />} />

@@ -7,4 +7,5 @@ export const appRoutes = {
   UPDATE_PASSWORD: "/updatePassword",
   COURSES: "/courses/:id",
   NOT_FOUND: "*",
+  TRAINING: "/training",
 };

@@ -1,22 +1,21 @@
-import { useLocation, useNavigate } from "react-router-dom";
 import ButtonLink from "../components/ui/ButtonLink.tsx";
 import { appRoutes } from "../lib/appRoutes.ts";
 import { useUser } from "../hooks/useUser.ts";
 import MyCourses from "../components/MyCourses.tsx";
+import { useState } from "react";
+import UpdatePassword from "../components/modal/UpdatePassword.tsx";
 
 export default function ProfilePage() {
-  const location = useLocation();
-  const navigate = useNavigate();
   const { user } = useUser();
+  const [openModal, setOpenModal] = useState(false);
 
-  const openUpdatePasswordModal = () => {
-    navigate(appRoutes.UPDATE_PASSWORD, {
-      state: { backgroundLocation: location },
-    });
+  const closeModal = () => {
+    setOpenModal(false);
   };
 
   return (
     <main>
+      {openModal && <UpdatePassword closeModal={closeModal} />}
       <h2 className="text-left font-semibold text-[40px]">Профиль</h2>
 
       <section className="bg-[#FFFFFF] rounded-[30px] sm:px-[30px] px-[10px] py-[30px] mt-10">
@@ -41,7 +40,7 @@ export default function ProfilePage() {
               <ButtonLink
                 className="h-[52px]"
                 text={"Изменить пароль"}
-                onClick={openUpdatePasswordModal}
+                onClick={() => setOpenModal(true)}
               />
               <ButtonLink
                 className="w-[192px] h-[52px] border border-black bg-white text-[#000000] hover:bg-[#F7F7F7] active:bg-[#E9ECED]"

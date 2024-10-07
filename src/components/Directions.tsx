@@ -1,13 +1,7 @@
-const directions = [
-  "Йога для новичков",
-  "Классическая йога",
-  "Йогатерапия",
-  "Кундалини-йога",
-  "Хатха-йога",
-  "Аштанга-йога",
-];
-
-export default function Directions() {
+type DirectionsProps = {
+  directions: string[];
+};
+export default function Directions({ directions }: DirectionsProps) {
   return (
     <section className="w-[100%]">
       <h2 className="text-[40px] font-semibold leading-[44px] mb-10">

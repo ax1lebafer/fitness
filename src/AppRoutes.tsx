@@ -1,4 +1,5 @@
 import { Route, Routes, useLocation } from "react-router-dom";
+
 import Layout from "./components/Layout.tsx";
 import { appRoutes } from "./lib/appRoutes.ts";
 import HomePage from "./pages/HomePage.tsx";

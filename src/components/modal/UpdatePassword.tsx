@@ -71,14 +71,14 @@ export default function UpdatePassword({ closeModal }: UpdatePasswordProps) {
   }, [formValues.newPassword, formValues.confirmPassword]);
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50">
+    <div className="fixed inset-0 flex z-50">
       <div
         className="fixed inset-0 bg-black opacity-20"
         onClick={closeModal}
       ></div>
-      <div className="absolute left-[calc(50%-(360px/2))] top-[calc(50%-(527px/2))] opacity-100">
+      <div className="absolute mx-[16px] xl:left-[calc(50%-(360px/2))] top-[calc(50%-(527px/2))]">
         <form
-          className="w-[360px] p-[40px] bg-[white] rounded-[30px] flex flex-col items-center pt-[43px] pr-[47px] pb-[47px] pl-[40px]"
+          className="w-[343px] xl:w-[360px] p-[40px] xl:p-[40px] bg-[white] rounded-[30px] flex flex-col items-center"
           action="#"
         >
           <div className="w-[220px] h-[35px] mb-[48px]">

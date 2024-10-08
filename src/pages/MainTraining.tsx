@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import VideoPlayer from "../components/VideoPlayer.tsx";
-import ResultTraining from "../components/ResultTraining.tsx";
+import VideoPlayer from "../components/VideoPlayer";
+import ResultTraining from "../components/ResultTraining";
+
 
 export default function MainTraining() {
   return (

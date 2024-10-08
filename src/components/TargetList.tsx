@@ -1,4 +1,4 @@
-import { arrayTrainingProps } from "./ResultTraining.tsx";
+import { arrayTrainingProps } from "./ResultTraining";
 
 interface TargetListProps {
   targetList: arrayTrainingProps[];

@@ -20,10 +20,10 @@ export default function MyProgress({
         className="fixed top-[calc(50%-(487px/2))] left-[calc(50%-(343px/2))] lg:top-[calc(50%-(596px/2))] lg:left-[calc(50%-(426px/2))]
        bg-white  rounded-[30px] shadow-def w-[343px] p-[30px] lg:w-[426px] lg:p-10"
       >
-        <div className="overflow-x-hidden ">
-          <h3 className="font-skyeng text-[32px] text-black mb-12">
-            Мой прогресс
-          </h3>
+        <h3 className="font-skyeng text-[32px] text-black mb-12">
+          Мой прогресс
+        </h3>
+        <div className="overflow-x-hidden [&::-webkit-scrollbar]:w-[6px] [&::-webkit-scrollbar-track]:bg- #F7F7F7 [&::-webkit-scrollbar-thumb]:bg-black [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:rounded-full">
           <div className="w-[237px] lg:w-[320px] max-h-[350px]  mb-[34px]">
             {arrayTraining.map((target, i) => {
               return (
@@ -37,9 +37,9 @@ export default function MyProgress({
                 />
               );
             })}
-            <ButtonLink text={"Сохранить"} onClick={handleSaveChanges} />
           </div>
         </div>
+        <ButtonLink text={"Сохранить"} onClick={handleSaveChanges} />
       </div>
     </div>
   );

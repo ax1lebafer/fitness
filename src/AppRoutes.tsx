@@ -7,7 +7,6 @@ import CoursePage from "./pages/CoursePage.tsx";
 import NotFoundPage from "./pages/NotFoundPage.tsx";
 import SignIn from "./components/modal/SignIn.tsx";
 import SignUp from "./components/modal/SignUp.tsx";
-import UpdatePassword from "./components/modal/UpdatePassword.tsx";
 import ProfilePage from "./pages/ProfilePage.tsx";
 import PrivateRoute from "./components/PrivateRoute.tsx";
 import MainTraining from "./pages/MainTraining.tsx";
@@ -36,10 +35,6 @@ export default function AppRoutes() {
         <Routes location={location}>
           <Route path={appRoutes.SIGNIN} element={<SignIn />} />
           <Route path={appRoutes.SIGNUP} element={<SignUp />} />
-          <Route
-            path={appRoutes.UPDATE_PASSWORD}
-            element={<UpdatePassword />}
-          />
         </Routes>
       )}
     </>

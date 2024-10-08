@@ -6,7 +6,7 @@ import ResultTraining from "../components/ResultTraining";
 export default function MainTraining() {
   return (
     <div className="mb-[201px]">
-      <h1 className="text-[60px] text-left">Йога</h1>
+      <h1 className="text-[60px] text-left font-medium">Йога</h1>
       <nav aria-label="breadcrumb">
         <ol className="flex flex-row text-[32px] font-normal pt-6">
           <li><Link to="#"><span className="underline">Красота и здоровье</span></Link></li>

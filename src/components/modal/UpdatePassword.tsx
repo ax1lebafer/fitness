@@ -1,22 +1,14 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import { appRoutes } from "../../lib/appRoutes.ts";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { errorMessage } from "../../utils/ErrorMessage";
 import ButtonLink from "../../components/ui/ButtonLink";
 import { changePassword } from "../../api/userAuth";
 
-export default function UpdatePassword() {
-  const navigate = useNavigate();
-  const location = useLocation();
+type UpdatePasswordProps = {
+  closeModal: () => void;
+};
+
+export default function UpdatePassword({ closeModal }: UpdatePasswordProps) {
   // const { setUser, setIsEntering } = useUser();
-
-  const backgroundLocation = location.state?.backgroundLocation || {
-    pathname: appRoutes.HOME,
-  };
-
-  const onClose = () => {
-    navigate(backgroundLocation.pathname, { replace: true });
-  };
 
   // const onSignUp = () => {
   //   navigate(appRoutes.SIGNUP, { state: { backgroundLocation } });
@@ -65,7 +57,7 @@ export default function UpdatePassword() {
       .then((response) => {
         console.log("changePassword:", response);
         setUpdatePasswordError("");
-        onClose();
+        closeModal();
       })
       .catch((error) => {
         const errMessage = error.message.toLowerCase();
@@ -82,7 +74,7 @@ export default function UpdatePassword() {
     <div className="fixed inset-0 flex z-50">
       <div
         className="fixed inset-0 bg-black opacity-20"
-        onClick={onClose}
+        onClick={closeModal}
       ></div>
       <div className="absolute mx-[16px] xl:left-[calc(50%-(360px/2))] top-[calc(50%-(527px/2))]">
         <form

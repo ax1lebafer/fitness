@@ -5,10 +5,11 @@ import {
   set,
   child,
   push,
-  update,
+  // update,
 } from "firebase/database";
 import { app } from "../lib/firebaseConfig.ts";
 import { CourseType } from "../types/courses.ts";
+// import { useState } from "react";
 
 const database = getDatabase(app);
 
@@ -24,64 +25,104 @@ export async function fetchCourses(): Promise<CourseType[]> {
   }
 }
 
-export async function fetchAddCourseToUser(userId: string, courseId: string) {
-  const snapshot = await get(child(ref(database), `courses/${courseId}`));
+export async function fetchCourse(courseId: string): Promise<CourseType[]> {
+  const response = await get(ref(database, `courses/${courseId}`));
 
-  // A post entry.
-  // const postData = {
-  // courses: courseId
-  // };
-  if (snapshot.exists()) {
-    const response = await get(
-      child(ref(database), `users/${userId}/courses/_id`),
-    );
-    console.log("response.val(): ", response.val());
-    if (response.exists()) {
-      const currentRecord = { _id: response.val() };
-      console.log("currentRecord: ", currentRecord);
-      const newRec = { _id: courseId };
-      const newRecord = { currentRecord, ...newRec };
-      console.log("newRecord: ", newRecord);
-      // update(ref(database), newRecord);
-      // await set(ref(database, `users/${userId}/courses`), { _id: courseId });
-    // } else {
-      // await set(ref(database, `users/${userId}/courses`), { _id: courseId });
-    }
+  const data = response.val();
 
-    // Get a key for a new Post.
-    const newPostKey = push(child(ref(database), `users/${userId}/courses`),).key;
-    console.log("newPostKey: ", newPostKey);
-
-     const newPostKey_ = push(
-       child(ref(database), `users/${userId}/courses/_id`), courseId);
-
-    console.log("newPostKey_: ", newPostKey_);
-
-    // Write the new post's data simultaneously in the posts list and the user's post list.
-    const updates = {};
-    // updates["users/" + {userId} +"/courses" + newPostKey] = postData;
-    // updates["users/" + userId + "/courses" + newPostKey] = courseId;
-    updates["users/" + userId + "/courses/_id"] = courseId;
-
-    update(ref(database), updates);
-    // update(ref(database), newPostKey);
-    // update(ref(database), newPostKey_);
-  }
-
-  // if (snapshot.exists()) {
-  //   const response = await get(
-  //     child(ref(database), `users/${userId}/courses/${courseId}`),
-  //   );
-  //   if (!response.exists()) {
-  //     await set(ref(database, `users/${userId}/courses`), courseId);
-  //   }
-  // }
-  const resp = await get(
-    child(ref(database), `users/${userId}/courses/${courseId}`),
-  );
-  if (resp.exists()) {
-    console.log("Snapshot.val: ", resp.val());
+  if (data) {
+    return Object.values(data);
   } else {
     throw new Error("Нет данных");
+  }
+}
+
+// export async function _fetchAddCourseToUser(userId: string, courseId: string) {
+//   const snapshot = await get(child(ref(database), `courses/${courseId}`));
+//   let isContain = false;
+//   if (snapshot.exists()) {
+//     const response = await get(child(ref(database), `users/${userId}/courses`));
+//     console.log("response.val(): ", response.val());
+//     if (response.exists()) {
+//       const snapshotCourse = await get(
+//         child(ref(database), `users/${userId}/courses`),
+//       );
+
+//       if (!snapshotCourse.exists()) {
+//         _addCourse();
+//       } else {
+//         snapshotCourse.forEach((item) => {
+//           if (item.val()._id === courseId) {
+//             isContain = true;
+//             alert("Такой курс уже имеется");
+//           }
+//         });
+
+//         if (!isContain) {
+//           _addCourse();
+//         }
+//       }
+//     } else {
+//       _addCourse();
+//     }
+
+//     function _addCourse() {
+//       const postListRef = ref(database, `users/${userId}/courses`);
+//       const newPostRef = push(postListRef);
+//       set(newPostRef, { _id: courseId });
+//       alert("Курс добавлен");
+//     }
+
+//     // const removeFavorite = async (key) => {
+//     //   await remove(ref(db, `user/${userAuth.uid}/favorite/${key}`));
+//     // };
+//   } else {
+//     console.log("Такого курса в списке нет");
+//   }
+// }
+
+// export const fetchAddCourseToUser = async (
+// userId: string,
+// courseId: string
+// ) => {
+export async function fetchAddCourseToUser(userId: string, courseId: string) {
+  let isContain = false;
+  const snapshot = await get(child(ref(database), `courses/${courseId}`));
+  console.log("snapshot.val(): ", snapshot.val());
+  if (snapshot.exists()) {
+    const response = await get(child(ref(database), `users/${userId}/${courseId}`));
+    console.log("response.val(): ", response.val());
+    if (response.exists()) {
+      const snapshotCourse = await get(
+        child(ref(database), `users/${userId}/${courseId}`),
+      );
+      console.log("snapshotCourse.val(): ", snapshotCourse.val());
+
+      if (!snapshotCourse.exists()) {
+        set(ref(database, `users/${userId}/${courseId}`), snapshot.val());
+        alert("Курс добавлен стр.103");
+      } else {
+        snapshotCourse.forEach((item) => {
+          if (item.val()._id === courseId) {
+            isContain = true;
+            alert("Такой курс уже имеется");
+          }
+        });
+
+        if (!isContain) {
+          set(
+            ref(database, `users/${userId}/${courseId}`),
+            snapshot.val(),
+          );
+          alert("Курс добавлен стр.117");
+        }
+      }
+    } else {
+      set(
+        ref(database, `users/${userId}/${courseId}`),
+        snapshot.val(),
+      );
+      alert("Курс добавлен стр.125");
+    }
   }
 }

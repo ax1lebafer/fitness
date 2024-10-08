@@ -35,7 +35,7 @@ export default function StartBanner({ id }: IdProps) {
     console.log("StartBanner. courseId: ", id);
     console.log("StartBanner. uid: ", user?.uid);
     fetchAddCourseToUser(userId, id);
-    alert("Курс добавлен");
+    // alert("Курс добавлен");
   };
 
   return (

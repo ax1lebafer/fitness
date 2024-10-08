@@ -4,7 +4,7 @@ import {
   ref,
   set,
   child,
-  push,
+  // push,
   // update,
 } from "firebase/database";
 import { app } from "../lib/firebaseConfig.ts";
@@ -86,6 +86,7 @@ export async function fetchCourse(courseId: string): Promise<CourseType[]> {
 // courseId: string
 // ) => {
 export async function fetchAddCourseToUser(userId: string, courseId: string) {
+  // const [isContain, setIsContain] = useState(false);
   let isContain = false;
   const snapshot = await get(child(ref(database), `courses/${courseId}`));
   console.log("snapshot.val(): ", snapshot.val());
@@ -94,24 +95,25 @@ export async function fetchAddCourseToUser(userId: string, courseId: string) {
     console.log("response.val(): ", response.val());
     if (response.exists()) {
       const snapshotCourse = await get(
-        child(ref(database), `users/${userId}/${courseId}`),
+        child(ref(database), `users/${userId}`),
       );
       console.log("snapshotCourse.val(): ", snapshotCourse.val());
 
       if (!snapshotCourse.exists()) {
-        set(ref(database, `users/${userId}/${courseId}`), snapshot.val());
+        set(ref(database, `users/${userId}`), snapshot.val());
         alert("Курс добавлен стр.103");
       } else {
         snapshotCourse.forEach((item) => {
           if (item.val()._id === courseId) {
             isContain = true;
+            // setIsContain(true);
             alert("Такой курс уже имеется");
           }
         });
 
         if (!isContain) {
           set(
-            ref(database, `users/${userId}/${courseId}`),
+            ref(database, `users/${userId}`),
             snapshot.val(),
           );
           alert("Курс добавлен стр.117");

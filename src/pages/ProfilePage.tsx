@@ -2,6 +2,9 @@ import { useLocation } from "react-router-dom";
 import ButtonLink from "../components/ui/ButtonLink.tsx";
 import { appRoutes } from "../lib/appRoutes.ts";
 import { useUser } from "../hooks/useUser.ts";
+import MyCourses from "../components/MyCourses.tsx";
+import { useState } from "react";
+import UpdatePassword from "../components/modal/UpdatePassword.tsx";
 // import MyCourses from "../components/MyCourses.tsx";
 import { useState } from "react";
 import UpdatePassword from "../components/modal/UpdatePassword.tsx";
@@ -33,10 +36,9 @@ export default function ProfilePage() {
             Профиль
           </h2>
         </div>
-
-        <section className="bg-[#FFFFFF] rounded-[30px] p-[30px] mt-10">
+        <div className="bg-[#FFFFFF] rounded-[30px] p-[30px]">
           <div className="flex flex-wrap flex-row">
-            <div className="relative xl:w-[197px] w-[141px] xl:h-[197px] h-[141px] xl:mx-[0px] mx-[71px]">
+            <div className="items-center">
               <img
                 src="/img/avatar-big.svg"
                 alt="Фото профиля"
@@ -66,8 +68,7 @@ export default function ProfilePage() {
               </div>
             </div>
           </div>
-        </section>
-        {/* <MyCourses /> */}
+        </div>
       </div>
     </main>
   );

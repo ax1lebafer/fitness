@@ -1,15 +1,14 @@
 import { Route, Routes, useLocation } from "react-router-dom";
-import Layout from "./components/Layout";
-import { appRoutes } from "./lib/appRoutes";
-import HomePage from "./pages/HomePage";
-import CoursePage from "./pages/CoursePage";
-import NotFoundPage from "./pages/NotFoundPage";
-import SignIn from "./components/modal/SignIn";
-import SignUp from "./components/modal/SignUp";
-import ProfileEnter from "./components/modal/ProfileEnter";
-import UpdatePassword from "./components/modal/UpdatePassword";
-import ProfilePage from "./pages/ProfilePage";
-import PrivateRoute from "./components/PrivateRoute";
+
+import Layout from "./components/Layout.tsx";
+import { appRoutes } from "./lib/appRoutes.ts";
+import HomePage from "./pages/HomePage.tsx";
+import CoursePage from "./pages/CoursePage.tsx";
+import NotFoundPage from "./pages/NotFoundPage.tsx";
+import SignIn from "./components/modal/SignIn.tsx";
+import SignUp from "./components/modal/SignUp.tsx";
+import ProfilePage from "./pages/ProfilePage.tsx";
+import PrivateRoute from "./components/PrivateRoute.tsx";
 import MainTraining from "./pages/MainTraining.tsx";
 
 export default function AppRoutes() {
@@ -36,11 +35,6 @@ export default function AppRoutes() {
         <Routes location={location}>
           <Route path={appRoutes.SIGNIN} element={<SignIn />} />
           <Route path={appRoutes.SIGNUP} element={<SignUp />} />
-          <Route path={appRoutes.PROFILE_ENTER} element={<ProfileEnter />} />
-          <Route
-            path={appRoutes.UPDATE_PASSWORD}
-            element={<UpdatePassword />}
-          />
         </Routes>
       )}
     </>

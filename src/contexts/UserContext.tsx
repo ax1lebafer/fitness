@@ -13,6 +13,8 @@ type ContextType = {
   logout: () => void;
   isProfile: boolean;
   setIsProfile: (prevState: boolean) => void;
+  isContain: boolean;
+  setIsContain: (prevState: boolean) => void;
 };
 
 export const UserContext = createContext<null | ContextType>(null);
@@ -21,6 +23,7 @@ export default function UserProvider({ children }: ProviderProps) {
   const [user, setUser] = useState<null | UserType>(null);
   const [isEntering, setIsEntering] = useState<boolean>(false);
   const [isProfile, setIsProfile] = useState<boolean>(false);
+  const [isContain, setIsContain] = useState<boolean>(false);
 
   function logout() {
     localStorage.removeItem("user");
@@ -37,6 +40,8 @@ export default function UserProvider({ children }: ProviderProps) {
         logout,
         isProfile,
         setIsProfile,
+        isContain,
+        setIsContain,
       }}
     >
       {children}

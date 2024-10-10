@@ -2,14 +2,13 @@ import {
   get,
   getDatabase,
   ref,
+  update,
   set,
   child,
-  // push,
-  // update,
+  remove,
 } from "firebase/database";
 import { app } from "../lib/firebaseConfig.ts";
 import { CourseType } from "../types/courses.ts";
-// import { useState } from "react";
 
 const database = getDatabase(app);
 
@@ -37,94 +36,73 @@ export async function fetchCourse(courseId: string): Promise<CourseType[]> {
   }
 }
 
-// export async function _fetchAddCourseToUser(userId: string, courseId: string) {
-//   const snapshot = await get(child(ref(database), `courses/${courseId}`));
-//   let isContain = false;
-//   if (snapshot.exists()) {
-//     const response = await get(child(ref(database), `users/${userId}/courses`));
-//     console.log("response.val(): ", response.val());
-//     if (response.exists()) {
-//       const snapshotCourse = await get(
-//         child(ref(database), `users/${userId}/courses`),
-//       );
+export async function fetchCoursesOfUser(userId: string) {
+  console.log("fetchCoursesOfUser userId:", userId);
+  console.log("fetchCoursesOfUser userId.id:", userId.id);
+  const snapshot = await get(
+    child(ref(database), `users/${userId}/courses`),
+  );
+  console.log("snapshot.val(): ", snapshot.val());
+  if (snapshot.exists()) {
+    const data = snapshot.val();
 
-//       if (!snapshotCourse.exists()) {
-//         _addCourse();
-//       } else {
-//         snapshotCourse.forEach((item) => {
-//           if (item.val()._id === courseId) {
-//             isContain = true;
-//             alert("Такой курс уже имеется");
-//           }
-//         });
+    if (data) {
+      return Object.values(data);
+    } else {
+      throw new Error("Нет данных");
+    }
+  }
+}
 
-//         if (!isContain) {
-//           _addCourse();
-//         }
-//       }
-//     } else {
-//       _addCourse();
-//     }
-
-//     function _addCourse() {
-//       const postListRef = ref(database, `users/${userId}/courses`);
-//       const newPostRef = push(postListRef);
-//       set(newPostRef, { _id: courseId });
-//       alert("Курс добавлен");
-//     }
-
-//     // const removeFavorite = async (key) => {
-//     //   await remove(ref(db, `user/${userAuth.uid}/favorite/${key}`));
-//     // };
-//   } else {
-//     console.log("Такого курса в списке нет");
-//   }
-// }
-
-// export const fetchAddCourseToUser = async (
-// userId: string,
-// courseId: string
-// ) => {
 export async function fetchAddCourseToUser(userId: string, courseId: string) {
-  // const [isContain, setIsContain] = useState(false);
-  let isContain = false;
   const snapshot = await get(child(ref(database), `courses/${courseId}`));
   console.log("snapshot.val(): ", snapshot.val());
   if (snapshot.exists()) {
-    const response = await get(child(ref(database), `users/${userId}/${courseId}`));
-    console.log("response.val(): ", response.val());
-    if (response.exists()) {
-      const snapshotCourse = await get(
-        child(ref(database), `users/${userId}`),
+    const snapshotCourseDir = await get(
+      child(ref(database), `users/${userId}/courses`),
+    );
+    console.log("snapshotCourseDir.val(): ", snapshotCourseDir.val());
+    if (snapshotCourseDir.exists()) {
+      const snapshotCourseOfUser = await get(
+        child(ref(database), `users/${userId}/courses/${courseId}`),
       );
-      console.log("snapshotCourse.val(): ", snapshotCourse.val());
+      console.log("snapshotCourseOfUser.val(): ", snapshotCourseOfUser.val());
 
-      if (!snapshotCourse.exists()) {
-        set(ref(database, `users/${userId}`), snapshot.val());
-        alert("Курс добавлен стр.103");
+      if (!snapshotCourseOfUser.exists()) {
+        update(
+          child(ref(database), `users/${userId}/courses/${courseId}`),
+          snapshot.val(),
+        );
+        alert("Курс добавлен стр.69");
       } else {
-        snapshotCourse.forEach((item) => {
-          if (item.val()._id === courseId) {
-            isContain = true;
-            // setIsContain(true);
-            alert("Такой курс уже имеется");
-          }
-        });
-
-        if (!isContain) {
-          set(
-            ref(database, `users/${userId}`),
-            snapshot.val(),
-          );
-          alert("Курс добавлен стр.117");
-        }
+        alert("Такой курс уже имеется");
       }
     } else {
-      set(
-        ref(database, `users/${userId}/${courseId}`),
-        snapshot.val(),
-      );
-      alert("Курс добавлен стр.125");
+      set(ref(database, `users/${userId}/courses/${courseId}`), snapshot.val());
+      alert("Курс добавлен стр.75");
     }
+  }
+}
+
+export async function fetchRemoveCourseFromUser(
+  userId: string,
+  courseId: string,
+) {
+  const snapshot = await get(child(ref(database), `courses/${courseId}`));
+  console.log("snapshot.val(): ", snapshot.val());
+  if (snapshot.exists()) {
+    const snapshotCourseDir = await get(
+      child(ref(database), `users/${userId}/courses`),
+    );
+    console.log("snapshotCourseDir.val(): ", snapshotCourseDir.val());
+    if (snapshotCourseDir.exists()) {
+      remove(child(ref(database), `users/${userId}/courses/${courseId}`));
+      alert("Курс удален стр.100");
+    } else {
+      alert("Такого курса нет");
+    }
+  } else {
+    set(ref(database, `users/${userId}/courses/${courseId}`), snapshot.val());
+    alert("Курс Удален стр.106");
   }
 }

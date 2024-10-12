@@ -6,9 +6,9 @@ interface TargetListProps {
 
 export default function TargetList({ targetList }: TargetListProps) {
   return (
-    <ol className="mt-[20px] flex flex-col flex-wrap h-[213px]">
+    <ol className="mt-[20px] grid grid-flow-row-dense grid-rows-3 grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-4">
       {targetList.map((arrayTraining, index) => (
-        <li className="w-[320px] mb-[20px]" key={index}>
+        <li className="mb-[20px]" key={index}>
           <p className="text-[18px] text-left">
             {`${arrayTraining.target} ${arrayTraining.result}%`}
           </p>

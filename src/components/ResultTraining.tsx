@@ -1,4 +1,3 @@
-
 import TargetList from "./TargetList.tsx";
 import ButtonLink from "./ui/ButtonLink.tsx";
 import { arrayTrainingProps } from "../pages/MainTraining.tsx";
@@ -10,7 +9,7 @@ type ResultTrainingProps = {
 
 export default function ResultTraining({arrayTraining, toggleWorkoutMyProgress}: ResultTrainingProps) {
 
-  
+
   return (
     <div className="w-[100%] rounded-[30px] overflow-hidden mt-[40px] p-10 bg-white">
       <div>

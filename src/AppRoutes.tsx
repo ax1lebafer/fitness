@@ -1,4 +1,5 @@
 import { Route, Routes, useLocation } from "react-router-dom";
+
 import Layout from "./components/Layout.tsx";
 import { appRoutes } from "./lib/appRoutes.ts";
 import HomePage from "./pages/HomePage.tsx";
@@ -25,7 +26,6 @@ export default function AppRoutes() {
           <Route path={appRoutes.TRAINING} element={<MainTraining />} />
           <Route element={<PrivateRoute />}>
             <Route path={appRoutes.PROFILE} element={<ProfilePage />} />
-            {/*  <Route path={appRoutes.TRAINING} element={<MainTraining />} /> */}
           </Route>
         </Route>
         <Route path={appRoutes.NOT_FOUND} element={<NotFoundPage />} />

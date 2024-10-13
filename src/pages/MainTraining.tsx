@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import VideoPlayer from "../components/VideoPlayer.tsx";
 import ResultTraining from "../components/ResultTraining.tsx";
-import { useState } from "react";
 import MyProgress from "../components/modal/MyProgress.tsx";
 import MyProgressCounted from "../components/modal/MyProgressCounted.tsx";
 
@@ -48,7 +48,6 @@ const arrayTraining: arrayTrainingProps[] = [
     result: 0,
   },
 ];
-
 export default function MainTraining() {
   const [openSuccessModal, setOpenSuccessModal] = useState(false);
   const [isOpenMyProgressModal, setIsOpenMyProgressModal] = useState(false);

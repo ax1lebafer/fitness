@@ -11,6 +11,8 @@ type ContextType = {
   setUser: (prevState: null | UserType) => void;
   setIsEntering: (prevState: boolean) => void;
   logout: () => void;
+  isProfile: boolean;
+  setIsProfile: (prevState: boolean) => void;
 };
 
 export const UserContext = createContext<null | ContextType>(null);
@@ -18,8 +20,7 @@ export const UserContext = createContext<null | ContextType>(null);
 export default function UserProvider({ children }: ProviderProps) {
   const [user, setUser] = useState<null | UserType>(null);
   const [isEntering, setIsEntering] = useState<boolean>(false);
-
-  console.log(user);
+  const [isProfile, setIsProfile] = useState<boolean>(false);
 
   function logout() {
     localStorage.removeItem("user");
@@ -28,7 +29,15 @@ export default function UserProvider({ children }: ProviderProps) {
 
   return (
     <UserContext.Provider
-      value={{ user, setUser, isEntering, setIsEntering, logout }}
+      value={{
+        user,
+        setUser,
+        isEntering,
+        setIsEntering,
+        logout,
+        isProfile,
+        setIsProfile,
+      }}
     >
       {children}
     </UserContext.Provider>

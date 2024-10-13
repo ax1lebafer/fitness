@@ -35,8 +35,8 @@ export default function ProfilePage() {
         </div>
 
         <section className="bg-[#FFFFFF] rounded-[30px] p-[30px] mt-10">
-          <div>
-            <div className="relative xl:w-[197px] w-[141px] xl:h-[197px] h-[141px] xl:mx-[0px] mx-[80px]">
+          <div className="flex flex-wrap flex-row">
+            <div className="relative xl:w-[197px] w-[141px] xl:h-[197px] h-[141px] xl:mx-[0px] mx-[71px]">
               <img
                 src="/img/avatar-big.svg"
                 alt="Фото профиля"
@@ -67,6 +67,7 @@ export default function ProfilePage() {
             </div>
           </div>
         </section>
+        {/* <MyCourses id={userId} /> */}
         <MyCourses />
       </div>
     </main>

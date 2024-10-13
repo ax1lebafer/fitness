@@ -20,7 +20,7 @@ export default function CoursePage() {
 
   console.log(course);
 
-   console.log(course);
+  console.log(course);
 
   return (
     <main className="flex flex-col justify-center h-full gap-[60px]">

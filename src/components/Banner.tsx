@@ -16,7 +16,9 @@ export default function Banner({ name, id }: BannerType) {
         alt="Баннер курса"
         className="absolute block xl:hidden left-[20%] translate-x-[-20%] w-[343px] h-[389px] object-cover"
       />
-      <h2 className="absolute hidden xl:block p-10 text-[60px] text-white font-medium">{name}</h2>
+      <h2 className="absolute hidden xl:block p-10 text-[60px] text-white font-medium">
+        {name}
+      </h2>
     </section>
   );
 }

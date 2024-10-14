@@ -41,8 +41,6 @@ export default function MyCourses() {
 
       <ul className="flex flex-wrap gap-10">
         {/* <Card name={"Стэп-аэробика"} id={"6i67sm"} /> */}
-        {/* <Card name={"Стэп-аэробика"} id={"6i67sm"} /> */}
-        {/* <Card name={"Стэп-аэробика"} id={"6i67sm"} /> */}
 
         {selectedCourses?.map((selectedCourse) => (
           <Card key={selectedCourse._id} name={selectedCourse.nameRU} id={selectedCourse._id} />

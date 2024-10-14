@@ -48,17 +48,10 @@ export async function fetchCourse(courseId: string) {
 export async function fetchCoursesOfUser(userId: string) {
   let data: CourseType[] = [];
 
-  // console.log("API.fetchCoursesOfUser userId:", userId);
   const snapshot = await get(child(ref(database), `users/${userId}/courses`));
-  // console.log("Path.CourseOfUsers: ", `users/${userId}/courses`);
   // console.log("snapshot.val(): ", snapshot.val());
   if (snapshot.exists()) {
-    // console.log("API.fetchCoursesOfUser.snapshot:", snapshot.val());
     const coursesData = snapshot.val();
-    // Object.keys(coursesData).forEach((key) => {
-    //   data.push(coursesData[key]);
-    // });
-    // data = data.sort(sortByOrder);
     const promises = Object.keys(coursesData).map(async (key) => {
       const data = await fetchCourse(key);
       const dataForView = {
@@ -105,7 +98,7 @@ export async function fetchAddCourseToUser(userId: string, courseId: string) {
           const exercises = workoutDataSnapshot.val();
           console.log("exercises: ", exercises);
 
-          
+
           // const snapshotExercises = await get(
           //   child(ref(database), `workouts/${id}/exersises`),
           // );
@@ -121,7 +114,7 @@ export async function fetchAddCourseToUser(userId: string, courseId: string) {
             );
           }
         }
-        alert("Курс добавлен стр.113");
+        alert("Курс добавлен стр.117");
       } else {
         alert("Такой курс уже имеется");
       }
@@ -140,7 +133,7 @@ export async function fetchAddCourseToUser(userId: string, courseId: string) {
           );
         }
       }
-      alert("Курс добавлен стр.132");
+      alert("Курс добавлен стр.136");
     }
   }
 }

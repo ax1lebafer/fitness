@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import ProgressBar from "./ProgressBar.tsx";
 import {
   fetchAddCourseToUser,
@@ -8,6 +8,7 @@ import {
 import { useEffect } from "react";
 import useCourses from "../hooks/useCourses.ts";
 import { useUser } from "../hooks/useUser.ts";
+import { appRoutes } from "../lib/appRoutes.ts";
 
 type CardProps = {
   name: string;
@@ -16,58 +17,66 @@ type CardProps = {
 
 export default function Card({ name, id }: CardProps) {
   const location = useLocation();
+  const navigate = useNavigate();
   const pathname = location.pathname;
-  const { user } = useUser();
-  const { setSelectedCourses, setError, setLoading, setSelectedLoading } = useCourses();
+  const { isEntering, user } = useUser();
+  const { setSelectedCourses, setCourseError, setSelectedLoading } =
+    useCourses();
 
   const isProfilePage = pathname === "/profile";
+  console.log("isProfilePage : ", isProfilePage);
 
-   const addCourse = () => {
-    console.log("StartBanner. courseId: ", id);
-    console.log("StartBanner. uid: ", user?.uid);
-    fetchAddCourseToUser(user?.uid, id);
+  const openSignInModal = () => {
+    navigate(appRoutes.SIGNIN, { state: { backgroundLocation: location } });
   };
-  
+
+  const userId = user?.uid;
+
+  const addCourse = () => {
+    console.log("StartBanner. courseId: ", id);
+    console.log("StartBanner. uid: ", userId);
+    if (isEntering) {
+      fetchAddCourseToUser(userId, id);
+    } else { 
+      openSignInModal();
+    }
+  };
+
   const delCourse = () => {
     console.log("Profile. courseId: ", id);
-    console.log("Profile. uid: ", user?.uid);
-    fetchRemoveCourseFromUser(user?.uid, id);
+    console.log("Profile. uid: ", userId);
+    fetchRemoveCourseFromUser(userId, id);
   };
 
   useEffect(() => {
     async function getSelectedCourses() {
       try {
-        const data = await fetchCoursesOfUser(user?.uid);
+        const data = await fetchCoursesOfUser(userId);
         setSelectedLoading(true);
         setSelectedCourses(data);
       } catch (error: unknown) {
         if (error instanceof Error) {
-          setError(error.message);
+          setCourseError(error.message);
         }
-        setError("Неизвестная ошибка");
+        setCourseError("Неизвестная ошибка");
         console.log(error);
       } finally {
         setSelectedLoading(false);
       }
     }
     getSelectedCourses();
-  }, [setError, setSelectedLoading, setSelectedCourses, user?.uid, id]);
+  }, [setCourseError, setSelectedLoading, setSelectedCourses, userId, id]);
 
   return (
-    // <div className="mx-[16px] xl:mx-0 w-[343px] xl:w-[360px] content-center items-center bg-white rounded-[30px]">
-    <div className="mx-[calc((100%-343px)/2)] xl:mx-0 w-[343px] xl:w-[360px] content-center items-center bg-white rounded-[30px]">
+    <div className="mx-[calc((100%-343px)/2)] xl:mx-0 w-[343px] xl:w-[360px] items-center bg-white rounded-[30px]">
       <div className="relative h-[325px]">
         <img
-          className="rounded-[30px] h-[325px] w-[360px] object-cover"
+          className="rounded-[30px] h-[325px] w-[343px] xl:w-[360px] object-cover"
           src={`/img/${id}.png`}
           alt="Курс"
         />
         {!isProfilePage ? (
-          <button
-            onClick={() => addCourse()}
-            // className="w-[15px] h-[35px] xl:h-[50px] bg-[#e5e5e5] cursor-point inline-block"
-            type="button"
-          >
+          <button onClick={() => addCourse()} type="button">
             <img
               src="/img/icons/add.svg"
               alt="Добавить"
@@ -78,11 +87,7 @@ export default function Card({ name, id }: CardProps) {
             />
           </button>
         ) : (
-          <button
-            onClick={() => delCourse()}
-            // className="w-[15px] h-[35px] xl:h-[50px] bg-[#e5e5e5] cursor-point inline-block"
-            type="button"
-          >
+          <button onClick={() => delCourse()} type="button">
             <img
               src="/img/icons/sub.svg"
               alt="Удалить"

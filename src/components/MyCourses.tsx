@@ -1,30 +1,36 @@
-import { useEffect } from "react";
-import { fetchCoursesOfUser } from "../api/data.ts";
+// import { useEffect } from "react";
+// import { fetchCoursesOfUser } from "../api/data.ts";
 import Card from "./Card.tsx";
 import useCourses from "../hooks/useCourses.ts";
 
-export default function MyCourses(userId: string) {
-  const { selectedCourses, setSelectedCourses, setError, setSelectedLoading } = useCourses();
+// export default function MyCourses(userId: string) {
+export default function MyCourses() {
+  // const { selectedCourses, setSelectedCourses, setCourseError, setSelectedLoading } = useCourses();
+  const { selectedCourses} = useCourses();
 
-  useEffect(() => {
-    async function getSelectedCourses(userId: string) {
-      try {
-        const data = await fetchCoursesOfUser(userId);
-        setSelectedLoading(true);
-        setSelectedCourses(data);
-      } catch (error: unknown) {
-        if (error instanceof Error) {
-          setError(error.message);
-        }
-        setError("Неизвестная ошибка");
-        console.log(error);
-      } finally {
-        setSelectedLoading(false);
-      }
-    }
+  // useEffect(() => {
+  //   // async function getSelectedCourses(userId: string) {
+  //   async function getSelectedCourses() {      
+  //     try {
+  //       console.log("getSelectedCourses.userId: ", userId);
+  //       const data = await fetchCoursesOfUser(userId.id);
+  //       console.log("fetchSelectedCourses. data:", data);
+  //       setSelectedLoading(true);
+  //       setSelectedCourses(data);
+  //     } catch (error: unknown) {
+  //       if (error instanceof Error) {
+  //         setCourseError(error.message);
+  //       }
+  //       setCourseError("Неизвестная ошибка");
+  //       console.log(error);
+  //     } finally {
+  //       setSelectedLoading(false);
+  //     }
+  //   }
 
-    getSelectedCourses(userId);
-  }, [setError, setSelectedLoading, setSelectedCourses, userId]);
+  //   // getSelectedCourses(userId);
+  //   getSelectedCourses();    
+  // }, [setCourseError, setSelectedLoading, setSelectedCourses, userId]);
 
 
   return (

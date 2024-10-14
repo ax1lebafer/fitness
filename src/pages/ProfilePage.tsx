@@ -11,6 +11,9 @@ export default function ProfilePage() {
   const [openModal, setOpenModal] = useState(false);
   const location = useLocation();
 
+  const userId = user?.uid;
+  console.log("Profile. userId: ", userId);
+
   const backgroundLocation = location.state?.backgroundLocation || location;
   console.log(
     "Profile BackgroundLocation.pathname: ",
@@ -67,7 +70,8 @@ export default function ProfilePage() {
             </div>
           </div>
         </section>
-        <MyCourses id={user?.uid} />
+        {/* <MyCourses id={userId} /> */}
+        <MyCourses />
       </div>
     </main>
   );

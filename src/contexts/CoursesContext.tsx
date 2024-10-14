@@ -11,11 +11,13 @@ type ContextType = {
   loading: boolean;
   selectedLoading: boolean;
   error: string | null;
+  courseError: string | null;
   setCourses: (prevState: CourseType[]) => void;
   setSelectedCourses: (prevState: CourseType[]) => void;
   setLoading: (prevState: boolean) => void;
   setSelectedLoading: (prevState: boolean) => void;
   setError: (prevState: string | null) => void;
+  setCourseError: (prevState: string | null) => void;
 };
 
 export const CoursesContext = createContext<ContextType | null>(null);
@@ -24,6 +26,7 @@ export default function CoursesProvider({ children }: ProviderProps) {
   const [courses, setCourses] = useState<CourseType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [courseError, setCourseError] = useState<string | null>(null);
 
   const [selectedCourses, setSelectedCourses] = useState<CourseType[]>([]);
   const [selectedLoading, setSelectedLoading] = useState<boolean>(false);
@@ -36,7 +39,9 @@ export default function CoursesProvider({ children }: ProviderProps) {
         loading,
         setLoading,
         error,
+        courseError,
         setError,
+        setCourseError,
         selectedLoading,
         setSelectedLoading,
         selectedCourses,

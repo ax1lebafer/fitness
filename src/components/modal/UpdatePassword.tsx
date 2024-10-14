@@ -1,26 +1,18 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import { appRoutes } from "../../lib/appRoutes.ts";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { errorMessage } from "../../utils/ErrorMessage";
 import ButtonLink from "../../components/ui/ButtonLink";
 import { changePassword } from "../../api/userAuth";
 
-export default function UpdatePassword() {
-    const navigate = useNavigate();
-    const location = useLocation();
-    // const { setUser, setIsEntering } = useUser();
-    
-    const backgroundLocation = location.state?.backgroundLocation || {
-      pathname: appRoutes.HOME,
-    };
-  
-    const onClose = () => {
-      navigate(backgroundLocation.pathname, { replace: true });
-    };
-  
-    // const onSignUp = () => {
-    //   navigate(appRoutes.SIGNUP, { state: { backgroundLocation } });
-    // };
+type UpdatePasswordProps = {
+  closeModal: () => void;
+};
+
+export default function UpdatePassword({ closeModal }: UpdatePasswordProps) {
+  // const { setUser, setIsEntering } = useUser();
+
+  // const onSignUp = () => {
+  //   navigate(appRoutes.SIGNUP, { state: { backgroundLocation } });
+  // };
 
   const [formValues, setFormValues] = useState({
     newPassword: "",
@@ -65,7 +57,7 @@ export default function UpdatePassword() {
       .then((response) => {
         console.log("changePassword:", response);
         setUpdatePasswordError("");
-        onClose();
+        closeModal();
       })
       .catch((error) => {
         const errMessage = error.message.toLowerCase();
@@ -79,14 +71,14 @@ export default function UpdatePassword() {
   }, [formValues.newPassword, formValues.confirmPassword]);
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50">
+    <div className="fixed inset-0 flex z-50">
       <div
         className="fixed inset-0 bg-black opacity-20"
-        onClick={onClose}
+        onClick={closeModal}
       ></div>
-      <div className="absolute left-[calc(50%-(360px/2))] top-[calc(50%-(527px/2))] opacity-100">
+      <div className="absolute mx-[16px] xl:left-[calc(50%-(360px/2))] top-[calc(50%-(527px/2))]">
         <form
-          className="w-[360px] p-[40px] bg-[white] rounded-[30px] flex flex-col items-center pt-[43px] pr-[47px] pb-[47px] pl-[40px]"
+          className="w-[343px] xl:w-[360px] p-[40px] xl:p-[40px] bg-[white] rounded-[30px] flex flex-col items-center"
           action="#"
         >
           <div className="w-[220px] h-[35px] mb-[48px]">

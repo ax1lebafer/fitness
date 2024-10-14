@@ -13,7 +13,8 @@ export default function Card({ name, id }: CardProps) {
   const isProfilePage = pathname === "/profile";
 
   return (
-    <div className="w-[360px] bg-white rounded-[30px]">
+    // <div className="mx-[16px] xl:mx-0 w-[343px] xl:w-[360px] content-center items-center bg-white rounded-[30px]">
+    <div className="mx-[calc((100%-343px)/2)] xl:mx-0 w-[343px] xl:w-[360px] content-center items-center bg-white rounded-[30px]">
       <div className="relative h-[325px]">
         <img
           className="rounded-[30px] h-[325px] w-[360px] object-cover"
@@ -23,6 +24,7 @@ export default function Card({ name, id }: CardProps) {
         <img
           src="/img/icons/add.svg"
           alt="Добавить"
+          title="Добавить курс"
           width={26}
           height={26}
           className="absolute right-6 top-6 cursor-pointer hover:scale-125 transition ease-linear"
@@ -30,7 +32,7 @@ export default function Card({ name, id }: CardProps) {
       </div>
       <div className="flex px-[30px] py-5 flex-col gap-5">
         <Link
-          className="hover:underline text-3xl font-medium leading-none text-left"
+          className="hover:underline text-2xl xl:text-3xl font-medium leading-none text-left"
           to={`/courses/${id}`}
         >
           {name}

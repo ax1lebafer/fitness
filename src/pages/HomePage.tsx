@@ -31,7 +31,7 @@ export default function HomePage() {
           <span className="absolute rotate-[35deg] bottom-[-25px] left-[40%] transform -translate-x-1/2 w-0 h-0 border-l-[10px] border-l-transparent border-r-[15px] border-r-transparent border-t-[35px] border-t-[#BCEC30]"></span>
         </div>
       </div>
-      <div className="flex gap-10 flex-wrap mb-10">
+      <div className="flex gap-10 flex-wrap mb-10 justify-start">
         {courses?.map((course) => (
           <Card key={course._id} name={course.nameRU} id={course._id} />
         ))}

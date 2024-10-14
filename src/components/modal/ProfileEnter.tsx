@@ -1,6 +1,5 @@
 import ButtonLink from "../../components/ui/ButtonLink";
 import { useNavigate } from "react-router-dom";
-import { appRoutes } from "../../lib/appRoutes.ts";
 import { useUser } from "../../hooks/useUser";
 
 type ProfileEnterProps = {
@@ -20,7 +19,6 @@ export default function ProfileEnter({ closeModal }: ProfileEnterProps) {
     closeModal();
     logout();
     setIsEntering(false);
-    navigate(appRoutes.HOME);
   };
 
   return (

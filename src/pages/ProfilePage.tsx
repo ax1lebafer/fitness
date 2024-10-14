@@ -11,6 +11,9 @@ export default function ProfilePage() {
   const [openModal, setOpenModal] = useState(false);
   const location = useLocation();
 
+  const userId = user?.uid;
+  console.log("Profile. userId: ", userId);
+
   const backgroundLocation = location.state?.backgroundLocation || location;
   console.log(
     "Profile BackgroundLocation.pathname: ",

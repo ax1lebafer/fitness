@@ -2,86 +2,203 @@ import {
   get,
   getDatabase,
   ref,
-  set,
-  child,
-  push,
   update,
+  // set,
+  child,
+  remove,
 } from "firebase/database";
 import { app } from "../lib/firebaseConfig.ts";
 import { CourseType } from "../types/courses.ts";
+import { WorkoutType } from "../types/workouts.ts";
+import { sortByOrder } from "../utils/SortOrder.ts";
 
 const database = getDatabase(app);
 
 export async function fetchCourses(): Promise<CourseType[]> {
-  const response = await get(ref(database, "courses"));
+  let data: CourseType[] = [];
 
-  const data = response.val();
+  const snapshot = await get(ref(database, "courses"));
+
+  if (snapshot.exists()) {
+    const coursesData = snapshot.val();
+    Object.keys(coursesData).forEach((key) => {
+      data.push(coursesData[key]);
+    });
+    data = data.sort(sortByOrder);
+  }
 
   if (data) {
-    return Object.values(data);
+    return data;
   } else {
     throw new Error("Нет данных");
   }
 }
 
-export async function fetchAddCourseToUser(userId: string, courseId: string) {
-  const snapshot = await get(child(ref(database), `courses/${courseId}`));
+export async function fetchCourse(courseId: string) {
+  const snapshot = await get(ref(database, `courses/${courseId}`));
+  const data = snapshot.val();
 
-  // A post entry.
-  // const postData = {
-  // courses: courseId
-  // };
   if (snapshot.exists()) {
-    const response = await get(
-      child(ref(database), `users/${userId}/courses/_id`),
-    );
-    console.log("response.val(): ", response.val());
-    if (response.exists()) {
-      const currentRecord = { _id: response.val() };
-      console.log("currentRecord: ", currentRecord);
-      const newRec = { _id: courseId };
-      const newRecord = { currentRecord, ...newRec };
-      console.log("newRecord: ", newRecord);
-      // update(ref(database), newRecord);
-      // await set(ref(database, `users/${userId}/courses`), { _id: courseId });
-    // } else {
-      // await set(ref(database, `users/${userId}/courses`), { _id: courseId });
-    }
-
-    // Get a key for a new Post.
-    const newPostKey = push(child(ref(database), `users/${userId}/courses`),).key;
-    console.log("newPostKey: ", newPostKey);
-
-     const newPostKey_ = push(
-       child(ref(database), `users/${userId}/courses/_id`), courseId);
-
-    console.log("newPostKey_: ", newPostKey_);
-
-    // Write the new post's data simultaneously in the posts list and the user's post list.
-    const updates = {};
-    // updates["users/" + {userId} +"/courses" + newPostKey] = postData;
-    // updates["users/" + userId + "/courses" + newPostKey] = courseId;
-    updates["users/" + userId + "/courses/_id"] = courseId;
-
-    update(ref(database), updates);
-    // update(ref(database), newPostKey);
-    // update(ref(database), newPostKey_);
-  }
-
-  // if (snapshot.exists()) {
-  //   const response = await get(
-  //     child(ref(database), `users/${userId}/courses/${courseId}`),
-  //   );
-  //   if (!response.exists()) {
-  //     await set(ref(database, `users/${userId}/courses`), courseId);
-  //   }
-  // }
-  const resp = await get(
-    child(ref(database), `users/${userId}/courses/${courseId}`),
-  );
-  if (resp.exists()) {
-    console.log("Snapshot.val: ", resp.val());
+    return data;
   } else {
     throw new Error("Нет данных");
   }
+}
+
+export async function fetchCoursesOfUser(userId: string) {
+  let data: CourseType[] = [];
+
+  const snapshot = await get(child(ref(database), `users/${userId}/courses`));
+  // console.log("snapshot.val(): ", snapshot.val());
+  if (snapshot.exists()) {
+    const coursesData = snapshot.val();
+    const promises = Object.keys(coursesData).map(async (key) => {
+      const data = await fetchCourse(key);
+      const dataForView = {
+        ...data,
+      };
+      return dataForView;
+    });
+    data = await Promise.all(promises);
+    data = data.sort(sortByOrder);
+
+    if (data) {
+      return data;
+    } else {
+      throw new Error("Нет данных");
+    }
+  }
+}
+
+export async function fetchAddCourseToUser(userId: string, courseId: string) {
+  const snapshot = await get(child(ref(database), `courses/${courseId}`));
+  const workoutIdsSnapshot = await get(
+    child(ref(database), `courses/${courseId}/workouts`),
+  );
+  const workoutIds = workoutIdsSnapshot.val();
+  console.log("workoutIds: ", workoutIds);
+
+  if (snapshot.exists()) {
+    const snapshotCourseDir = await get(
+      child(ref(database), `users/${userId}/courses`),
+    );
+    console.log("snapshotCourseDir.val(): ", snapshotCourseDir.val());
+    if (snapshotCourseDir.exists()) {
+      const snapshotCourseOfUser = await get(
+        child(ref(database), `users/${userId}/courses/${courseId}`),
+      );
+      console.log("snapshotCourseOfUser. val(): ", snapshotCourseOfUser.val());
+
+      if (!snapshotCourseOfUser.exists()) {
+        for (const id of workoutIds) {
+          console.log("id: ", id);
+          const workoutDataSnapshot = await get(
+            child(ref(database), `workouts/${id}`),
+          );
+          const exercises = workoutDataSnapshot.val();
+          console.log("exercises: ", exercises);
+
+
+          // const snapshotExercises = await get(
+          //   child(ref(database), `workouts/${id}/exersises`),
+          // );
+
+          // let arrExercises = []
+          // const exercisesIds = snapshotExercises.val();
+          // for (const idEx of exercisesIds)
+
+          if (workoutDataSnapshot.exists()) {
+            update(
+              child(ref(database), `users/${userId}/courses/${courseId}/${id}`),
+              exercises,
+            );
+          }
+        }
+        alert("Курс добавлен стр.117");
+      } else {
+        alert("Такой курс уже имеется");
+      }
+    } else {
+      for (const id of workoutIds) {
+        console.log("id: ", id);
+        const workoutDataSnapshot = await get(
+          child(ref(database), `workouts/${id}`),
+        );
+        const exercises = workoutDataSnapshot.val();
+        console.log("exercises: ", exercises);
+        if (workoutDataSnapshot.exists()) {
+          await update(
+            child(ref(database), `users/${userId}/courses/${courseId}/${id}`),
+            exercises,
+          );
+        }
+      }
+      alert("Курс добавлен стр.136");
+    }
+  }
+}
+
+export async function fetchRemoveCourseFromUser(
+  userId: string,
+  courseId: string,
+) {
+  const snapshot = await get(child(ref(database), `courses/${courseId}`));
+  console.log("snapshot.val(): ", snapshot.val());
+  if (snapshot.exists()) {
+    const snapshotCourseDir = await get(
+      child(ref(database), `users/${userId}/courses`),
+    );
+    console.log("snapshotCourseDir.val(): ", snapshotCourseDir.val());
+    if (snapshotCourseDir.exists()) {
+      remove(child(ref(database), `users/${userId}/courses/${courseId}`));
+      alert("Курс удален стр.100");
+    } else {
+      alert("Такого курса нет");
+    }
+  } else {
+    alert("Такого курса нет");
+  }
+}
+
+export const fetchWorkoutsOfUserCourse = async (
+  workoutId: string,
+  userId: string,
+  courseId: string,
+) => {
+  console.log("fetchWorkoutOfCourse", workoutId, userId, courseId);
+  let result: WorkoutType | null = null;
+
+  try {
+    const snapshot = await get(
+      child(
+        ref(database),
+        `users/${userId}/courses/${courseId}/workouts/${workoutId}`,
+      ),
+    );
+
+    if (snapshot.exists()) {
+      result = snapshot.val();
+    }
+  } catch (error) {
+    console.error(error);
+  }
+
+  return result;
+};
+
+export async function fetchWorkoutsOfCourse(workoutId: string) {
+  console.log("fetchWorkoutOfCourse", workoutId);
+  let result: WorkoutType | null = null;
+
+  try {
+    const snapshot = await get(child(ref(database), `workouts/${workoutId}`));
+
+    if (snapshot.exists()) {
+      result = snapshot.val();
+    }
+  } catch (error) {
+    console.error(error);
+  }
+
+  return result;
 }

@@ -71,71 +71,58 @@ export async function fetchCoursesOfUser(userId: string) {
 }
 
 export async function fetchAddCourseToUser(userId: string, courseId: string) {
-  const snapshot = await get(child(ref(database), `courses/${courseId}`));
+  const courseSnapshot = await get(child(ref(database), `courses/${courseId}`));
+  if (!courseSnapshot.exists()) {
+    alert("Курс не найден");
+    return;
+  }
+
   const workoutIdsSnapshot = await get(
     child(ref(database), `courses/${courseId}/workouts`),
   );
   const workoutIds = workoutIdsSnapshot.val();
   console.log("workoutIds: ", workoutIds);
 
-  if (snapshot.exists()) {
-    const snapshotCourseDir = await get(
-      child(ref(database), `users/${userId}/courses`),
+  const userCourseSnapshot = await get(
+    child(ref(database), `users/${userId}/courses/${courseId}`),
+  );
+
+  if (userCourseSnapshot.exists()) {
+    alert("Такой курс уже имеется");
+    return;
+  }
+
+  for (const id of workoutIds) {
+    console.log("id: ", id);
+    const workoutDataSnapshot = await get(
+      child(ref(database), `workouts/${id}`),
     );
-    console.log("snapshotCourseDir.val(): ", snapshotCourseDir.val());
-    if (snapshotCourseDir.exists()) {
-      const snapshotCourseOfUser = await get(
-        child(ref(database), `users/${userId}/courses/${courseId}`),
+    if (workoutDataSnapshot.exists()) {
+      const workoutData = workoutDataSnapshot.val() as WorkoutType;
+      console.log("workoutData: ", workoutData);
+
+      if (workoutData.exercises && Array.isArray(workoutData.exercises)) {
+        const updatedExercises = workoutData.exercises.map((exercise) => {
+          return {
+            ...exercise,
+            isDone: false,
+            progress: 0,
+          };
+        });
+        workoutData.exercises = updatedExercises;
+      }
+
+      await update(
+        child(
+          ref(database),
+          `users/${userId}/courses/${courseId}/workouts/${id}`,
+        ),
+        workoutData,
       );
-      console.log("snapshotCourseOfUser. val(): ", snapshotCourseOfUser.val());
-
-      if (!snapshotCourseOfUser.exists()) {
-        for (const id of workoutIds) {
-          console.log("id: ", id);
-          const workoutDataSnapshot = await get(
-            child(ref(database), `workouts/${id}`),
-          );
-          const exercises = workoutDataSnapshot.val();
-          console.log("exercises: ", exercises);
-
-
-          // const snapshotExercises = await get(
-          //   child(ref(database), `workouts/${id}/exersises`),
-          // );
-
-          // let arrExercises = []
-          // const exercisesIds = snapshotExercises.val();
-          // for (const idEx of exercisesIds)
-
-          if (workoutDataSnapshot.exists()) {
-            update(
-              child(ref(database), `users/${userId}/courses/${courseId}/${id}`),
-              exercises,
-            );
-          }
-        }
-        alert("Курс добавлен стр.117");
-      } else {
-        alert("Такой курс уже имеется");
-      }
-    } else {
-      for (const id of workoutIds) {
-        console.log("id: ", id);
-        const workoutDataSnapshot = await get(
-          child(ref(database), `workouts/${id}`),
-        );
-        const exercises = workoutDataSnapshot.val();
-        console.log("exercises: ", exercises);
-        if (workoutDataSnapshot.exists()) {
-          await update(
-            child(ref(database), `users/${userId}/courses/${courseId}/${id}`),
-            exercises,
-          );
-        }
-      }
-      alert("Курс добавлен стр.136");
     }
   }
+
+  alert("Курс добавлен");
 }
 
 export async function fetchRemoveCourseFromUser(

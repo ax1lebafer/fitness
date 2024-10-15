@@ -5,7 +5,7 @@ export default function useCourses() {
   const context = useContext(CoursesContext);
 
   if (context === null) {
-    throw new Error("useUser должен использоваться внутри UserProvider");
+    throw new Error("useCourses должен использоваться внутри CoursesProvider");
   }
   return context;
 }

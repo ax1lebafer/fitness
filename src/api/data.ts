@@ -45,28 +45,29 @@ export async function fetchCourse(courseId: string) {
   }
 }
 
-export async function fetchCoursesOfUser(userId: string) {
-  let data: CourseType[] = [];
+export async function fetchCoursesOfUser(
+  userId: string,
+): Promise<CourseType[]> {
+  const data: CourseType[] = [];
 
   const snapshot = await get(child(ref(database), `users/${userId}/courses`));
-  // console.log("snapshot.val(): ", snapshot.val());
   if (snapshot.exists()) {
     const coursesData = snapshot.val();
-    const promises = Object.keys(coursesData).map(async (key) => {
-      const data = await fetchCourse(key);
-      const dataForView = {
-        ...data,
-      };
-      return dataForView;
-    });
-    data = await Promise.all(promises);
-    data = data.sort(sortByOrder);
+    const courseIds = Object.keys(coursesData);
 
-    if (data) {
-      return data;
-    } else {
-      throw new Error("Нет данных");
+    for (const courseId of courseIds) {
+      const courseSnapshot = await get(
+        child(ref(database), `courses/${courseId}`),
+      );
+      if (courseSnapshot.exists()) {
+        const courseData = courseSnapshot.val() as CourseType;
+        data.push(courseData);
+      }
     }
+
+    return data.sort(sortByOrder);
+  } else {
+    throw new Error("У пользователя нет курсов");
   }
 }
 
@@ -128,22 +129,31 @@ export async function fetchAddCourseToUser(userId: string, courseId: string) {
 export async function fetchRemoveCourseFromUser(
   userId: string,
   courseId: string,
-) {
-  const snapshot = await get(child(ref(database), `courses/${courseId}`));
-  console.log("snapshot.val(): ", snapshot.val());
-  if (snapshot.exists()) {
-    const snapshotCourseDir = await get(
-      child(ref(database), `users/${userId}/courses`),
+): Promise<void> {
+  try {
+    const courseSnapshot = await get(
+      child(ref(database), `courses/${courseId}`),
     );
-    console.log("snapshotCourseDir.val(): ", snapshotCourseDir.val());
-    if (snapshotCourseDir.exists()) {
-      remove(child(ref(database), `users/${userId}/courses/${courseId}`));
-      alert("Курс удален стр.100");
-    } else {
-      alert("Такого курса нет");
+    console.log("courseSnapshot.val(): ", courseSnapshot.val());
+
+    if (!courseSnapshot.exists()) {
+      throw new Error("Такого курса не существует в базе данных.");
     }
-  } else {
-    alert("Такого курса нет");
+
+    const userCourseSnapshot = await get(
+      child(ref(database), `users/${userId}/courses/${courseId}`),
+    );
+    console.log("userCourseSnapshot.val(): ", userCourseSnapshot.val());
+
+    if (!userCourseSnapshot.exists()) {
+      throw new Error("У пользователя нет такого курса.");
+    }
+
+    await remove(child(ref(database), `users/${userId}/courses/${courseId}`));
+    console.log("Курс успешно удалён у пользователя.");
+  } catch (error) {
+    console.error("Ошибка при удалении курса у пользователя:", error);
+    throw error;
   }
 }
 

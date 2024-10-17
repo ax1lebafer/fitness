@@ -1,7 +1,7 @@
 import ButtonLink from "../ui/ButtonLink";
 import { arrayTrainingProps } from "../../pages/MainTraining";
 import { useState } from "react";
-import { InputProgressForm } from "../inputProgressForm.tsx";
+import InputProgressForm from "../InputProgressForm.tsx";
 
 type TypeMyProgressProps = {
   arrayTraining: arrayTrainingProps[];

@@ -2,10 +2,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import ProgressBar from "./ProgressBar.tsx";
 import {
   fetchAddCourseToUser,
-  fetchCoursesOfUser,
   fetchRemoveCourseFromUser,
 } from "../api/data.ts";
-import { useEffect } from "react";
 import useCourses from "../hooks/useCourses.ts";
 import { useUser } from "../hooks/useUser.ts";
 import { appRoutes } from "../lib/appRoutes.ts";
@@ -20,11 +18,9 @@ export default function Card({ name, id }: CardProps) {
   const navigate = useNavigate();
   const pathname = location.pathname;
   const { isEntering, user } = useUser();
-  const { setSelectedCourses, setCourseError, setSelectedLoading } =
-    useCourses();
+  const { selectedCourses, setSelectedCourses } = useCourses();
 
   const isProfilePage = pathname === "/profile";
-  console.log("isProfilePage : ", isProfilePage);
 
   const openSignInModal = () => {
     navigate(appRoutes.SIGNIN, { state: { backgroundLocation: location } });
@@ -32,40 +28,34 @@ export default function Card({ name, id }: CardProps) {
 
   const userId = user?.uid;
 
-  const addCourse = () => {
-    console.log("StartBanner. courseId: ", id);
-    console.log("StartBanner. uid: ", userId);
-    if (isEntering) {
-      fetchAddCourseToUser(userId, id);
-    } else { 
+  const addCourse = async () => {
+    if (isEntering && userId) {
+      await fetchAddCourseToUser(userId, id);
+      const updatedCourses = [...selectedCourses, { id, name }];
+      setSelectedCourses(updatedCourses);
+    } else {
       openSignInModal();
     }
   };
 
-  const delCourse = () => {
-    console.log("Profile. courseId: ", id);
-    console.log("Profile. uid: ", userId);
-    fetchRemoveCourseFromUser(userId, id);
-  };
-
-  useEffect(() => {
-    async function getSelectedCourses() {
+  const delCourse = async () => {
+    if (userId) {
       try {
-        const data = await fetchCoursesOfUser(userId);
-        setSelectedLoading(true);
-        setSelectedCourses(data);
-      } catch (error: unknown) {
+        await fetchRemoveCourseFromUser(userId, id);
+        const updatedCourses = selectedCourses.filter(
+          (course) => course._id !== id,
+        );
+        setSelectedCourses(updatedCourses);
+      } catch (error) {
         if (error instanceof Error) {
-          setCourseError(error.message);
+          console.error(error.message);
+          alert(error.message);
         }
-        setCourseError("Неизвестная ошибка");
-        console.log(error);
-      } finally {
-        setSelectedLoading(false);
       }
+    } else {
+      console.error("Пользователь не авторизован");
     }
-    getSelectedCourses();
-  }, [setCourseError, setSelectedLoading, setSelectedCourses, userId, id]);
+  };
 
   return (
     <div className="mx-[calc((100%-343px)/2)] xl:mx-0 w-[343px] xl:w-[360px] items-center bg-white rounded-[30px]">

@@ -4,7 +4,7 @@ type InputProgressFormType = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export function InputProgressForm({
+export default function InputProgressForm({
   exerciseName,
   /*  id, */
   value,

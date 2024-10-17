@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import React, { createContext, useState } from "react";
 import { CourseType } from "../types/courses.ts";
 
 type ProviderProps = {
@@ -6,18 +6,18 @@ type ProviderProps = {
 };
 
 type ContextType = {
-  courses: CourseType[] | null;
-  selectedCourses: CourseType[] | null;
+  courses: CourseType[];
+  selectedCourses: CourseType[];
   loading: boolean;
   selectedLoading: boolean;
   error: string | null;
   courseError: string | null;
-  setCourses: (prevState: CourseType[]) => void;
-  setSelectedCourses: (prevState: CourseType[]) => void;
-  setLoading: (prevState: boolean) => void;
-  setSelectedLoading: (prevState: boolean) => void;
-  setError: (prevState: string | null) => void;
-  setCourseError: (prevState: string | null) => void;
+  setCourses: React.Dispatch<React.SetStateAction<CourseType[]>>;
+  setSelectedCourses: React.Dispatch<React.SetStateAction<CourseType[]>>;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setSelectedLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setError: React.Dispatch<React.SetStateAction<string | null>>;
+  setCourseError: React.Dispatch<React.SetStateAction<string | null>>;
 };
 
 export const CoursesContext = createContext<ContextType | null>(null);

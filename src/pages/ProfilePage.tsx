@@ -1,4 +1,3 @@
-import { useLocation } from "react-router-dom";
 import ButtonLink from "../components/ui/ButtonLink.tsx";
 import { appRoutes } from "../lib/appRoutes.ts";
 import { useUser } from "../hooks/useUser.ts";
@@ -7,21 +6,8 @@ import { useState } from "react";
 import UpdatePassword from "../components/modal/UpdatePassword.tsx";
 
 export default function ProfilePage() {
-  const { user, setIsProfile } = useUser();
+  const { user } = useUser();
   const [openModal, setOpenModal] = useState(false);
-  const location = useLocation();
-
-  const userId = user?.uid;
-  console.log("Profile. userId: ", userId);
-
-  const backgroundLocation = location.state?.backgroundLocation || location;
-  console.log(
-    "Profile BackgroundLocation.pathname: ",
-    backgroundLocation.pathname,
-  );
-  if (backgroundLocation.pathname === "/profile") {
-    setIsProfile(true);
-  }
 
   const closeModal = () => {
     setOpenModal(false);
@@ -40,12 +26,7 @@ export default function ProfilePage() {
         <section className="bg-[#FFFFFF] rounded-[30px] p-[30px] mt-10">
           <div className="flex flex-wrap flex-row">
             <div className="relative xl:w-[197px] w-[141px] xl:h-[197px] h-[141px] xl:mx-[0px] mx-[71px]">
-              <img
-                src="/img/avatar-big.svg"
-                alt="Фото профиля"
-                // width={197}
-                // height={197}
-              />
+              <img src="/img/avatar-big.svg" alt="Фото профиля" />
             </div>
             <div className="flex flex-col xl:gap-[20px] gap-[13px] mt-0 xl:mt-[22px] ml-0 xl:ml-[19px]">
               <div className="xl:text-[32px] text-[24px] font-bold text-left">
@@ -70,7 +51,6 @@ export default function ProfilePage() {
             </div>
           </div>
         </section>
-        {/* <MyCourses id={userId} /> */}
         <MyCourses />
       </div>
     </main>

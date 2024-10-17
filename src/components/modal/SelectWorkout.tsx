@@ -1,10 +1,17 @@
 import { Link } from "react-router-dom";
 import ButtonLink from "../ui/ButtonLink.tsx";
 
-export default function SelectWorkout() {
+type SelectWorkoutProps = {
+  closeModal: () => void;
+};
+
+export default function SelectWorkout({ closeModal }: SelectWorkoutProps) {
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
-      <div className="fixed inset-0 bg-black opacity-50"></div>
+      <div
+        className="fixed inset-0 bg-black opacity-50"
+        onClick={closeModal}
+      ></div>
 
       <div className="p-10 bg-white w-[460px] h-[610px] rounded-[30px] z-10">
         <p className="text-[32px] text-center mb-12">Выберите тренировку</p>

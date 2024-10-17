@@ -3,6 +3,8 @@ import useCourses from "../hooks/useCourses.ts";
 import { useUser } from "../hooks/useUser.ts";
 import { useEffect } from "react";
 import { fetchCoursesOfUser } from "../api/data.ts";
+import { appRoutes } from "../lib/appRoutes.ts";
+import ButtonLink from "./ui/ButtonLink.tsx";
 
 export default function MyCourses() {
   const {
@@ -55,6 +57,15 @@ export default function MyCourses() {
           />
         ))}
       </ul>
+
+      {selectedCourses.length === 0 && (
+        <div>
+          <p className="text-3xl mb-10">
+            Нет активных курсов. Для добавления курсов перейдите на
+          </p>
+          <ButtonLink text="Главную страницу" to={appRoutes.HOME} />
+        </div>
+      )}
     </section>
   );
 }

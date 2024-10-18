@@ -50,8 +50,6 @@ export default function SelectWorkout({
     getWorkoutsOfUser();
   }, [userId, courseId, setWorkouts, setWorkoutsError, setIsWorkoutsLoading]);
 
-  console.log(workouts);
-
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
       <div
@@ -62,39 +60,47 @@ export default function SelectWorkout({
       <div className="p-10 bg-white w-[460px] h-[610px] rounded-[30px] z-10">
         <p className="text-[32px] text-center mb-12">Выберите тренировку</p>
         <ul className="overflow-auto h-[360px]">
-          {workoutsError && workoutsError}
+          {workoutsError && <p>{workoutsError}</p>}
 
-          {isWorkoutsLoading && <p>Загрузка</p>}
+          {isWorkoutsLoading && <p>Загрузка...</p>}
 
-          {!isWorkoutsLoading && (
+          {!isWorkoutsLoading && !workoutsError && (
             <>
-              {workouts.map((workout) => (
-                <li
-                  key={workout._id}
-                  className="flex gap-3 items-center border-b w-[370px]"
-                >
-                  <img
-                    src="/img/icons/checked.svg"
-                    alt="Выполнено"
-                    className="w-5 h-5"
-                  />
+              {workouts.map((workout) => {
+                const isWorkoutDone =
+                  Array.isArray(workout.exercises) &&
+                  workout.exercises.every((exercise) => exercise.isDone);
 
-                  {/*<span className="w-5 h-5 rounded-full border border-black"></span>*/}
-                  <div className="flex flex-col gap-2.5">
-                    <Link
-                      to={"/training/" + workout._id}
-                      className="text-2xl mt-2.5 leading-none"
-                    >
-                      {workout.name}
-                    </Link>
-                    {/*<p className="text-[16px] mb-2">{workout.name}</p>*/}
-                  </div>
-                </li>
-              ))}
+                return (
+                  <li
+                    key={workout._id}
+                    className="flex gap-5 items-center border-b w-[370px]"
+                  >
+                    {isWorkoutDone ? (
+                      <img
+                        src="/img/icons/checked.svg"
+                        alt="Выполнено"
+                        className="w-5 h-5"
+                      />
+                    ) : (
+                      <span className="w-5 h-5 rounded-full border border-black"></span>
+                    )}
+
+                    <div className="flex flex-col gap-2.5 w-[330px]">
+                      <Link
+                        to={"/training/" + workout._id}
+                        className="text-[20px] pt-2.5 pb-2.5 leading-none text-left"
+                      >
+                        {workout.name}
+                      </Link>
+                    </div>
+                  </li>
+                );
+              })}
             </>
           )}
         </ul>
-        <ButtonLink text="Начать" className="w-full text-[18px]" />
+        <ButtonLink text="Начать" className="w-full text-[18px] mt-2.5" />
       </div>
     </div>
   );

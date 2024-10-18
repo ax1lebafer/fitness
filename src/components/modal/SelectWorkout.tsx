@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ButtonLink from "../ui/ButtonLink.tsx";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fetchWorkoutsOfUserCourse } from "../../api/data.ts";
 import { useUser } from "../../hooks/useUser.ts";
 import { useWorkouts } from "../../hooks/useWorkouts.ts";
@@ -23,6 +23,10 @@ export default function SelectWorkout({
     setIsWorkoutsLoading,
     setWorkoutsError,
   } = useWorkouts();
+  const [selectedWorkoutId, setSelectedWorkoutId] = useState<string | null>(
+    null,
+  );
+  const navigate = useNavigate();
 
   const userId = user?.uid;
 
@@ -50,6 +54,18 @@ export default function SelectWorkout({
     getWorkoutsOfUser();
   }, [userId, courseId, setWorkouts, setWorkoutsError, setIsWorkoutsLoading]);
 
+  const handleWorkoutClick = (workoutId: string) => {
+    setSelectedWorkoutId(workoutId);
+  };
+
+  const handleStartClick = () => {
+    if (selectedWorkoutId) {
+      navigate(`/training/${selectedWorkoutId}`);
+    } else {
+      alert("Пожалуйста, выберите тренировку");
+    }
+  };
+
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
       <div
@@ -74,7 +90,12 @@ export default function SelectWorkout({
                 return (
                   <li
                     key={workout._id}
-                    className="flex gap-5 items-center border-b w-[370px]"
+                    className={`flex gap-5 items-center border-b w-[370px] cursor-pointer ${
+                      selectedWorkoutId === workout._id
+                        ? "bg-gray-200 rounded-2xl"
+                        : ""
+                    }`}
+                    onClick={() => handleWorkoutClick(workout._id)}
                   >
                     {isWorkoutDone ? (
                       <img
@@ -87,12 +108,9 @@ export default function SelectWorkout({
                     )}
 
                     <div className="flex flex-col gap-2.5 w-[330px]">
-                      <Link
-                        to={"/training/" + workout._id}
-                        className="text-[20px] pt-2.5 pb-2.5 leading-none text-left"
-                      >
+                      <p className="text-[20px] pt-2.5 pb-2.5 leading-none text-left">
                         {workout.name}
-                      </Link>
+                      </p>
                     </div>
                   </li>
                 );
@@ -100,7 +118,12 @@ export default function SelectWorkout({
             </>
           )}
         </ul>
-        <ButtonLink text="Начать" className="w-full text-[18px] mt-2.5" />
+        <ButtonLink
+          text="Начать"
+          className="w-full text-[18px] mt-2.5"
+          onClick={handleStartClick}
+          disabled={!selectedWorkoutId}
+        />
       </div>
     </div>
   );

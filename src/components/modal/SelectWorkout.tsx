@@ -30,6 +30,7 @@ export default function SelectWorkout({
     const getWorkoutsOfUser = async () => {
       try {
         setIsWorkoutsLoading(false);
+        setWorkoutsError(null);
         if (userId) {
           setIsWorkoutsLoading(true);
           const response = await fetchWorkoutsOfUserCourse(userId, courseId);
@@ -47,10 +48,9 @@ export default function SelectWorkout({
     };
 
     getWorkoutsOfUser();
-  }, [userId, courseId]);
+  }, [userId, courseId, setWorkouts, setWorkoutsError, setIsWorkoutsLoading]);
 
   console.log(workouts);
-  console.log(isWorkoutsLoading);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">

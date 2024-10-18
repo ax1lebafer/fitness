@@ -10,8 +10,8 @@ type ContextType = {
   isWorkoutsLoading: boolean;
   workoutsError: null | string;
   setWorkouts: React.Dispatch<React.SetStateAction<WorkoutType[]>>;
-  setIsWorkoutsLoading: (prev: boolean) => void;
-  setWorkoutsError: React.Dispatch<React.SetStateAction<null | string>>;
+  setIsWorkoutsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setWorkoutsError: React.Dispatch<React.SetStateAction<string | null>>;
 };
 
 export const WorkoutsContext = createContext<null | ContextType>(null);
@@ -19,7 +19,7 @@ export const WorkoutsContext = createContext<null | ContextType>(null);
 export default function WorkoutsProvider({ children }: ProviderProps) {
   const [workouts, setWorkouts] = useState<WorkoutType[]>([]);
   const [isWorkoutsLoading, setIsWorkoutsLoading] = useState(false);
-  const [workoutsError, setWorkoutsError] = useState<null | string>(null);
+  const [workoutsError, setWorkoutsError] = useState<string | null>(null);
 
   return (
     <WorkoutsContext.Provider

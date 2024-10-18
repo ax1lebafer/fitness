@@ -1,5 +1,5 @@
 export type ExerciseType = {
-  _id: string;
+  isDone: boolean;
   name: string;
   quantity: number;
   progress: number;

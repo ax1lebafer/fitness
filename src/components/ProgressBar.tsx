@@ -2,7 +2,11 @@ import ButtonLink from "./ui/ButtonLink.tsx";
 import { useState } from "react";
 import SelectWorkout from "./modal/SelectWorkout.tsx";
 
-export default function ProgressBar() {
+type ProgressBarProps = {
+  courseId: string;
+};
+
+export default function ProgressBar({ courseId }: ProgressBarProps) {
   const [isOpenModal, setIsOpenModal] = useState(false);
 
   return (
@@ -19,7 +23,10 @@ export default function ProgressBar() {
         onClick={() => setIsOpenModal(true)}
       />
       {isOpenModal && (
-        <SelectWorkout closeModal={() => setIsOpenModal(false)} />
+        <SelectWorkout
+          closeModal={() => setIsOpenModal(false)}
+          courseId={courseId}
+        />
       )}
     </div>
   );

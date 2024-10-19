@@ -13,6 +13,7 @@ type ContextType = {
   logout: () => void;
   isContain: boolean;
   setIsContain: (prevState: boolean) => void;
+  loadingUser: boolean;
 };
 
 export const UserContext = createContext<null | ContextType>(null);
@@ -21,6 +22,7 @@ export default function UserProvider({ children }: ProviderProps) {
   const [user, setUser] = useState<null | UserType>(null);
   const [isEntering, setIsEntering] = useState<boolean>(false);
   const [isContain, setIsContain] = useState<boolean>(false);
+  const [loadingUser, setLoadingUser] = useState<boolean>(true);
 
   useEffect(() => {
     try {
@@ -34,6 +36,8 @@ export default function UserProvider({ children }: ProviderProps) {
     } catch (error) {
       console.error("Ошибка при загрузке пользователя из localStorage:", error);
       localStorage.removeItem("user");
+    } finally {
+      setLoadingUser(false);
     }
   }, []);
 
@@ -63,6 +67,7 @@ export default function UserProvider({ children }: ProviderProps) {
         logout,
         isContain,
         setIsContain,
+        loadingUser,
       }}
     >
       {children}

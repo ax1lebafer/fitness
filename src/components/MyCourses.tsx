@@ -51,7 +51,7 @@ export default function MyCourses() {
       <ul className="flex flex-wrap gap-10">
         {selectedCourses.map((selectedCourse) => (
           <Card
-            key={selectedCourse._id}
+            key={selectedCourse.order}
             name={selectedCourse.nameRU}
             id={selectedCourse._id}
           />

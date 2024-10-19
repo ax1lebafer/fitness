@@ -5,11 +5,14 @@ import ButtonLink from "../ui/ButtonLink.tsx";
 import { getUser } from "../../api/userAuth.ts";
 import { useUser } from "../../hooks/useUser";
 import { errorMessage } from "../../utils/ErrorMessage.ts";
+import { fetchCoursesOfUser } from "../../api/data.ts";
+import useCourses from "../../hooks/useCourses.ts"
 
 export default function SignIn() {
   const navigate = useNavigate();
   const location = useLocation();
   const { setUser, setIsEntering } = useUser();
+  const { setSelectedCourses } = useCourses();
 
   const backgroundLocation = location.state?.backgroundLocation || {
     pathname: appRoutes.HOME,
@@ -60,6 +63,9 @@ export default function SignIn() {
       setIsEntering(true);
       console.log("user", user);
       setSignInError("");
+      const userId = user.uid;
+      const data = await fetchCoursesOfUser(userId);
+      setSelectedCourses(data);
       navigate(backgroundLocation.pathname, { replace: true });
     } catch (error: unknown) {
       if (error instanceof Error) {

@@ -2,6 +2,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import ProgressBar from "./ProgressBar.tsx";
 import {
   fetchAddCourseToUser,
+  fetchCoursesOfUser,
   fetchRemoveCourseFromUser,
 } from "../api/data.ts";
 import useCourses from "../hooks/useCourses.ts";
@@ -21,7 +22,9 @@ export default function Card({ name, id }: CardProps) {
   const { selectedCourses, setSelectedCourses } = useCourses();
 
   const isProfilePage = pathname === "/profile";
-
+  let isSelected = Boolean(
+    selectedCourses ? selectedCourses?.find((el) => el._id === id) : null,
+  );
   const openSignInModal = () => {
     navigate(appRoutes.SIGNIN, { state: { backgroundLocation: location } });
   };
@@ -31,21 +34,31 @@ export default function Card({ name, id }: CardProps) {
   const addCourse = async () => {
     if (isEntering && userId) {
       await fetchAddCourseToUser(userId, id);
-      const updatedCourses = [...selectedCourses, { id, name }];
-      setSelectedCourses(updatedCourses);
+      // const updatedCourses = [...selectedCourses, { id, name }];
+      // setSelectedCourses(updatedCourses);
+      const data = await fetchCoursesOfUser(userId);
+      setSelectedCourses(data);
+      console.log("updatedCourses:", selectedCourses);
     } else {
       openSignInModal();
     }
+    isSelected = Boolean(
+      selectedCourses && isEntering
+        ? selectedCourses?.find((el) => el._id === id)
+        : null,
+    );
   };
 
   const delCourse = async () => {
     if (userId) {
       try {
         await fetchRemoveCourseFromUser(userId, id);
-        const updatedCourses = selectedCourses.filter(
-          (course) => course._id !== id,
-        );
-        setSelectedCourses(updatedCourses);
+        // const updatedCourses = selectedCourses.filter(
+        //   (course) => course._id !== id,
+        // );
+        // setSelectedCourses(updatedCourses);
+        const data = await fetchCoursesOfUser(userId);
+        setSelectedCourses(data);
       } catch (error) {
         if (error instanceof Error) {
           console.error(error.message);
@@ -60,22 +73,35 @@ export default function Card({ name, id }: CardProps) {
   return (
     <div className="mx-[calc((100%-343px)/2)] xl:mx-0 w-[343px] xl:w-[360px] items-center bg-white rounded-[30px]">
       <div className="relative h-[325px]">
-        <img
-          className="rounded-[30px] h-[325px] w-[343px] xl:w-[360px] object-cover"
-          src={`/img/${id}.png`}
-          alt="Курс"
-        />
+        <Link to={`/courses/${id}`}>
+          <img
+            className="rounded-[30px] h-[325px] w-[343px] xl:w-[360px] object-cover"
+            src={`/img/${id}.png`}
+            alt="Курс"
+          />
+        </Link>
         {!isProfilePage ? (
-          <button onClick={() => addCourse()} type="button">
+          isSelected ? (
             <img
-              src="/img/icons/add.svg"
-              alt="Добавить"
-              title="Добавить курс"
+              src="/img/icons/checked.svg"
+              alt="Добавлен"
+              title="Курс добавлен"
               width={26}
               height={26}
-              className="absolute right-6 top-6 cursor-pointer hover:scale-125 transition ease-linear"
+              className="absolute right-6 top-6 cursor-default hover:scale-125 transition ease-linear"
             />
-          </button>
+          ) : (
+            <button onClick={() => addCourse()} type="button">
+              <img
+                src="/img/icons/add.svg"
+                alt="Добавить"
+                title="Добавить курс"
+                width={26}
+                height={26}
+                className="absolute right-6 top-6 cursor-pointer hover:scale-125 transition ease-linear"
+              />
+            </button>
+          )
         ) : (
           <button onClick={() => delCourse()} type="button">
             <img

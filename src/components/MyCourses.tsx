@@ -18,14 +18,15 @@ export default function MyCourses() {
 
   useEffect(() => {
     async function getSelectedCourses() {
-      if (!userId) {
+      // if (!userId) {
+      if (!userId || selectedCourses.length === 0) {
         return;
       }
       setSelectedLoading(true);
       try {
-        console.log("getSelectedCourses.userId: ", userId);
+        // console.log("getSelectedCourses.userId: ", userId);
         const data = await fetchCoursesOfUser(userId);
-        console.log("fetchSelectedCourses. data:", data);
+        // console.log("fetchSelectedCourses. data:", data);
         setSelectedCourses(data);
       } catch (error: unknown) {
         if (error instanceof Error) {
@@ -40,7 +41,14 @@ export default function MyCourses() {
     }
 
     getSelectedCourses();
-  }, [userId, setSelectedCourses, setCourseError, setSelectedLoading]);
+    // }, [userId, setSelectedCourses, setCourseError, setSelectedLoading]);
+  }, [
+    userId,
+    setSelectedCourses,
+    setCourseError,
+    setSelectedLoading,
+    selectedCourses,
+  ]);
 
   return (
     <section className="mb-10">
@@ -49,7 +57,7 @@ export default function MyCourses() {
       </h2>
 
       <ul className="flex flex-wrap gap-10">
-        {selectedCourses.map((selectedCourse) => (
+        {selectedCourses?.map((selectedCourse) => (
           <Card
             key={selectedCourse._id}
             name={selectedCourse.nameRU}

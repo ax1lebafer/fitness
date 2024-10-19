@@ -4,11 +4,14 @@ import { appRoutes } from "../lib/appRoutes.ts";
 import { useUser } from "../hooks/useUser.ts";
 import { useState } from "react";
 import ProfileEnter from "./modal/ProfileEnter.tsx";
+// import { fetchCoursesOfUser } from "../api/data.ts";
+// import useCourses from "../hooks/useCourses.ts";
 
 export default function Header() {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, isEntering } = useUser();
+  // const { setSelectedCourses } = useCourses();
 
   const isProfile = location.pathname.includes("profile");
 
@@ -20,6 +23,11 @@ export default function Header() {
 
   const openSignInModal = () => {
     navigate(appRoutes.SIGNIN, { state: { backgroundLocation: location } });
+    // if (user) {
+    //   const userId = user.uid;
+    //   const data = await fetchCoursesOfUser(userId);
+    //   setSelectedCourses(data);
+    // }
   };
 
   return (

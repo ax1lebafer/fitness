@@ -1,6 +1,7 @@
 import ButtonLink from "../../components/ui/ButtonLink";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../hooks/useUser";
+import useCourses from "../../hooks/useCourses";
 
 type ProfileEnterProps = {
   closeModal: () => void;
@@ -9,6 +10,7 @@ type ProfileEnterProps = {
 export default function ProfileEnter({ closeModal }: ProfileEnterProps) {
   const navigate = useNavigate();
   const { user, setIsEntering, logout } = useUser();
+  const { setSelectedCourses } = useCourses();
 
   const openProfilePage = () => {
     closeModal();
@@ -19,6 +21,7 @@ export default function ProfileEnter({ closeModal }: ProfileEnterProps) {
     closeModal();
     logout();
     setIsEntering(false);
+    setSelectedCourses([]);
   };
 
   return (

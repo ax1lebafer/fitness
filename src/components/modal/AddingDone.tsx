@@ -2,7 +2,7 @@ export type AddRemovProps = {
   mess: string;
 }
 
-export default function AddingRemovingDone(messageProc: AddRemovProps) {
+export default function AddingDone(messageProc: AddRemovProps) {
   const trueMess = Object.values(messageProc);
 
   return (

@@ -9,7 +9,7 @@ import useCourses from "../hooks/useCourses.ts";
 import { useUser } from "../hooks/useUser.ts";
 import { appRoutes } from "../lib/appRoutes.ts";
 import { useState } from "react";
-import AddingRemovingDone from "../components/modal/AddingRemovingDone.tsx";
+import AddingDone from "./modal/AddingDone.tsx";
 
 type CardProps = {
   name: string;
@@ -128,7 +128,7 @@ export default function Card({ name, id }: CardProps) {
           </button>
         )}
       </div>
-      {isOpenProcessModal && <AddingRemovingDone mess={messageProc} />}
+      {isOpenProcessModal && <AddingDone mess={messageProc} />}
       <div className="flex px-[30px] py-5 flex-col gap-5">
         <Link
           className="hover:underline text-2xl xl:text-3xl font-medium leading-none text-left"

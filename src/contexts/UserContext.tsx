@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { UserType } from "../types/user.ts";
 
 type ProviderProps = {
@@ -8,7 +8,7 @@ type ProviderProps = {
 type ContextType = {
   user: UserType | null;
   isEntering: boolean;
-  setUser: (prevState: null | UserType) => void;
+  setUser: (user: UserType | null) => void;
   setIsEntering: (prevState: boolean) => void;
   logout: () => void;
   isContain: boolean;
@@ -22,16 +22,42 @@ export default function UserProvider({ children }: ProviderProps) {
   const [isEntering, setIsEntering] = useState<boolean>(false);
   const [isContain, setIsContain] = useState<boolean>(false);
 
+  useEffect(() => {
+    try {
+      const storedUser = localStorage.getItem("user");
+
+      if (storedUser) {
+        const parsedUser = JSON.parse(storedUser);
+        setUser(parsedUser);
+        setIsEntering(true);
+      }
+    } catch (error) {
+      console.error("Ошибка при загрузке пользователя из localStorage:", error);
+      localStorage.removeItem("user");
+    }
+  }, []);
+
+  function setUserAndPersist(newUser: UserType | null) {
+    if (newUser) {
+      localStorage.setItem("user", JSON.stringify(newUser));
+    } else {
+      localStorage.removeItem("user");
+    }
+    setUser(newUser);
+    setIsEntering(!!newUser);
+  }
+
   function logout() {
     localStorage.removeItem("user");
     setUser(null);
+    setIsEntering(false);
   }
 
   return (
     <UserContext.Provider
       value={{
         user,
-        setUser,
+        setUser: setUserAndPersist,
         isEntering,
         setIsEntering,
         logout,
@@ -43,28 +69,3 @@ export default function UserProvider({ children }: ProviderProps) {
     </UserContext.Provider>
   );
 }
-
-// function getUserFromLocalStorage() {
-//   const userInfo = localStorage.getItem("user");
-//   return userInfo ? JSON.parse(userInfo) : null;
-// };
-
-// export default function UserProvider({ children }) {
-//   const [userData, setUserData] = useState(getUserFromLocalStorage());
-
-//   function logout() {
-//     localStorage.removeItem("user");
-//     setUserData(null);
-//   };
-
-//   function setUser(newUser) {
-//     setUserData(newUser);
-//     localStorage.setItem("user", JSON.stringify(newUser));
-//   };
-
-//   return (
-//     <UserContext.Provider value={{ userData, logout, setUser }}>
-//       {children}
-//     </UserContext.Provider>
-//   );
-// };

@@ -1,9 +1,10 @@
-import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useState } from "react";
 import VideoPlayer from "../components/VideoPlayer.tsx";
 import ResultTraining from "../components/ResultTraining.tsx";
 import MyProgress from "../components/modal/MyProgress.tsx";
 import MyProgressCounted from "../components/modal/MyProgressCounted.tsx";
+import { useWorkouts } from "../hooks/useWorkouts.ts";
 
 export type arrayTrainingProps = {
   target: string;
@@ -52,6 +53,11 @@ export default function MainTraining() {
   const [openSuccessModal, setOpenSuccessModal] = useState(false);
   const [isOpenMyProgressModal, setIsOpenMyProgressModal] = useState(false);
 
+  const { workouts } = useWorkouts();
+  const { id } = useParams();
+
+  const workout = workouts.find((w) => w._id === id);
+
   const toggleWorkoutMyProgress = () => {
     setIsOpenMyProgressModal(true);
   };
@@ -64,15 +70,15 @@ export default function MainTraining() {
 
   return (
     <div className="mb-[201px]">
-      <h1 className="sm:text-[48px] md:text-[60px] text-[24px] text-left font-medium">Йога</h1>
-      <nav aria-label="breadcrumb">
-        <ol className="flex flex-row text-center sm:text-[24px] md:text-[32px] font-normal pt-6 text-[18px]">
-          <li><Link to="#"><span className="underline">Красота и здоровье</span></Link></li>
-          <li><Link to="#"><span className="underline">Йога на каждый день</span></Link></li>
-          <li><Link to="#"><span className="underline">2 день</span></Link></li>
-        </ol>
-      </nav>
-      <VideoPlayer />
+      <h1 className="sm:text-[48px] md:text-[60px] text-[24px] text-left font-medium">
+        Йога
+      </h1>
+      <div>
+        <p className="xl:text-[32px] text-left xl:underline pt-6 text-[18px]">
+          {workout?.name}
+        </p>
+      </div>
+      <VideoPlayer src={workout?.video} />
       <ResultTraining
         arrayTraining={arrayTraining}
         toggleWorkoutMyProgress={toggleWorkoutMyProgress}

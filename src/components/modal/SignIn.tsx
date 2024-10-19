@@ -61,7 +61,6 @@ export default function SignIn() {
       const user = await getUser(formValues);
       setUser(user);
       setIsEntering(true);
-      console.log("user", user);
       setSignInError("");
       const userId = user.uid;
       const data = await fetchCoursesOfUser(userId);
@@ -70,7 +69,6 @@ export default function SignIn() {
     } catch (error: unknown) {
       if (error instanceof Error) {
       const errMessage = error.message.toLowerCase();
-      console.log("errMessage", errMessage);
       const userMessage = errorMessage(errMessage);
       setSignInError(userMessage);
     }}

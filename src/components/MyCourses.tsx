@@ -18,15 +18,14 @@ export default function MyCourses() {
 
   useEffect(() => {
     async function getSelectedCourses() {
-      // if (!userId) {
       if (!userId || selectedCourses.length === 0) {
         return;
       }
       setSelectedLoading(true);
       try {
-        // console.log("getSelectedCourses.userId: ", userId);
+        console.log("getSelectedCourses.userId: ", userId);
         const data = await fetchCoursesOfUser(userId);
-        // console.log("fetchSelectedCourses. data:", data);
+        console.log("fetchSelectedCourses. data:", data);
         setSelectedCourses(data);
       } catch (error: unknown) {
         if (error instanceof Error) {
@@ -41,13 +40,12 @@ export default function MyCourses() {
     }
 
     getSelectedCourses();
-    // }, [userId, setSelectedCourses, setCourseError, setSelectedLoading]);
   }, [
     userId,
     setSelectedCourses,
     setCourseError,
     setSelectedLoading,
-    selectedCourses,
+    selectedCourses.length,
   ]);
 
   return (

@@ -8,11 +8,15 @@ import {
 import useCourses from "../hooks/useCourses.ts";
 import { useUser } from "../hooks/useUser.ts";
 import { appRoutes } from "../lib/appRoutes.ts";
+import { useState } from "react";
+import AddingRemovingDone from "../components/modal/AddingRemovingDone.tsx";
 
 type CardProps = {
   name: string;
   id: string;
 };
+
+let messageProc = "";
 
 export default function Card({ name, id }: CardProps) {
   const location = useLocation();
@@ -20,6 +24,14 @@ export default function Card({ name, id }: CardProps) {
   const pathname = location.pathname;
   const { isEntering, user } = useUser();
   const { selectedCourses, setSelectedCourses } = useCourses();
+
+  const [isOpenProcessModal, setOpenProcessModal] = useState(false);
+  function handleViewChanges() {
+    setOpenProcessModal(true);
+    setTimeout(() => {
+      setOpenProcessModal(false);
+    }, 2000);
+  }
 
   const isProfilePage = pathname === "/profile";
   let isSelected = Boolean(
@@ -38,7 +50,8 @@ export default function Card({ name, id }: CardProps) {
       // setSelectedCourses(updatedCourses);
       const data = await fetchCoursesOfUser(userId);
       setSelectedCourses(data);
-      console.log("updatedCourses:", selectedCourses);
+      messageProc = `Курс "${name}" добавлен`;
+      handleViewChanges();
     } else {
       openSignInModal();
     }
@@ -115,6 +128,7 @@ export default function Card({ name, id }: CardProps) {
           </button>
         )}
       </div>
+      {isOpenProcessModal && <AddingRemovingDone mess={messageProc} />}
       <div className="flex px-[30px] py-5 flex-col gap-5">
         <Link
           className="hover:underline text-2xl xl:text-3xl font-medium leading-none text-left"

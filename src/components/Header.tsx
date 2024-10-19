@@ -45,7 +45,10 @@ export default function Header() {
           {!isEntering ? (
             <ButtonLink text={"Войти"} onClick={openSignInModal} />
           ) : (
-            <div className="w-auto h-[35px] xl:h-[50px] flex flex-row gap-[12px]">
+            <div
+              className="w-auto h-[35px] xl:h-[50px] flex flex-row gap-[12px] cursor-pointer"
+              onClick={() => setOpenModal(true)}
+            >
               <div className="w-[35px] xl:w-[50px]">
                 <img src="/img/avatar-small.svg" alt="avatar" />
               </div>
@@ -53,7 +56,6 @@ export default function Header() {
                 {user?.name}
               </div>
               <button
-                onClick={() => setOpenModal(true)}
                 className="w-[15px] h-[35px] xl:h-[50px] bg-[#e5e5e5] cursor-point inline-block"
                 type="button"
               >

@@ -1,20 +1,20 @@
-import { arrayTrainingProps } from "../pages/MainTraining.tsx";
+import { ExerciseType } from "../types/exercises.ts";
 
 interface TargetListProps {
-  targetList: arrayTrainingProps[];
+  exercises: ExerciseType[];
 }
 
-export default function TargetList({ targetList }: TargetListProps) {
+export default function TargetList({ exercises }: TargetListProps) {
   return (
     <ol className="mt-[20px] grid grid-flow-row-dense grid-rows-3 grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-4">
-      {targetList.map((arrayTraining, index) => (
+      {exercises.map((exercise, index) => (
         <li className="mb-[20px]" key={index}>
           <p className="text-[18px] text-left">
-            {`${arrayTraining.target} ${arrayTraining.result}%`}
+            {`${exercise.name} ${exercise.progress}%`}
           </p>
           <progress
             className="w-full h-1.5"
-            value={arrayTraining.result}
+            value={exercise.progress}
             max={100}
           />
         </li>

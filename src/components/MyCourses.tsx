@@ -23,9 +23,7 @@ export default function MyCourses() {
       }
       setSelectedLoading(true);
       try {
-        console.log("getSelectedCourses.userId: ", userId);
         const data = await fetchCoursesOfUser(userId);
-        console.log("fetchSelectedCourses. data:", data);
         setSelectedCourses(data);
       } catch (error: unknown) {
         if (error instanceof Error) {

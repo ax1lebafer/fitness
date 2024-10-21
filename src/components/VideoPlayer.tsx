@@ -1,9 +1,11 @@
-// "use client";
 import { useState } from "react";
 import ReactPlayer from "react-player";
 
+type VideoPlayerProps = {
+  src: string;
+};
 
-export default function VideoPlayer() {
+export default function VideoPlayer({ src }: VideoPlayerProps) {
   const [playing, setPlaying] = useState(false);
 
   const handlePlayPause = () => {
@@ -13,7 +15,7 @@ export default function VideoPlayer() {
   return (
     <div className="w-[100%] h-[100%] rounded-[30px] overflow-hidden mt-[40px] relative pt-[56.25%]">
       <ReactPlayer
-        url="https://youtu.be/GeulXZP_kZ8"
+        url={src}
         width="100%"
         height="100%"
         controls={false}
@@ -24,7 +26,10 @@ export default function VideoPlayer() {
       />
 
       {!playing && (
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 cursor-pointer z-10" onClick={handlePlayPause}>
+        <div
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 cursor-pointer z-10"
+          onClick={handlePlayPause}
+        >
           <img
             src="/img/icons/subtract.svg"
             alt="Play"

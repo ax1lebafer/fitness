@@ -115,7 +115,7 @@ export default function Card({ name, id }: CardProps) {
             <p className="text-[16px]">Сложность</p>
           </div>
         </div>
-        {isProfilePage && <ProgressBar />}
+        {isProfilePage && <ProgressBar courseId={id} />}
       </div>
     </div>
   );

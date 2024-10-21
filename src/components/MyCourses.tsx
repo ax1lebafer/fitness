@@ -23,9 +23,7 @@ export default function MyCourses() {
       }
       setSelectedLoading(true);
       try {
-        console.log("getSelectedCourses.userId: ", userId);
         const data = await fetchCoursesOfUser(userId);
-        console.log("fetchSelectedCourses. data:", data);
         setSelectedCourses(data);
       } catch (error: unknown) {
         if (error instanceof Error) {
@@ -51,7 +49,7 @@ export default function MyCourses() {
       <ul className="flex flex-wrap gap-10">
         {selectedCourses.map((selectedCourse) => (
           <Card
-            key={selectedCourse._id}
+            key={selectedCourse.order}
             name={selectedCourse.nameRU}
             id={selectedCourse._id}
           />

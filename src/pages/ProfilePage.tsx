@@ -1,12 +1,11 @@
 import ButtonLink from "../components/ui/ButtonLink.tsx";
-import { appRoutes } from "../lib/appRoutes.ts";
 import { useUser } from "../hooks/useUser.ts";
 import MyCourses from "../components/MyCourses.tsx";
 import { useState } from "react";
 import UpdatePassword from "../components/modal/UpdatePassword.tsx";
 
 export default function ProfilePage() {
-  const { user } = useUser();
+  const { user, logout } = useUser();
   const [openModal, setOpenModal] = useState(false);
 
   const closeModal = () => {
@@ -45,7 +44,7 @@ export default function ProfilePage() {
                 <ButtonLink
                   className="h-[50px] xl:h-[52px] w-[283px] xl:w-[192px] pt-[12px] border border-black bg-white text-[#000000] hover:bg-[#F7F7F7] active:bg-[#E9ECED]"
                   text={"Выйти"}
-                  to={appRoutes.HOME}
+                  onClick={() => logout()}
                 />
               </div>
             </div>

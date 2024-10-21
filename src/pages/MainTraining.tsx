@@ -101,7 +101,7 @@ export default function MainTraining() {
   }
 
   return (
-    <div className="mb-[201px]">
+    <div className="mb-[201px] px-[16px] xl:px-0">
       <h1 className="sm:text-[48px] md:text-[60px] text-[24px] text-left font-medium">
         {course.nameRU}
       </h1>

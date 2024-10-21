@@ -30,11 +30,11 @@ export default function VideoPlayer({ src }: VideoPlayerProps) {
           className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 cursor-pointer z-10"
           onClick={handlePlayPause}
         >
-          <img
+          <img className="w-[46px] xl:w-[156px] h-[46px] xl:h-[156px]"
             src="/img/icons/subtract.svg"
             alt="Play"
-            width={80}
-            height={80}
+            // width={80}
+            // height={80}
           />
         </div>
       )}

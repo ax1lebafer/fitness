@@ -2,14 +2,12 @@ import { ChangeEvent, useEffect, useState } from "react";
 import ButtonLink from "../ui/ButtonLink.tsx";
 import { useLocation, useNavigate } from "react-router-dom";
 import { appRoutes } from "../../lib/appRoutes.ts";
-// import { useUser } from "../../hooks/useUser.ts";
 import { getRegistration } from "../../api/userAuth.ts";
 import { errorMessage } from "../../utils/ErrorMessage.ts";
 
 export default function SignUp() {
   const navigate = useNavigate();
   const location = useLocation();
-  // const { setUser } = useUser();
 
   const backgroundLocation = location.state?.backgroundLocation || location;
 
@@ -25,7 +23,6 @@ export default function SignUp() {
     email: "",
     username: "",
     password: "",
-    // confirmPassword: "",
   });
 
   const [signUpError, setSignUpError] = useState<string>("");
@@ -62,25 +59,8 @@ export default function SignUp() {
       return;
     }
 
-    // if (
-    //   !formValues.confirmPassword ||
-    //   formValues.confirmPassword.trim() === ""
-    // ) {
-    //   setSignUpError("Не введено подтверждение пароля");
-    //   return;
-    // } else if (formValues.confirmPassword.trim().length < 6) {
-    //   setSignUpError("Пароль не должен быть короче 6 символов");
-    //   return;
-    // }
-
-    // if (formValues.password !== formValues.confirmPassword) {
-    //   setSignUpError("Пароли не совпадают");
-    //   return;
-    // }
-
     try {
       const user = await getRegistration(formValues);
-      // setUser(user);
       setSignUpError("");
       console.log("SignUp. user", user);
       navigate(appRoutes.SIGNIN, { state: { backgroundLocation } });
@@ -135,14 +115,6 @@ export default function SignUp() {
             value={formValues.password}
             onChange={onInputChange}
           />
-          {/* <input
-            className="w-[280px] v-[52px] rounded-[8px] border-[1px] border-[#d0cece] px-[18px] py-[16px] text-lg"
-            type="password"
-            name="confirmPassword"
-            placeholder="Повторите пароль"
-            value={formValues.confirmPassword}
-            onChange={onInputChange}
-          /> */}
           {signUpError && (
             <p className="mt-[10px] text-[#db0030] text-sm text-center font-normal leading-4">
               {signUpError}

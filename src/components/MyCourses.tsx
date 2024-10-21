@@ -18,7 +18,7 @@ export default function MyCourses() {
 
   useEffect(() => {
     async function getSelectedCourses() {
-      if (!userId) {
+      if (!userId || selectedCourses.length === 0) {
         return;
       }
       setSelectedLoading(true);
@@ -38,7 +38,13 @@ export default function MyCourses() {
     }
 
     getSelectedCourses();
-  }, [userId, setSelectedCourses, setCourseError, setSelectedLoading]);
+  }, [
+    userId,
+    setSelectedCourses,
+    setCourseError,
+    setSelectedLoading,
+    selectedCourses.length,
+  ]);
 
   return (
     <section className="mb-10">
@@ -47,7 +53,7 @@ export default function MyCourses() {
       </h2>
 
       <ul className="flex flex-wrap gap-10">
-        {selectedCourses.map((selectedCourse) => (
+        {selectedCourses?.map((selectedCourse) => (
           <Card
             key={selectedCourse.order}
             name={selectedCourse.nameRU}

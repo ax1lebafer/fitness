@@ -3,7 +3,6 @@ import {
   getDatabase,
   ref,
   update,
-  // set,
   child,
   remove,
 } from "firebase/database";
@@ -67,7 +66,8 @@ export async function fetchCoursesOfUser(
 
     return data.sort(sortByOrder);
   } else {
-    throw new Error("У пользователя нет курсов");
+    return [];
+    // throw new Error("У пользователя нет курсов");
   }
 }
 
@@ -82,7 +82,6 @@ export async function fetchAddCourseToUser(userId: string, courseId: string) {
     child(ref(database), `courses/${courseId}/workouts`),
   );
   const workoutIds = workoutIdsSnapshot.val();
-  console.log("workoutIds: ", workoutIds);
 
   const userCourseSnapshot = await get(
     child(ref(database), `users/${userId}/courses/${courseId}`),
@@ -94,13 +93,11 @@ export async function fetchAddCourseToUser(userId: string, courseId: string) {
   }
 
   for (const id of workoutIds) {
-    console.log("id: ", id);
     const workoutDataSnapshot = await get(
       child(ref(database), `workouts/${id}`),
     );
     if (workoutDataSnapshot.exists()) {
       const workoutData = workoutDataSnapshot.val() as WorkoutType;
-      console.log("workoutData: ", workoutData);
 
       if (workoutData.exercises && Array.isArray(workoutData.exercises)) {
         const updatedExercises = workoutData.exercises.map((exercise) => {
@@ -122,8 +119,6 @@ export async function fetchAddCourseToUser(userId: string, courseId: string) {
       );
     }
   }
-
-  alert("Курс добавлен");
 }
 
 export async function fetchRemoveCourseFromUser(
@@ -134,7 +129,6 @@ export async function fetchRemoveCourseFromUser(
     const courseSnapshot = await get(
       child(ref(database), `courses/${courseId}`),
     );
-    console.log("courseSnapshot.val(): ", courseSnapshot.val());
 
     if (!courseSnapshot.exists()) {
       throw new Error("Такого курса не существует в базе данных.");
@@ -143,7 +137,6 @@ export async function fetchRemoveCourseFromUser(
     const userCourseSnapshot = await get(
       child(ref(database), `users/${userId}/courses/${courseId}`),
     );
-    console.log("userCourseSnapshot.val(): ", userCourseSnapshot.val());
 
     if (!userCourseSnapshot.exists()) {
       throw new Error("У пользователя нет такого курса.");

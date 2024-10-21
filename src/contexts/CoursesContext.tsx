@@ -1,5 +1,7 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { CourseType } from "../types/courses.ts";
+import { useUser } from "../hooks/useUser.ts";
+import { fetchCoursesOfUser } from "../api/data.ts";
 
 type ProviderProps = {
   children: React.ReactNode;
@@ -30,6 +32,32 @@ export default function CoursesProvider({ children }: ProviderProps) {
 
   const [selectedCourses, setSelectedCourses] = useState<CourseType[]>([]);
   const [selectedLoading, setSelectedLoading] = useState<boolean>(false);
+
+  const { user, loadingUser } = useUser();
+  const userId = user?.uid;
+
+  useEffect(() => {
+    const loadUserCourses = async () => {
+      if (userId) {
+        try {
+          setSelectedLoading(true);
+          const courses = await fetchCoursesOfUser(userId);
+          setSelectedCourses(courses);
+        } catch (error) {
+          console.error("Ошибка при загрузке курсов пользователя:", error);
+          setCourseError("Не удалось загрузить курсы пользователя");
+        } finally {
+          setSelectedLoading(false);
+        }
+      } else {
+        setSelectedCourses([]);
+      }
+    };
+
+    if (!loadingUser) {
+      loadUserCourses();
+    }
+  }, [userId, loadingUser]);
 
   return (
     <CoursesContext.Provider

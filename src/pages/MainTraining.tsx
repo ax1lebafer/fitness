@@ -8,13 +8,13 @@ import useCourses from "../hooks/useCourses.ts";
 import { useUser } from "../hooks/useUser.ts";
 import { WorkoutType } from "../types/workouts.ts";
 import { CourseType } from "../types/courses.ts";
-import { fetchCoursesOfUser, fetchWorkoutsOfUserCourse } from "../api/data.ts";
+import { fetchWorkoutsOfUserCourse } from "../api/data.ts";
 
 export default function MainTraining() {
   const [openSuccessModal, setOpenSuccessModal] = useState(false);
   const [isOpenMyProgressModal, setIsOpenMyProgressModal] = useState(false);
 
-  const { selectedCourses, setSelectedCourses } = useCourses();
+  const { selectedCourses } = useCourses();
   const { user, loadingUser } = useUser();
   const userId = user?.uid;
 
@@ -25,29 +25,6 @@ export default function MainTraining() {
 
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    async function fetchUserCourses() {
-      if (!userId) {
-        setError("Вы не авторизованы");
-        setLoading(false);
-        return;
-      }
-
-      try {
-        const courses = await fetchCoursesOfUser(userId);
-        setSelectedCourses(courses);
-      } catch (error) {
-        console.error("Ошибка при загрузке курсов пользователя:", error);
-        setError("Не удалось загрузить курсы пользователя");
-        setLoading(false);
-      }
-    }
-
-    if (!loadingUser && userId && selectedCourses.length === 0) {
-      fetchUserCourses();
-    }
-  }, [userId, setSelectedCourses, selectedCourses.length, loadingUser]);
 
   useEffect(() => {
     const loadData = async () => {

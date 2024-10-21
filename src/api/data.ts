@@ -150,31 +150,27 @@ export async function fetchRemoveCourseFromUser(
   }
 }
 
-export const fetchWorkoutsOfUserCourse = async (
-  workoutId: string,
+export async function fetchWorkoutsOfUserCourse(
   userId: string,
   courseId: string,
-) => {
-  // console.log("fetchWorkoutOfCourse", workoutId, userId, courseId);
-  let result: WorkoutType | null = null;
+): Promise<WorkoutType[]> {
+  let result: WorkoutType[] = [];
 
   try {
     const snapshot = await get(
-      child(
-        ref(database),
-        `users/${userId}/courses/${courseId}/workouts/${workoutId}`,
-      ),
+      child(ref(database), `users/${userId}/courses/${courseId}/workouts`),
     );
 
     if (snapshot.exists()) {
-      result = snapshot.val();
+      const workoutsData = snapshot.val() as Record<string, WorkoutType>;
+      result = Object.values(workoutsData);
     }
   } catch (error) {
     console.error(error);
   }
 
   return result;
-};
+}
 
 export async function fetchWorkoutsOfCourse(workoutId: string) {
   console.log("fetchWorkoutOfCourse", workoutId);

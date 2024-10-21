@@ -1,15 +1,15 @@
 import ButtonLink from "../ui/ButtonLink";
-import { arrayTrainingProps } from "../../pages/MainTraining";
 import { useState } from "react";
 import InputProgressForm from "../InputProgressForm.tsx";
+import { ExerciseType } from "../../types/exercises.ts";
 
 type TypeMyProgressProps = {
-  arrayTraining: arrayTrainingProps[];
+  exercises: ExerciseType[];
   handleSaveChanges: () => void;
 };
 
 export default function MyProgress({
-  arrayTraining,
+  exercises,
   handleSaveChanges,
 }: TypeMyProgressProps) {
   const [value, setValue] = useState("");
@@ -23,11 +23,11 @@ export default function MyProgress({
         <h3 className="text-[32px] text-black mb-12 text-left">Мой прогресс</h3>
         <div className="max-h-[350px] overflow-x-hidden [&::-webkit-scrollbar]:w-[6px] [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-black [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:rounded-full">
           <div className="w-[237px] lg:w-[320px] mb-[34px]">
-            {arrayTraining.map((target, i) => {
+            {exercises.map((target, i) => {
               return (
                 <InputProgressForm
                   key={i}
-                  exerciseName={target.target}
+                  exerciseName={target.name}
                   value={value}
                   onChange={(e) => {
                     setValue(e.target.value);

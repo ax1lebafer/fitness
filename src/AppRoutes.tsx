@@ -23,8 +23,8 @@ export default function AppRoutes() {
         <Route element={<Layout />}>
           <Route path={appRoutes.HOME} element={<HomePage />} />
           <Route path={appRoutes.COURSES} element={<CoursePage />} />
-          <Route path={appRoutes.TRAINING} element={<MainTraining />} />
           <Route element={<PrivateRoute />}>
+            <Route path={appRoutes.TRAINING} element={<MainTraining />} />
             <Route path={appRoutes.PROFILE} element={<ProfilePage />} />
           </Route>
         </Route>

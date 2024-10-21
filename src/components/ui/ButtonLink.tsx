@@ -21,6 +21,11 @@ export default function ButtonLink<E = React.MouseEvent<HTMLButtonElement>>({
   const baseClasses =
     "px-[16px] xl:px-[26px] py-[8px] xl:py-[16px] rounded-[46px] bg-[#BCEC30] hover:bg-[#C6FF00] active:bg-black text-black hover:text-black active:text-white transition-colors duration-300 ease-linear inline-block text-center";
 
+  const disabledClasses =
+    "bg-[#F7F7F7] cursor-not-allowed hover:bg-gray-400 active:bg-gray-400";
+
+  const combinedClasses = `${baseClasses} ${className} ${disabled ? disabledClasses : ""}`;
+
   if (to) {
     return (
       <Link to={to} className={`${baseClasses} ${className}`}>
@@ -32,7 +37,7 @@ export default function ButtonLink<E = React.MouseEvent<HTMLButtonElement>>({
   return (
     <button
       onClick={onClick as React.MouseEventHandler<HTMLButtonElement>}
-      className={`${baseClasses} ${className}`}
+      className={combinedClasses}
       type={type}
       disabled={disabled}
     >

@@ -1,56 +1,105 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import VideoPlayer from "../components/VideoPlayer.tsx";
 import ResultTraining from "../components/ResultTraining.tsx";
 import MyProgress from "../components/modal/MyProgress.tsx";
 import MyProgressCounted from "../components/modal/MyProgressCounted.tsx";
+import useCourses from "../hooks/useCourses.ts";
+import { useUser } from "../hooks/useUser.ts";
+import { WorkoutType } from "../types/workouts.ts";
+import { CourseType } from "../types/courses.ts";
+import { fetchCoursesOfUser, fetchWorkoutsOfUserCourse } from "../api/data.ts";
 
-export type arrayTrainingProps = {
-  target: string;
-  result: number;
-};
-
-const arrayTraining: arrayTrainingProps[] = [
-  {
-    target: "Наклоны вперед",
-    result: 0,
-  },
-  {
-    target: "Наклоны назад",
-    result: 10,
-  },
-  {
-    target: "Поднятие ног, согнутых в коленях",
-    result: 0,
-  },
-  {
-    target: "Наклоны вперед",
-    result: 0,
-  },
-  {
-    target: "Наклоны назад",
-    result: 10,
-  },
-  {
-    target: "Поднятие ног, согнутых в коленях",
-    result: 0,
-  },
-  {
-    target: "Наклоны вперед",
-    result: 0,
-  },
-  {
-    target: "Наклоны назад",
-    result: 10,
-  },
-  {
-    target: "Поднятие ног, согнутых в коленях",
-    result: 0,
-  },
-];
 export default function MainTraining() {
   const [openSuccessModal, setOpenSuccessModal] = useState(false);
   const [isOpenMyProgressModal, setIsOpenMyProgressModal] = useState(false);
+
+  const { selectedCourses, setSelectedCourses } = useCourses();
+  const { user, loadingUser } = useUser();
+  const userId = user?.uid;
+
+  const { id } = useParams();
+
+  const [workout, setWorkout] = useState<WorkoutType | null>(null);
+  const [course, setCourse] = useState<CourseType | null>(null);
+
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function fetchUserCourses() {
+      if (!userId) {
+        setError("Вы не авторизованы");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const courses = await fetchCoursesOfUser(userId);
+        setSelectedCourses(courses);
+      } catch (error) {
+        console.error("Ошибка при загрузке курсов пользователя:", error);
+        setError("Не удалось загрузить курсы пользователя");
+        setLoading(false);
+      }
+    }
+
+    if (!loadingUser && userId && selectedCourses.length === 0) {
+      fetchUserCourses();
+    }
+  }, [userId, setSelectedCourses, selectedCourses.length, loadingUser]);
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        setLoading(true);
+
+        if (!userId) {
+          setError("Вы не авторизованы");
+          setLoading(false);
+          return;
+        }
+
+        const currentCourse = selectedCourses.find((course) =>
+          course.workouts.includes(id!),
+        );
+
+        if (!currentCourse) {
+          setError("У вас нет доступа к этой тренировке");
+          setLoading(false);
+          return;
+        }
+
+        setCourse(currentCourse);
+
+        const userWorkouts = await fetchWorkoutsOfUserCourse(
+          userId,
+          currentCourse._id,
+        );
+
+        const currentWorkout = userWorkouts.find(
+          (workout) => workout._id === id,
+        );
+
+        if (!currentWorkout) {
+          setError("Тренировка не найдена");
+          setLoading(false);
+          return;
+        }
+
+        setWorkout(currentWorkout);
+      } catch (err) {
+        console.error("Ошибка при загрузке данных:", err);
+        setError("Ошибка при загрузке данных");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (!loadingUser && selectedCourses.length > 0) {
+      loadData();
+    }
+  }, [id, userId, selectedCourses, loadingUser]);
 
   const toggleWorkoutMyProgress = () => {
     setIsOpenMyProgressModal(true);
@@ -62,24 +111,40 @@ export default function MainTraining() {
     setTimeout(() => setOpenSuccessModal(false), 2000);
   }
 
+  if (loading || loadingUser || selectedCourses.length === 0) {
+    return <p>Загрузка...</p>;
+  }
+
+  if (error) {
+    return <p>Ошибка: {error}</p>;
+  }
+
+  if (!workout || !course) {
+    return <p>Данные не найдены</p>;
+  }
+
   return (
     <div className="mb-[201px]">
-      <h1 className="sm:text-[48px] md:text-[60px] text-[24px] text-left font-medium">Йога</h1>
-      <nav aria-label="breadcrumb">
-        <ol className="flex flex-row text-center sm:text-[24px] md:text-[32px] font-normal pt-6 text-[18px]">
-          <li><Link to="#"><span className="underline">Красота и здоровье</span></Link></li>
-          <li><Link to="#"><span className="underline">Йога на каждый день</span></Link></li>
-          <li><Link to="#"><span className="underline">2 день</span></Link></li>
-        </ol>
-      </nav>
-      <VideoPlayer />
-      <ResultTraining
-        arrayTraining={arrayTraining}
-        toggleWorkoutMyProgress={toggleWorkoutMyProgress}
-      />
+      <h1 className="sm:text-[48px] md:text-[60px] text-[24px] text-left font-medium">
+        {course.nameRU}
+      </h1>
+      <div>
+        <p className="xl:text-[32px] text-left xl:underline pt-6 text-[18px]">
+          {workout.name}
+        </p>
+      </div>
+      <VideoPlayer src={workout.video} />
+
+      {workout.exercises && (
+        <ResultTraining
+          exercises={workout.exercises}
+          toggleWorkoutMyProgress={toggleWorkoutMyProgress}
+        />
+      )}
+
       {isOpenMyProgressModal && (
         <MyProgress
-          arrayTraining={arrayTraining}
+          exercises={workout.exercises}
           handleSaveChanges={handleSaveChanges}
         />
       )}

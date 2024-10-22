@@ -16,7 +16,7 @@ export default function ResultTraining({
   return (
     <div className="w-[100%] rounded-[30px] overflow-hidden mt-[24px] xl:mt-[40px] bg-white">
       <div className="xl:m-[40px] m-[30px]">
-        <h2 className="text-[32px] text-left">Упражнения тренировки 2</h2>
+        <h2 className="text-[32px] text-left">Упражнения тренировки</h2>
         <TargetList exercises={exercises} />
         <ButtonLink
           text={

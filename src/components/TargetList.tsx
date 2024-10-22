@@ -5,6 +5,8 @@ interface TargetListProps {
 }
 
 export default function TargetList({ exercises }: TargetListProps) {
+  const numbRows =
+    Math.trunc(exercises.length / 3) + (exercises.length % 3 === 0 ? 0 : 1);
 
   return (
     <ol

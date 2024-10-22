@@ -14,6 +14,7 @@ type ContextType = {
   isContain: boolean;
   setIsContain: (prevState: boolean) => void;
   loadingUser: boolean;
+  setLoadingUser: (prevState: boolean) => void;
 };
 
 export const UserContext = createContext<null | ContextType>(null);
@@ -68,6 +69,7 @@ export default function UserProvider({ children }: ProviderProps) {
         isContain,
         setIsContain,
         loadingUser,
+        setLoadingUser,
       }}
     >
       {children}

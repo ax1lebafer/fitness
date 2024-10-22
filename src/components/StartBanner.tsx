@@ -2,7 +2,10 @@ import ButtonLink from "./ui/ButtonLink.tsx";
 import { appRoutes } from "../lib/appRoutes.ts";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useUser } from "../hooks/useUser.ts";
-import { fetchAddCourseToUser } from "../api/data.ts";
+import { fetchAddCourseToUser, fetchCoursesOfUser } from "../api/data.ts";
+import useCourses from "../hooks/useCourses.ts";
+import { useState } from "react";
+import AddingDone from "./modal/AddingDone.tsx";
 
 const ulList = [
   "проработка всех групп мышц",
@@ -17,9 +20,14 @@ type IdProps = {
 };
 
 export default function StartBanner({ id }: IdProps) {
+  const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isOpenProcessModal, setOpenProcessModal] = useState(false);
+
   const navigate = useNavigate();
   const location = useLocation();
   const { user } = useUser();
+  const { setSelectedCourses } = useCourses();
 
   let userId: string;
   if (user) {
@@ -30,8 +38,26 @@ export default function StartBanner({ id }: IdProps) {
     navigate(appRoutes.SIGNIN, { state: { backgroundLocation: location } });
   };
 
-  const addCourse = () => {
-    fetchAddCourseToUser(userId, id);
+  function handleViewChanges() {
+    setOpenProcessModal(true);
+    setTimeout(() => {
+      setOpenProcessModal(false);
+    }, 2000);
+  }
+
+  const addCourse = async () => {
+    try {
+      setIsLoading(true);
+      await fetchAddCourseToUser(userId, id);
+      const data = await fetchCoursesOfUser(userId);
+      setSelectedCourses(data);
+      setMessage(`Курс добавлен`);
+      handleViewChanges();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -51,6 +77,7 @@ export default function StartBanner({ id }: IdProps) {
           text={user ? "Добавить курс" : "Войдите, чтобы добавить курс"}
           className="mt-7 w-[283px] xl:w-[437px] h-[50px] xl:h-[52px]"
           onClick={user ? addCourse : handleSignInClick}
+          disabled={isLoading}
         />
       </div>
       <div className="relative">
@@ -77,6 +104,7 @@ export default function StartBanner({ id }: IdProps) {
           className="absolute top-[-590px] xl:top-[-463px] left-[145px] xl:left-[757px]  w-[32px] xl:w-[50px] h-[27px] xl:h-[42.5px] select-none"
         />
       </div>
+      {isOpenProcessModal && <AddingDone message={message} />}
     </section>
   );
 }

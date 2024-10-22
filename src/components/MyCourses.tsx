@@ -21,7 +21,7 @@ export default function MyCourses() {
               <Card
                 key={selectedCourse.order}
                 name={selectedCourse.nameRU}
-                id={selectedCourse._id}
+                courseId={selectedCourse._id}
               />
             ))}
           </ul>

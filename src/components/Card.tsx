@@ -18,8 +18,6 @@ type CardProps = {
   courseId: string;
 };
 
-let messageProc = "";
-
 export default function Card({ name, courseId }: CardProps) {
   const location = useLocation();
   const navigate = useNavigate();
@@ -28,6 +26,7 @@ export default function Card({ name, courseId }: CardProps) {
   const { isEntering, user } = useUser();
   const { selectedCourses, setSelectedCourses } = useCourses();
 
+  const [message, setMessage] = useState("");
   const [isOpenProcessModal, setOpenProcessModal] = useState(false);
   const [courseWorkouts, setCourseWorkouts] = useState<WorkoutType[]>([]);
   const [courseProgress, setCourseProgress] = useState<number>(0);
@@ -55,7 +54,7 @@ export default function Card({ name, courseId }: CardProps) {
       await fetchAddCourseToUser(userId, courseId);
       const data = await fetchCoursesOfUser(userId);
       setSelectedCourses(data);
-      messageProc = `Курс "${name}" добавлен`;
+      setMessage(`Курс "${name}" добавлен`);
       handleViewChanges();
     } else {
       openSignInModal();
@@ -171,7 +170,7 @@ export default function Card({ name, courseId }: CardProps) {
           </button>
         )}
       </div>
-      {isOpenProcessModal && <AddingDone mess={messageProc} />}
+      {isOpenProcessModal && <AddingDone message={message} />}
       <div className="flex px-[30px] py-5 flex-col gap-5">
         <Link
           className="hover:underline text-2xl xl:text-3xl font-medium leading-none text-left"

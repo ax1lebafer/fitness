@@ -123,6 +123,7 @@ export default function MainTraining() {
         <MyProgress
           exercises={workout.exercises}
           handleSaveChanges={handleSaveChanges}
+          closeModal={() => setIsOpenMyProgressModal(false)}
         />
       )}
       {openSuccessModal && <MyProgressCounted />}

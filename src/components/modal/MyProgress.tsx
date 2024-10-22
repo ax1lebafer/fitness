@@ -6,16 +6,21 @@ import { ExerciseType } from "../../types/exercises.ts";
 type TypeMyProgressProps = {
   exercises: ExerciseType[];
   handleSaveChanges: () => void;
+  closeModal: () => void;
 };
 
 export default function MyProgress({
   exercises,
   handleSaveChanges,
+  closeModal,
 }: TypeMyProgressProps) {
   const [value, setValue] = useState("");
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center w-full h-full bg-black bg-opacity-20 z-20">
+    <div
+      className="fixed inset-0 flex items-center justify-center w-full h-full bg-black bg-opacity-20 z-20"
+      onClick={closeModal}
+    >
       <div
         className="fixed top-[calc(50%-(487px/2))] left-[calc(50%-(343px/2))] lg:top-[calc(50%-(596px/2))] lg:left-[calc(50%-(426px/2))]
        bg-white  rounded-[30px] shadow-def w-[343px] p-[30px] lg:w-[426px] lg:p-10"

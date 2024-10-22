@@ -9,7 +9,7 @@ import { errorMessage } from "../../utils/ErrorMessage.ts";
 export default function SignIn() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { setUser, setIsEntering } = useUser();
+  const { setUser, setIsEntering, loadingUser, setLoadingUser } = useUser();
 
   const backgroundLocation = location.state?.backgroundLocation || {
     pathname: appRoutes.HOME,
@@ -55,6 +55,7 @@ export default function SignIn() {
     }
 
     try {
+      setLoadingUser(true);
       const user = await getUser(formValues);
       setUser(user);
       setIsEntering(true);
@@ -66,12 +67,22 @@ export default function SignIn() {
         const userMessage = errorMessage(errMessage);
         setSignInError(userMessage);
       }
+    } finally {
+      setLoadingUser(false);
     }
   };
 
   useEffect(() => {
     setSignInError("");
   }, [formValues.email, formValues.password]);
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
 
   return (
     <div className="fixed inset-0 flex z-50">
@@ -110,6 +121,7 @@ export default function SignIn() {
             text="Войти"
             className="w-full mb-2.5 mt-[34px] h-[50px] xl:h-[52px]"
             onClick={onLogin}
+            disabled={loadingUser}
           />
           <ButtonLink
             text="Зарегистрироваться"

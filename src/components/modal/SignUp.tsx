@@ -79,6 +79,14 @@ export default function SignUp() {
     setSignUpError("");
   }, [formValues.email, formValues.username, formValues.password]);
 
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
+
   return (
     <div className="fixed inset-0 flex z-50">
       <div

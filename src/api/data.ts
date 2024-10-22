@@ -33,17 +33,6 @@ export async function fetchCourses(): Promise<CourseType[]> {
   }
 }
 
-export async function fetchCourse(courseId: string) {
-  const snapshot = await get(ref(database, `courses/${courseId}`));
-  const data = snapshot.val();
-
-  if (snapshot.exists()) {
-    return data;
-  } else {
-    throw new Error("Нет данных");
-  }
-}
-
 export async function fetchCoursesOfUser(
   userId: string,
 ): Promise<CourseType[]> {
@@ -67,7 +56,6 @@ export async function fetchCoursesOfUser(
     return data.sort(sortByOrder);
   } else {
     return [];
-    // throw new Error("У пользователя нет курсов");
   }
 }
 
@@ -164,23 +152,6 @@ export async function fetchWorkoutsOfUserCourse(
     if (snapshot.exists()) {
       const workoutsData = snapshot.val() as Record<string, WorkoutType>;
       result = Object.values(workoutsData);
-    }
-  } catch (error) {
-    console.error(error);
-  }
-
-  return result;
-}
-
-export async function fetchWorkoutsOfCourse(workoutId: string) {
-  console.log("fetchWorkoutOfCourse", workoutId);
-  let result: WorkoutType | null = null;
-
-  try {
-    const snapshot = await get(child(ref(database), `workouts/${workoutId}`));
-
-    if (snapshot.exists()) {
-      result = snapshot.val();
     }
   } catch (error) {
     console.error(error);

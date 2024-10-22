@@ -30,15 +30,17 @@ export default function SelectWorkout({
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50">
+    <div className="fixed inset-0 flex items-center justify-center z-50 pl-4 pr-4">
       <div
         className="fixed inset-0 bg-black opacity-50"
         onClick={closeModal}
       ></div>
 
-      <div className="p-10 bg-white w-[460px] h-[610px] rounded-[30px] z-10">
-        <p className="text-[32px] text-center mb-12">Выберите тренировку</p>
-        <ul className="overflow-auto h-[360px]">
+      <div className="p-10 bg-white xl:w-[460px] xl:h-[610px] rounded-[30px] w-full z-10">
+        <p className="text-[32px] xl:text-center text-left xl:mb-12 mb-[34px]">
+          Выберите тренировку
+        </p>
+        <ul className="overflow-auto xl:h-[360px]">
           {workouts.length === 0 && <p>Нет доступных тренировок</p>}
 
           {workouts.map((workout) => {
@@ -49,7 +51,7 @@ export default function SelectWorkout({
             return (
               <li
                 key={workout._id}
-                className={`flex gap-5 items-center border-b w-[370px] cursor-pointer ${
+                className={`flex gap-5 items-center border-b xl:w-[370px] cursor-pointer ${
                   selectedWorkoutId === workout._id
                     ? "bg-gray-200 rounded-2xl"
                     : ""
@@ -67,7 +69,7 @@ export default function SelectWorkout({
                 )}
 
                 <div className="flex flex-col gap-2.5 w-[330px]">
-                  <p className="text-[20px] pt-2.5 pb-2.5 leading-none text-left">
+                  <p className="xl:text-[20px] text-[18px] pt-2.5 pb-2.5 leading-none text-left">
                     {workout.name}
                   </p>
                 </div>

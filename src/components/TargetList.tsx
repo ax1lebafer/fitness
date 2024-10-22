@@ -5,8 +5,13 @@ interface TargetListProps {
 }
 
 export default function TargetList({ exercises }: TargetListProps) {
+  const numbRows =
+    Math.trunc(exercises.length / 3) + (exercises.length % 3 === 0 ? 0 : 1);
+
   return (
-    <ol className="mt-[20px] grid grid-flow-row-dense grid-rows-3 grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-4">
+    <ol
+      className={`mt-[20px] grid grid-flow-row-dense grid-rows-${numbRows} grid-cols-[repeat(auto-fill,minmax(auto,1fr))] xl:grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-4`}
+    >
       {exercises.map((exercise) => {
         const quantity = exercise.quantity || 1;
 
@@ -16,7 +21,7 @@ export default function TargetList({ exercises }: TargetListProps) {
 
         return (
           <li className="mb-5" key={exercise.name}>
-            <p className="text-lg text-left">
+            <p className="h-[46px] text-left">
               {`${exercise.name} ${progressPercentage}%`}
             </p>
             <progress

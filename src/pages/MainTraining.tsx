@@ -78,6 +78,18 @@ export default function MainTraining() {
     }
   }, [id, userId, selectedCourses, loadingUser]);
 
+  useEffect(() => {
+    if (isOpenMyProgressModal || openSuccessModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpenMyProgressModal, openSuccessModal]);
+
   const toggleWorkoutMyProgress = () => {
     setIsOpenMyProgressModal(true);
   };
@@ -121,7 +133,7 @@ export default function MainTraining() {
   }
 
   return (
-    <div className="mb-[201px]">
+    <div className="mb-[201px] px-[16px] xl:px-0">
       <h1 className="sm:text-[48px] md:text-[60px] text-[24px] text-left font-medium">
         {course.nameRU}
       </h1>

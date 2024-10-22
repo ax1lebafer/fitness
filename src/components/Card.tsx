@@ -4,28 +4,41 @@ import {
   fetchAddCourseToUser,
   fetchCoursesOfUser,
   fetchRemoveCourseFromUser,
+  fetchWorkoutsOfUserCourse,
 } from "../api/data.ts";
 import useCourses from "../hooks/useCourses.ts";
 import { useUser } from "../hooks/useUser.ts";
 import { appRoutes } from "../lib/appRoutes.ts";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddingDone from "./modal/AddingDone.tsx";
+import { WorkoutType } from "../types/workouts.ts";
 
 type CardProps = {
   name: string;
-  id: string;
+  courseId: string;
 };
 
 let messageProc = "";
 
-export default function Card({ name, id }: CardProps) {
+export default function Card({ name, courseId }: CardProps) {
   const location = useLocation();
   const navigate = useNavigate();
   const pathname = location.pathname;
+
   const { isEntering, user } = useUser();
   const { selectedCourses, setSelectedCourses } = useCourses();
 
   const [isOpenProcessModal, setOpenProcessModal] = useState(false);
+  const [courseWorkouts, setCourseWorkouts] = useState<WorkoutType[]>([]);
+  const [courseProgress, setCourseProgress] = useState<number>(0);
+
+  const userId = user?.uid;
+
+  const isProfilePage = pathname === "/profile";
+  let isSelected = Boolean(
+    selectedCourses ? selectedCourses?.find((el) => el._id === courseId) : null,
+  );
+
   function handleViewChanges() {
     setOpenProcessModal(true);
     setTimeout(() => {
@@ -33,21 +46,13 @@ export default function Card({ name, id }: CardProps) {
     }, 2000);
   }
 
-  const isProfilePage = pathname === "/profile";
-  let isSelected = Boolean(
-    selectedCourses ? selectedCourses?.find((el) => el._id === id) : null,
-  );
   const openSignInModal = () => {
     navigate(appRoutes.SIGNIN, { state: { backgroundLocation: location } });
   };
 
-  const userId = user?.uid;
-
   const addCourse = async () => {
     if (isEntering && userId) {
-      await fetchAddCourseToUser(userId, id);
-      // const updatedCourses = [...selectedCourses, { id, name }];
-      // setSelectedCourses(updatedCourses);
+      await fetchAddCourseToUser(userId, courseId);
       const data = await fetchCoursesOfUser(userId);
       setSelectedCourses(data);
       messageProc = `Курс "${name}" добавлен`;
@@ -57,7 +62,7 @@ export default function Card({ name, id }: CardProps) {
     }
     isSelected = Boolean(
       selectedCourses && isEntering
-        ? selectedCourses?.find((el) => el._id === id)
+        ? selectedCourses?.find((el) => el._id === courseId)
         : null,
     );
   };
@@ -65,11 +70,7 @@ export default function Card({ name, id }: CardProps) {
   const delCourse = async () => {
     if (userId) {
       try {
-        await fetchRemoveCourseFromUser(userId, id);
-        // const updatedCourses = selectedCourses.filter(
-        //   (course) => course._id !== id,
-        // );
-        // setSelectedCourses(updatedCourses);
+        await fetchRemoveCourseFromUser(userId, courseId);
         const data = await fetchCoursesOfUser(userId);
         setSelectedCourses(data);
       } catch (error) {
@@ -83,13 +84,55 @@ export default function Card({ name, id }: CardProps) {
     }
   };
 
+  useEffect(() => {
+    const fetchWorkouts = async () => {
+      if (userId && isProfilePage) {
+        try {
+          const workouts = await fetchWorkoutsOfUserCourse(userId, courseId);
+          setCourseWorkouts(workouts);
+
+          if (workouts.length > 0) {
+            let totalExercises = 0;
+            let completedExercises = 0;
+
+            workouts.forEach((workout) => {
+              if (workout.exercises && workout.exercises.length > 0) {
+                workout.exercises.forEach((exercise) => {
+                  totalExercises += 1;
+                  if (
+                    exercise.isDone ||
+                    (exercise.progress && exercise.progress >= 100)
+                  ) {
+                    completedExercises += 1;
+                  }
+                });
+              }
+            });
+
+            const progressPercentage = totalExercises
+              ? Math.round((completedExercises / totalExercises) * 100)
+              : 0;
+
+            setCourseProgress(progressPercentage);
+          } else {
+            setCourseProgress(0);
+          }
+        } catch (error) {
+          console.error("Ошибка при загрузке тренировок:", error);
+        }
+      }
+    };
+
+    fetchWorkouts();
+  }, [userId, courseId, isProfilePage]);
+
   return (
     <div className="mx-[calc((100%-343px)/2)] xl:mx-0 w-[343px] xl:w-[360px] items-center bg-white rounded-[30px]">
       <div className="relative h-[325px]">
-        <Link to={`/courses/${id}`}>
+        <Link to={`/courses/${courseId}`}>
           <img
             className="rounded-[30px] h-[325px] w-[343px] xl:w-[360px] object-cover"
-            src={`/img/${id}.png`}
+            src={`/img/${courseId}.png`}
             alt="Курс"
           />
         </Link>
@@ -132,7 +175,7 @@ export default function Card({ name, id }: CardProps) {
       <div className="flex px-[30px] py-5 flex-col gap-5">
         <Link
           className="hover:underline text-2xl xl:text-3xl font-medium leading-none text-left"
-          to={`/courses/${id}`}
+          to={`/courses/${courseId}`}
         >
           {name}
         </Link>
@@ -155,7 +198,9 @@ export default function Card({ name, id }: CardProps) {
             <p className="text-[16px]">Сложность</p>
           </div>
         </div>
-        {isProfilePage && <ProgressBar courseId={id} />}
+        {isProfilePage && (
+          <ProgressBar workouts={courseWorkouts} progress={courseProgress} />
+        )}
       </div>
     </div>
   );

@@ -2,6 +2,13 @@
 
 SPA разработано по [макету](https://www.figma.com/file/2Vhk2Zdii1eM7rA0fWQExv/SkyFitnessPro?type=design&node-id=0%3A1&mode=design&t=uZxZakRy4Oc9rn5Z-1)
 
+Разработка проекта велась на [Kaiten](https://axl1lebafer.kaiten.ru/space/441962)
+
+Команда разработчиков:
+- [ax1lebafer](https://github.com/ax1lebafer)
+- [Aleks3y1](https://github.com/Aleks3y1)
+- [OlegGorin](https://github.com/OlegGorin)
+
 ## В стеке используются такие технологии как:
 - React.js
 - TypeScript

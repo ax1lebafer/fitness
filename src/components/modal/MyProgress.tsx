@@ -12,7 +12,14 @@ export default function MyProgress({
   exercises,
   handleSaveChanges,
 }: TypeMyProgressProps) {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState<{ [index: number]: number }>({});
+
+  const handleInputChange = (index: number, value: number) => {
+    setValue((prevValues) => ({
+      ...prevValues,
+      [index]: value,
+    }));
+  };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center w-full h-full bg-black bg-opacity-20 z-20">
@@ -23,15 +30,13 @@ export default function MyProgress({
         <h3 className="text-[32px] text-black mb-12 text-left">Мой прогресс</h3>
         <div className="max-h-[350px] overflow-x-hidden [&::-webkit-scrollbar]:w-[6px] [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-black [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:rounded-full">
           <div className="w-[237px] lg:w-[320px] mb-[34px]">
-            {exercises.map((target, i) => {
+            {exercises.map((exercise, i) => {
               return (
                 <InputProgressForm
                   key={i}
-                  exerciseName={target.name}
-                  value={value}
-                  onChange={(e) => {
-                    setValue(e.target.value);
-                  }}
+                  exerciseName={exercise.name}
+                  value={value[i]}
+                  onChange={(e) => handleInputChange(i, Number(e.target.value))}
                 />
               );
             })}

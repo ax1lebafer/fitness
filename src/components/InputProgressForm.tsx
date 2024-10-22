@@ -1,5 +1,5 @@
 type InputProgressFormType = {
-  value: string;
+  value: number;
   exerciseName: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };

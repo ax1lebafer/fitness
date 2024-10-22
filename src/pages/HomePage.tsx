@@ -28,7 +28,7 @@ export default function HomePage() {
       </div>
       <div className="flex gap-10 flex-wrap mb-10">
         {courses?.map((course) => (
-          <Card key={course._id} name={course.nameRU} id={course._id} />
+          <Card key={course._id} name={course.nameRU} courseId={course._id} />
         ))}
       </div>
       <div className="mx-[calc((100%-343px)/2)] xl:mx-0 flex items-center xl:items-center justify-end xl:justify-center mb-10">

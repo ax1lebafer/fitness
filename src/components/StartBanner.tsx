@@ -23,7 +23,6 @@ export default function StartBanner({ id }: IdProps) {
 
   let userId: string;
   if (user) {
-    console.log("StartBanner. user: ", user);
     userId = user.uid;
   }
 
@@ -32,10 +31,7 @@ export default function StartBanner({ id }: IdProps) {
   };
 
   const addCourse = () => {
-    console.log("StartBanner. courseId: ", id);
-    console.log("StartBanner. uid: ", user?.uid);
     fetchAddCourseToUser(userId, id);
-    // alert("Курс добавлен");
   };
 
   return (

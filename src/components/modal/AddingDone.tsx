@@ -1,8 +1,8 @@
-export type AddRemovProps = {
-  mess: string;
-}
+export type AddingDoneProps = {
+  message: string;
+};
 
-export default function AddingDone(messageProc: AddRemovProps) {
+export default function AddingDone(messageProc: AddingDoneProps) {
   const trueMess = Object.values(messageProc);
 
   return (
@@ -15,9 +15,7 @@ export default function AddingDone(messageProc: AddRemovProps) {
             width={32}
             height={32}
           ></img>
-          <h3 className="font-skyeng text-[24px] text-black">
-            {trueMess[0]}
-          </h3>
+          <h3 className="font-skyeng text-[24px] text-black">{trueMess[0]}</h3>
         </div>
       </div>
     </div>

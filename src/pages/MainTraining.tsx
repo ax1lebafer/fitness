@@ -82,8 +82,28 @@ export default function MainTraining() {
     setIsOpenMyProgressModal(true);
   };
 
-  function handleSaveChanges() {
+  async function handleSaveChanges() {
     setIsOpenMyProgressModal(false);
+
+    try {
+      if (userId && course && id) {
+        const updatedWorkouts = await fetchWorkoutsOfUserCourse(
+          userId,
+          course._id,
+        );
+
+        const updatedWorkout = updatedWorkouts.find((w) => w._id === id);
+
+        if (updatedWorkout) {
+          setWorkout(updatedWorkout);
+        } else {
+          console.error("Тренировка не найдена после обновления");
+        }
+      }
+    } catch (error) {
+      console.error("Ошибка при обновлении данных тренировки:", error);
+    }
+
     setOpenSuccessModal(true);
     setTimeout(() => setOpenSuccessModal(false), 2000);
   }
@@ -123,6 +143,8 @@ export default function MainTraining() {
         <MyProgress
           exercises={workout.exercises}
           handleSaveChanges={handleSaveChanges}
+          courseId={course._id}
+          workoutId={workout._id}
         />
       )}
       {openSuccessModal && <MyProgressCounted />}

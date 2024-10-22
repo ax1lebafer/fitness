@@ -188,3 +188,22 @@ export async function fetchWorkoutsOfCourse(workoutId: string) {
 
   return result;
 }
+
+export async function updateExerciseProgressByIndex(
+  userId: string,
+  courseId: string,
+  workoutId: string,
+  exerciseIndex: number,
+  progress: number,
+  isDone: boolean,
+): Promise<void> {
+  const exerciseProgressRef = ref(
+    database,
+    `users/${userId}/courses/${courseId}/workouts/${workoutId}/exercises/${exerciseIndex}`,
+  );
+
+  await update(exerciseProgressRef, {
+    progress,
+    isDone,
+  });
+}

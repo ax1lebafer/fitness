@@ -1,7 +1,7 @@
 import ButtonLink from "../components/ui/ButtonLink.tsx";
 import { useUser } from "../hooks/useUser.ts";
 import MyCourses from "../components/MyCourses.tsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UpdatePassword from "../components/modal/UpdatePassword.tsx";
 
 export default function ProfilePage() {
@@ -11,6 +11,18 @@ export default function ProfilePage() {
   const closeModal = () => {
     setOpenModal(false);
   };
+
+  useEffect(() => {
+    if (openModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [openModal]);
 
   return (
     <main>

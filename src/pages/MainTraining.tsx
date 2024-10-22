@@ -78,6 +78,18 @@ export default function MainTraining() {
     }
   }, [id, userId, selectedCourses, loadingUser]);
 
+  useEffect(() => {
+    if (isOpenMyProgressModal || openSuccessModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpenMyProgressModal, openSuccessModal]);
+
   const toggleWorkoutMyProgress = () => {
     setIsOpenMyProgressModal(true);
   };

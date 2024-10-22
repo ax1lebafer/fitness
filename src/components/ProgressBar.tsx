@@ -1,5 +1,5 @@
 import ButtonLink from "./ui/ButtonLink.tsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SelectWorkout from "./modal/SelectWorkout.tsx";
 import { WorkoutType } from "../types/workouts.ts";
 import { getTextButton } from "../utils/getTextButton.ts";
@@ -16,6 +16,18 @@ export default function ProgressBar({ workouts, progress }: ProgressBarProps) {
     (workout) =>
       Array.isArray(workout.exercises) && workout.exercises.length > 0,
   );
+
+  useEffect(() => {
+    if (isOpenModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpenModal]);
 
   return (
     <div>

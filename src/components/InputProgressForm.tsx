@@ -1,5 +1,6 @@
 type InputProgressFormType = {
   value: string;
+  maxValue: number;
   exerciseName: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
@@ -8,6 +9,7 @@ export default function InputProgressForm({
   exerciseName,
   /*  id, */
   value,
+  maxValue,
   onChange,
 }: InputProgressFormType) {
   return (
@@ -17,7 +19,8 @@ export default function InputProgressForm({
         className="font-roboto-400 w-[237px] lg:w-[320px] h-[52px] mb-5 mt-2.5 border rounded-lg border-gray border-solid text-black text-[18px] font-normal px-[18px] py-[16px] mr-5"
         type="number"
         min="0"
-        max="20"
+        // max="20"
+        max={maxValue}
         step="1"
         placeholder="0"
         /* id={id} */

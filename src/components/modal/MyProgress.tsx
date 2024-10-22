@@ -29,6 +29,7 @@ export default function MyProgress({
                   key={i}
                   exerciseName={target.name}
                   value={value}
+                  maxValue={target.quantity}
                   onChange={(e) => {
                     setValue(e.target.value);
                   }}

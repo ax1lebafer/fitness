@@ -20,7 +20,6 @@ export async function getRegistration({
     password,
   );
   const uid = userCredential.user.uid;
-  console.log("reg. uid: ", uid);
 
   const response = await set(ref(database, "users/" + uid), {
     uid: uid,
@@ -42,7 +41,6 @@ export async function getUser({ email, password }: SignInType) {
     password,
   );
   const uid = userCredential.user.uid;
-  console.log("UID: ", uid);
 
   const snapshot = await get(child(ref(database), `users/${uid}`));
   if (snapshot.exists()) {

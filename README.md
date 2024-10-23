@@ -8,6 +8,7 @@ SPA разработано по [макету](https://www.figma.com/file/2Vhk2Z
 - [ax1lebafer](https://github.com/ax1lebafer)
 - [Aleks3y1](https://github.com/Aleks3y1)
 - [OlegGorin](https://github.com/OlegGorin)
+- [ReginaWe](https://github.com/ReginaWe)
 
 ## В стеке используются такие технологии как:
 - React.js

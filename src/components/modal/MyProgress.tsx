@@ -91,6 +91,7 @@ export default function MyProgress({
                   key={i}
                   exerciseName={exercise.name}
                   value={progressValues[i]}
+                  maxValue={exercise.quantity}
                   onChange={(e) => handleInputChange(i, Number(e.target.value))}
                 />
               );
